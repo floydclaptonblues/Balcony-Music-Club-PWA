@@ -1,0 +1,27 @@
+import type { Band } from './types';
+
+export const bands: Band[] = [
+  { id: 'josh-benitez-band', name: 'JOSH BENITEZ BAND', sourceIds: ['website-shows'] },
+  { id: 'john-lisi-delta-funk', name: 'JOHN LISI & DELTA FUNK', sourceIds: ['website-shows'] },
+  { id: 'big-mike-rb-kings', name: 'BIG MIKE & R&B KINGS', sourceIds: ['website-shows'] },
+  { id: 'andre-lovett-band', name: 'ANDRE LOVETT BAND', sourceIds: ['website-shows'] },
+  { id: 'mother-ruckus', name: 'MOTHER RUCKUS', sourceIds: ['website-shows'] },
+  { id: 'caesar-bros', name: 'CAESAR BROS', sourceIds: ['website-shows'] },
+  { id: 'deej-flava-mother-ruckus', name: 'DEEJ FLAVA & MOTHER RUCKUS', sourceIds: ['website-shows'] },
+  { id: 'sugar-the-daddies', name: 'SUGAR & THE DADDIES', sourceIds: ['website-shows'] },
+  { id: 'jam-brass-band', name: 'JAM BRASS BAND', sourceIds: ['website-shows'] },
+  { id: 'rumpshakers', name: 'RUMPSHAKERS', sourceIds: ['website-shows'] },
+  { id: 'under-the-covers', name: 'UNDER THE COVERS', sourceIds: ['website-shows'] },
+  { id: 'maurice-cade-ess', name: 'MAURICE CADE & ESS', sourceIds: ['website-shows'] },
+  { id: 'kat-kiley-experience', name: 'KAT KILEY EXPERIENCE', sourceIds: ['website-shows'] },
+  { id: 'rr-smokin-foundation', name: 'R&R SMOKIN FOUNDATION', sourceIds: ['website-shows'] },
+  { id: 'sierra-green-notes', name: 'SIERRA & GREEN NOTES', sourceIds: ['website-shows'] },
+  { id: 'kim-inda-wind-band', name: 'KIM INDA WIND BAND', sourceIds: ['website-shows'] },
+  { id: 'johnny-mastro', name: 'JOHNNY MASTRO', sourceIds: ['website-shows'] },
+  { id: 'no-mads', name: 'NO-MADS', sourceIds: ['website-shows'] },
+  { id: 'dapper-dandies', name: 'DAPPER DANDIES', sourceIds: ['website-shows'] },
+  { id: 'leroy-marshall-band', name: 'LEROY MARSHALL BAND', sourceIds: ['website-shows'] },
+  { id: 'covertones', name: 'COVERTONES', sourceIds: ['website-shows'] },
+  { id: 'maurice-cade', name: 'MAURICE CADE', sourceIds: ['website-shows'] },
+  { id: 'sierra', name: 'SIERRA', sourceIds: ['website-shows'] },
+];
