@@ -1,0 +1,19 @@
+{
+  "name": "Balcony Music Club",
+  "short_name": "BMC",
+  "description": "QR-ready guest app for Balcony Music Club.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#120728",
+  "theme_color": "#120728",
+  "icons": [
+    {
+      "src": "icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
