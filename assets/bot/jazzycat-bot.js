@@ -13,3 +13,12 @@ window.BMC_JAZZYCAT={
   ],
   quick:['Is there a cover charge?','Where is BMC?','How do I book an event?','How do I register for Paint and Sip?','What spaces are available?']
 };
+(function(){
+  function removeHappyHour(){
+    document.querySelectorAll('.card,.event').forEach(function(card){
+      if ((card.textContent || '').toLowerCase().includes('thursday happy hour')) card.remove();
+    });
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', removeHappyHour);
+  else removeHappyHour();
+})();
