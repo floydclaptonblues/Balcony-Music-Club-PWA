@@ -1,11 +1,11 @@
-const CACHE_NAME = 'bmc-guest-pwa-v7';
+const CACHE_NAME = 'bmc-guest-pwa-v8';
 const CORE_ASSETS = [
-  './',
-  './index.html',
-  './manifest.webmanifest',
-  './icons/icon.svg',
-  './assets/venue/photos.js',
-  './assets/bot/jazzycat-bot.js'
+  '/',
+  '/index.html',
+  '/manifest.webmanifest',
+  '/icons/icon.svg',
+  '/assets/venue/photos.js',
+  '/assets/bot/jazzycat-bot.js'
 ];
 
 const PHOTO_SWAP_PATCH = `
@@ -40,7 +40,10 @@ self.addEventListener('activate', (event) => {
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
 
-  if (new URL(event.request.url).pathname.endsWith('/assets/venue/photos.js')) {
+  const url = new URL(event.request.url);
+  if (url.origin !== self.location.origin) return;
+
+  if (url.pathname.endsWith('/assets/venue/photos.js')) {
     event.respondWith(
       fetch(event.request)
         .then((response) => response.text())
