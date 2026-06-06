@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bmc-guest-pwa-v18';
+const CACHE_NAME = 'bmc-guest-pwa-v20';
 const CORE_ASSETS = [
   '/',
   '/index.html',
