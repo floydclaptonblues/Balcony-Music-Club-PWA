@@ -1,6 +1,7 @@
 (function(){
   var CONTACT_DISPLAY='504-428-5494';
   var CONTACT_TEL='+15044285494';
+  var HERO_ASSET='assets/hero/bmc-hero.png?v=20260606hq';
   function patchText(el){
     if(!el)return;
     el.querySelectorAll('a[href^="tel:"]').forEach(function(a){a.href='tel:'+CONTACT_TEL;a.textContent=CONTACT_DISPLAY;});
@@ -24,7 +25,7 @@
     patchText(book); patchText(events);
     if(events){
       events.querySelectorAll('p').forEach(function(p){
-        p.innerHTML=p.innerHTML.replace(/Registration: <a href="tel:[^"]+">[^<]+<\/a>/g,'Registration: <a href="tel:'+CONTACT_TEL+'">'+CONTACT_DISPLAY+'</a>');
+        p.innerHTML=p.innerHTML.replace(/Registration: <a href="tel:[^"]+">[^<]+<\/a>/g,'Registration / contact: <a href="tel:'+CONTACT_TEL+'">'+CONTACT_DISPLAY+'</a>');
       });
     }
   }
@@ -41,6 +42,21 @@
       {keys:['paint','sip','register'],answer:'For Paint and Sip or general questions, use the contact number 504-428-5494.'}
     );
   }
-  function run(){patchContactGrid();patchBookingAndEvents();patchBot();}
+  function preferFullQualityHero(){
+    var poster=document.querySelector('.poster');
+    if(!poster)return;
+    var test=new Image();
+    test.onload=function(){
+      poster.innerHTML='<img class="hero-upload" src="'+HERO_ASSET+'" alt="Balcony Music Club live music cocktails NOLA collage">';
+    };
+    test.onerror=function(){
+      if(window.BMC_HERO_IMAGE && !poster.querySelector('.hero-upload')){
+        var hero=document.getElementById('heroArt');
+        if(hero)hero.outerHTML='<img class="hero-upload" src="'+window.BMC_HERO_IMAGE+'" alt="Balcony Music Club live music cocktails NOLA collage">';
+      }
+    };
+    test.src=HERO_ASSET;
+  }
+  function run(){patchContactGrid();patchBookingAndEvents();patchBot();preferFullQualityHero();}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run();
 })();
