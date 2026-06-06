@@ -1,11 +1,12 @@
-const CACHE_NAME = 'bmc-guest-pwa-v11';
+const CACHE_NAME = 'bmc-guest-pwa-v12';
 const CORE_ASSETS = [
   '/',
   '/index.html',
   '/manifest.webmanifest',
   '/icons/icon.svg',
   '/assets/venue/photos.js',
-  '/assets/bot/jazzycat-bot.js'
+  '/assets/bot/jazzycat-bot.js',
+  '/assets/bot/bmc-contact-patch.js'
 ];
 
 const PHOTO_SWAP_PATCH = `
