@@ -1,10 +1,11 @@
-const CACHE_NAME = 'bmc-guest-pwa-v5';
+const CACHE_NAME = 'bmc-guest-pwa-v6';
 const CORE_ASSETS = [
   './',
   './index.html',
   './manifest.webmanifest',
   './icons/icon.svg',
-  './assets/venue/photos.js'
+  './assets/venue/photos.js',
+  './assets/bot/jazzycat-bot.js'
 ];
 
 self.addEventListener('install', (event) => {
