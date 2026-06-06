@@ -3,14 +3,14 @@
   var CONTACT_TEL='+15044285494';
   var HERO_ASSET='assets/hero/file_000000006800722f9d43f096597b367e.png?v=20260606hq2';
   var SIGNATURE_DRINKS=[
-    ['The BMC','Shot of tequila, vodka, gin or rum, 1.5 oz blue agave syrup, creme de menthe, splash of Sprite, mint leaf & lemon.'],
-    ['Etta Jameson','2 oz Jameson, 1/2 oz Amaretto, 1/2 oz passion purée, 3/4 oz fresh lemon juice, peach bitters.'],
-    ['Jimi Hendrix Fizz','2 oz Hendricks gin, 3/4 oz fresh lemon juice, 1/2 oz Creme de Violette, 1/2 oz simple syrup, top with Prosecco.'],
-    ['Uptown Funk','2 oz Espolon Blanco, 3/4 oz Elderflower Liqueur, 3/4 oz fresh lime juice, 1/2 oz guava syrup.'],
-    ['Muddy Waters','2 oz Chocolate Vodka, 1 oz Baileys Espresso, Aztec chocolate bitters.'],
-    ['Billie Holiday','2 oz House Rum, 3/4 mango, 3/4 fresh lime juice, top with pineapple juice.'],
-    ['Prince Pimms','1 oz Pimm’s, 1 1/2 Cucumber Vodka, 3/4 fresh lemon juice, top with Ginger Beer.'],
-    ['Esplanade Lemonade','2 oz Strawberry Stoli, 3/4 oz strawberry purée, 3/4 oz fresh lemon juice, grapefruit bitters, top with soda.']
+    ['The BMC','Choice of tequila, vodka, gin, or rum; sweet blue-agave lift with minty citrus and a bright soda finish.'],
+    ['Etta Jameson','Whiskey-based; peach, passionfruit, citrus, and soft almond notes.'],
+    ['Jimi Hendrix Fizz','Gin-based; floral violet, fresh lemon, and a crisp bubbly finish.'],
+    ['Uptown Funk','Tequila-based; bright lime, guava sweetness, and a floral finish.'],
+    ['Muddy Waters','Chocolate vodka-based; creamy chocolate, espresso, and warm spice.'],
+    ['Billie Holiday','Rum-based; tropical mango, lime, and pineapple.'],
+    ['Prince Pimms','Pimm’s and cucumber-vodka based; cucumber, lemon, and ginger spice.'],
+    ['Esplanade Lemonade','Strawberry-vodka based; strawberry lemonade, grapefruit bitters, and soda sparkle.']
   ];
   var PACKAGED_DRINKS=['Budweiser','Corona','Crescent 9 Tropical','Crescent 9 Ginger Lemonade','Gosling Ginger Beer','Heineken','Heineken Zero','High Noon Grapefruit','High Noon Watermelon','High Noon Pin','Michelob Ultra','Miller High Life','Negra Modelo','New Castle','Not Your Fathers Root Beer','Pacifico','Paradise Park','PBR','Red Stripe','Shiner Bock','Sierra Nevada','Stella Artois','Urban South Holy Roller','Woodchuck Amber'];
   function installStarryNightTheme(){
@@ -39,7 +39,7 @@
     bot.answers.splice(3,0,
       {keys:['phone','call','contact','number'],answer:'The contact number for Balcony Music Club is 504-428-5494.'},
       {keys:['paint','sip','register'],answer:'For Paint and Sip or general questions, use the contact number 504-428-5494.'},
-      {keys:['drink','cocktail','beer','menu','signature'],answer:'The Drink Menu section lists BMC signature drinks and packaged drinks visible from the approved menu photos.'}
+      {keys:['drink','cocktail','beer','menu','signature'],answer:'The Drink Menu section lists BMC signature drinks by main spirit and flavor profile, plus packaged drinks visible from the approved menu photos.'}
     );
   }
   function preferFullQualityHero(){var poster=document.querySelector('.poster');if(!poster)return;var test=new Image();test.onload=function(){poster.innerHTML='<img class="hero-upload" src="'+HERO_ASSET+'" alt="Balcony Music Club live music cocktails NOLA collage">';};test.onerror=function(){if(window.BMC_HERO_IMAGE&&!poster.querySelector('.hero-upload')){var hero=document.getElementById('heroArt');if(hero)hero.outerHTML='<img class="hero-upload" src="'+window.BMC_HERO_IMAGE+'" alt="Balcony Music Club live music cocktails NOLA collage">';}};test.src=HERO_ASSET;}
@@ -52,7 +52,7 @@
     var drinksHtml=SIGNATURE_DRINKS.map(function(d){return '<article class="card drink-card"><h3>'+d[0]+'</h3><p>'+d[1]+'</p></article>';}).join('');
     var packagedHtml=PACKAGED_DRINKS.map(function(d){return '<span class="drink-pill">'+d+'</span>';}).join('');
     var section=document.createElement('section');section.id='drinks';section.className='panel drink-menu-panel';
-    section.innerHTML='<span class="ribbon">Drink Menu</span><h2>Signature Drinks</h2><p class="note">Typed from the approved BMC signature drink menu photos. Prices are not shown in the uploaded menu images.</p><div class="grid">'+drinksHtml+'</div><h2 style="margin-top:18px">Packaged Drinks</h2><p class="note">Visible list from the uploaded packaged-drinks menu image.</p><div class="drink-list">'+packagedHtml+'</div><div class="drink-menu-actions"><a class="button primary" href="#contact">Questions? Call '+CONTACT_DISPLAY+'</a></div>';
+    section.innerHTML='<span class="ribbon">Drink Menu</span><h2>Signature Drinks</h2><p class="note">Guest-facing descriptions show the main spirit and flavor profile only. Prices are not shown in the uploaded menu images.</p><div class="grid">'+drinksHtml+'</div><h2 style="margin-top:18px">Packaged Drinks</h2><p class="note">Visible list from the uploaded packaged-drinks menu image.</p><div class="drink-list">'+packagedHtml+'</div><div class="drink-menu-actions"><a class="button primary" href="#contact">Questions? Call '+CONTACT_DISPLAY+'</a></div>';
     var events=document.getElementById('events');var book=document.getElementById('book');
     if(events&&events.parentNode)events.parentNode.insertBefore(section,events);else if(book&&book.parentNode)book.parentNode.insertBefore(section,book.nextSibling);
   }
