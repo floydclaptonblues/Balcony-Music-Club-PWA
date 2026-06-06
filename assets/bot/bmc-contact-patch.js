@@ -1,7 +1,7 @@
 (function(){
   var CONTACT_DISPLAY='504-428-5494';
   var CONTACT_TEL='+15044285494';
-  var HERO_ASSET='assets/hero/bmc-hero.png?v=20260606hq';
+  var HERO_ASSET='assets/hero/file_000000006800722f9d43f096597b367e.png?v=20260606hq2';
   function patchText(el){
     if(!el)return;
     el.querySelectorAll('a[href^="tel:"]').forEach(function(a){a.href='tel:'+CONTACT_TEL;a.textContent=CONTACT_DISPLAY;});
