@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bmc-guest-pwa-v23';
+const CACHE_NAME = 'bmc-guest-pwa-v25';
 const CORE_ASSETS = [
   '/',
   '/index.html',
@@ -60,9 +60,9 @@ self.addEventListener('fetch', (event) => {
   }
 
   if (url.pathname.endsWith('/assets/venue/photos.js')) {
-    event.respondWith(fetch(event.request).then((response) => response.text()).then((body) => new Response(body + PHOTO_SWAP_PATCH, { headers: { 'Content-Type': 'application/javascript; charset=utf-8' } })).catch(() => caches.match(event.request)));
+    event.respondWith(fetch(event.request, { cache: 'no-store' }).then((response) => response.text()).then((body) => new Response(body + PHOTO_SWAP_PATCH, { headers: { 'Content-Type': 'application/javascript; charset=utf-8' } })).catch(() => caches.match(event.request)));
     return;
   }
 
-  event.respondWith(fetch(event.request).then((response) => { const copy = response.clone(); caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy)); return response; }).catch(() => caches.match(event.request)));
+  event.respondWith(fetch(event.request, { cache: 'no-store' }).then((response) => { const copy = response.clone(); caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy)); return response; }).catch(() => caches.match(event.request)));
 });
