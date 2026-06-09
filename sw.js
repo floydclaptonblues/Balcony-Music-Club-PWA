@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bmc-guest-pwa-v27';
+const CACHE_NAME = 'bmc-guest-pwa-v28';
 const CORE_ASSETS = [
   '/',
   '/index.html',
@@ -7,7 +7,8 @@ const CORE_ASSETS = [
   '/assets/venue/photos.js',
   '/assets/bot/jazzycat-bot.js',
   '/assets/bot/bmc-contact-patch.js',
-  '/assets/bot/hero-quality-patch.js'
+  '/assets/bot/hero-quality-patch.js',
+  '/assets/bot/jazzycat-restore-patch.js'
 ];
 
 const PHOTO_SWAP_PATCH = `
@@ -29,11 +30,13 @@ body:before,body:after{display:none!important;content:none!important;background:
 .bmc-ironwork{display:none!important;}
 </style>`;
 const HERO_QUALITY_PATCH = `<script src="assets/bot/hero-quality-patch.js?v=hero-quality-1"></script>`;
+const JAZZYCAT_RESTORE_PATCH = `<script src="assets/bot/jazzycat-restore-patch.js?v=jazzycat-original-1"></script>`;
 
 function patchIndexHtml(html) {
   let patched = html;
   if (!patched.includes('bmc-index-no-circles')) patched = patched.replace('</head>', INDEX_NO_CIRCLES_PATCH + '</head>');
   if (!patched.includes('hero-quality-patch.js')) patched = patched.replace('</body>', HERO_QUALITY_PATCH + '</body>');
+  if (!patched.includes('jazzycat-restore-patch.js')) patched = patched.replace('</body>', JAZZYCAT_RESTORE_PATCH + '</body>');
   return patched;
 }
 
