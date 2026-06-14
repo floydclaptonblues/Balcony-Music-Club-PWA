@@ -1,10 +1,11 @@
-const CACHE_NAME = 'bmc-guest-pwa-v30';
+const CACHE_NAME = 'bmc-guest-pwa-v31';
 const CORE_ASSETS = [
   '/',
   '/index.html',
   '/manifest.webmanifest',
   '/icons/icon.svg',
   '/assets/venue/photos.js',
+  '/assets/venue/venue-gallery-local-patch.js',
   '/assets/bot/jazzycat-bot.js',
   '/assets/bot/bmc-contact-patch.js',
   '/assets/bot/hero-quality-patch.js',
@@ -12,19 +13,6 @@ const CORE_ASSETS = [
   '/assets/bot/cosmic-restore-patch.js',
   '/assets/bot/management-schedule-patch.js'
 ];
-
-const PHOTO_SWAP_PATCH = `
-(function(){
-  var photos = window.BMC_VENUE_PHOTOS || [];
-  var speakeasy = photos.find(function(photo){ return photo.title === 'Speakeasy'; });
-  var bar = photos.find(function(photo){ return photo.title === 'Bar'; });
-  if (speakeasy && bar) {
-    var originalSpeakeasySrc = speakeasy.src;
-    speakeasy.src = bar.src;
-    bar.src = originalSpeakeasySrc;
-  }
-})();
-`;
 
 const INDEX_NO_CIRCLES_PATCH = `<style id="bmc-index-no-circles">
 html,body{background:#05020b!important;background-image:none!important;}
@@ -35,6 +23,7 @@ const HERO_QUALITY_PATCH = `<script src="assets/bot/hero-quality-patch.js?v=hero
 const JAZZYCAT_RESTORE_PATCH = `<script src="assets/bot/jazzycat-restore-patch.js?v=jazzycat-original-1"></script>`;
 const COSMIC_RESTORE_PATCH = `<script src="assets/bot/cosmic-restore-patch.js?v=cosmic-restore-1"></script>`;
 const MANAGEMENT_SCHEDULE_PATCH = `<script src="assets/bot/management-schedule-patch.js?v=management-schedule-1"></script>`;
+const VENUE_GALLERY_PATCH = `<script src="assets/venue/venue-gallery-local-patch.js?v=local-venue-1"></script>`;
 
 function patchIndexHtml(html) {
   let patched = html;
@@ -43,6 +32,7 @@ function patchIndexHtml(html) {
   if (!patched.includes('jazzycat-restore-patch.js')) patched = patched.replace('</body>', JAZZYCAT_RESTORE_PATCH + '</body>');
   if (!patched.includes('cosmic-restore-patch.js')) patched = patched.replace('</body>', COSMIC_RESTORE_PATCH + '</body>');
   if (!patched.includes('management-schedule-patch.js')) patched = patched.replace('</body>', MANAGEMENT_SCHEDULE_PATCH + '</body>');
+  if (!patched.includes('venue-gallery-local-patch.js')) patched = patched.replace('</body>', VENUE_GALLERY_PATCH + '</body>');
   return patched;
 }
 
@@ -69,11 +59,6 @@ self.addEventListener('fetch', (event) => {
         .then((body) => new Response(patchIndexHtml(body), { headers: { 'Content-Type': 'text/html; charset=utf-8' } }))
         .catch(() => caches.match(event.request).then((cached) => cached ? cached.text().then((body) => new Response(patchIndexHtml(body), { headers: { 'Content-Type': 'text/html; charset=utf-8' } })) : Response.error()))
     );
-    return;
-  }
-
-  if (url.pathname.endsWith('/assets/venue/photos.js')) {
-    event.respondWith(fetch(event.request, { cache: 'no-store' }).then((response) => response.text()).then((body) => new Response(body + PHOTO_SWAP_PATCH, { headers: { 'Content-Type': 'application/javascript; charset=utf-8' } })).catch(() => caches.match(event.request)));
     return;
   }
 
