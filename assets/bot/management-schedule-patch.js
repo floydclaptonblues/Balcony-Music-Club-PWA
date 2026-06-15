@@ -21,9 +21,18 @@
       .replace(/UNDER THE COVERS/g,ARTIST)
       .replace(/UNDER COVERS/g,ARTIST)
       .replace(/KIM INDA WIND BAND/g,'KIM IN THE WIND BAND')
+      .replace(/Kim Inda Wind Band/g,'Kim In The Wind Band')
       .replace(/\s+/g,' ')
       .trim()
       .toUpperCase();
+  }
+
+  function cleanArtistName(s){
+    return String(s||'')
+      .replace(/UNDER THE COVERS/g,ARTIST)
+      .replace(/UNDER COVERS/g,ARTIST)
+      .replace(/KIM INDA WIND BAND/g,'KIM IN THE WIND BAND')
+      .replace(/Kim Inda Wind Band/g,'Kim In The Wind Band');
   }
 
   function updateTextNodes(root){
@@ -31,23 +40,14 @@
     var walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,null);
     var node;
     while((node=walker.nextNode())){
-      node.nodeValue=node.nodeValue
-        .replace(/UNDER THE COVERS/g,ARTIST)
-        .replace(/UNDER COVERS/g,ARTIST)
-        .replace(/KIM INDA WIND BAND/g,'KIM IN THE WIND BAND')
-        .replace(/Kim Inda Wind Band/g,'Kim In The Wind Band');
+      node.nodeValue=cleanArtistName(node.nodeValue);
     }
   }
 
   function updateJazzyAnswers(){
     if(window.BMC_JAZZYCAT&&Array.isArray(window.BMC_JAZZYCAT.answers)){
       window.BMC_JAZZYCAT.answers.forEach(function(item){
-        if(item&&typeof item.answer==='string'){
-          item.answer=item.answer
-            .replace(/UNDER THE COVERS/g,ARTIST)
-            .replace(/UNDER COVERS/g,ARTIST)
-            .replace(/KIM INDA WIND BAND/g,'KIM IN THE WIND BAND');
-        }
+        if(item&&typeof item.answer==='string')item.answer=cleanArtistName(item.answer);
       });
     }
   }
@@ -56,33 +56,30 @@
     if(document.getElementById('bmc-headliner-band-style'))return;
     var style=document.createElement('style');
     style.id='bmc-headliner-band-style';
-    style.textContent='.bmc-band-photo{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border:2px solid rgba(255,216,87,.58);border-radius:14px;margin:8px 0 10px;background:#120728;box-shadow:0 12px 28px rgba(0,0,0,.32)}.today-lineup .bmc-band-photo{margin-top:10px}.show-day .bmc-band-photo{max-height:220px}.act.is-headliner-only{border-top:1px dashed rgba(255,255,255,.24);padding-top:8px;margin-top:8px}.headliner-note{display:inline-flex;margin:0 0 5px;padding:3px 7px;border:1px solid rgba(255,216,87,.38);border-radius:999px;color:var(--gold);font-size:10px;letter-spacing:.05em;text-transform:uppercase;background:rgba(0,0,0,.2)}';
+    style.textContent='.bmc-band-photo{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border:2px solid rgba(255,216,87,.58);border-radius:14px;margin:8px 0 10px;background:#120728;box-shadow:0 12px 28px rgba(0,0,0,.32)}.today-lineup .bmc-band-photo{margin-top:10px}.show-day .bmc-band-photo{max-height:220px}.act.is-featured-headliner{border-top:1px dashed rgba(255,255,255,.24);padding-top:8px;margin-top:8px}.headliner-note{display:inline-flex;margin:0 0 5px;padding:3px 7px;border:1px solid rgba(255,216,87,.38);border-radius:999px;color:var(--gold);font-size:10px;letter-spacing:.05em;text-transform:uppercase;background:rgba(0,0,0,.2)}';
     document.head.appendChild(style);
   }
 
-  function imageForArtist(artist){
-    return BAND_IMAGES[normalize(artist)]||'';
-  }
+  function imageForArtist(artist){return BAND_IMAGES[normalize(artist)]||'';}
 
   function decorateContainer(container){
     if(!container)return;
     var acts=[].slice.call(container.querySelectorAll(':scope > .act'));
     if(!acts.length)return;
-    var keep=acts[acts.length-1];
-    acts.slice(0,-1).forEach(function(act){act.remove();});
 
-    var nameEl=keep.querySelector('b');
-    var artist=nameEl?nameEl.textContent:'';
-    artist=artist
-      .replace(/UNDER THE COVERS/g,ARTIST)
-      .replace(/UNDER COVERS/g,ARTIST)
-      .replace(/KIM INDA WIND BAND/g,'KIM IN THE WIND BAND');
-    if(nameEl)nameEl.textContent=artist;
+    acts.forEach(function(act){
+      var nameEl=act.querySelector('b');
+      if(nameEl)nameEl.textContent=cleanArtistName(nameEl.textContent);
+      act.classList.remove('is-headliner-only','is-featured-headliner');
+      act.querySelectorAll('.bmc-band-photo,.headliner-note').forEach(function(el){el.remove();});
+    });
 
-    keep.classList.add('is-headliner-only');
+    var headliner=acts[acts.length-1];
+    var headlinerNameEl=headliner.querySelector('b');
+    var artist=headlinerNameEl?headlinerNameEl.textContent:'';
+    headliner.classList.add('is-featured-headliner');
 
     var src=imageForArtist(artist);
-    container.querySelectorAll(':scope > .bmc-band-photo,:scope > .headliner-note').forEach(function(el){el.remove();});
     if(src){
       var img=document.createElement('img');
       img.className='bmc-band-photo';
@@ -91,28 +88,14 @@
       img.decoding='async';
       img.alt=artist+' at Balcony Music Club';
       img.onerror=function(){this.remove();};
-      var h3=container.querySelector(':scope > h3');
-      if(h3&&h3.nextSibling)container.insertBefore(img,h3.nextSibling);
-      else container.insertBefore(img,keep);
+      headliner.insertBefore(img,headliner.firstChild);
     }
   }
 
-  function showOnlyHeadliners(){
-    document.querySelectorAll('.today-lineup,.show-day').forEach(decorateContainer);
-  }
+  function decorateSchedule(){document.querySelectorAll('.today-lineup,.show-day').forEach(decorateContainer);}
 
-  function run(){
-    installBandStyles();
-    updateTextNodes(document.body);
-    updateJazzyAnswers();
-    showOnlyHeadliners();
-  }
+  function run(){installBandStyles();updateTextNodes(document.body);updateJazzyAnswers();decorateSchedule();}
 
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);else run();
-  window.addEventListener('load',function(){
-    run();
-    setTimeout(run,250);
-    setTimeout(run,1000);
-    setTimeout(run,2000);
-  });
+  window.addEventListener('load',function(){run();setTimeout(run,250);setTimeout(run,1000);setTimeout(run,2000);});
 })();
