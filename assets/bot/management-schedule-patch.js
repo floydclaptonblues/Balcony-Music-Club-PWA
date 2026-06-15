@@ -1,18 +1,19 @@
 (function(){
   var ARTIST='Ashley Paige & The Soulcial Club';
+  var BAND_BASE='assets/bands/bmc-band-assets/assets/bands/';
   var BAND_IMAGES={
-    'ANDRE LOVETT BAND':'assets/bands/andre-lovett-band.jpg?v=20260614',
-    'ASHLEY PAIGE & THE SOULCIAL CLUB':'assets/bands/ashley-paige-soulcial-club.jpg?v=20260614',
-    'DAPPER DANDIES':'assets/bands/dapper-dandies.jpg?v=20260614',
-    'MAURICE CADE & ESS':'assets/bands/maurice-cade-ess.jpg?v=20260614',
-    'MOTHER RUCKUS':'assets/bands/mother-ruckus.jpg?v=20260614',
-    'SUGAR & THE DADDIES':'assets/bands/sugar-and-the-daddies.jpg?v=20260614',
-    'WOODYS RAMPAGE':'assets/bands/woodys-rampage.jpg?v=20260614',
-    'BIG MIKE & THE R&B KINGS':'assets/bands/big-mike-rb-kings.webp?v=20260614',
-    'SIERRA GREEN':'assets/bands/sierra-green.jpg?v=20260614',
-    'SIERRA & GREEN NOTES':'assets/bands/sierra-green.jpg?v=20260614',
-    'KIM IN THE WIND BAND':'assets/bands/kim-in-the-wind.webp?v=20260614',
-    'KAT KILEY EXPERIENCE':'assets/bands/kat-kiley-experience.webp?v=20260614'
+    'ANDRE LOVETT BAND':BAND_BASE+'andre-lovett-band.jpg?v=20260615',
+    'ASHLEY PAIGE & THE SOULCIAL CLUB':BAND_BASE+'ashley-paige-soulcial-club.jpg?v=20260615',
+    'DAPPER DANDIES':BAND_BASE+'dapper-dandies.jpg?v=20260615',
+    'MAURICE CADE & ESS':BAND_BASE+'maurice-cade-ess.jpg?v=20260615',
+    'MOTHER RUCKUS':BAND_BASE+'mother-ruckus.jpg?v=20260615',
+    'SUGAR & THE DADDIES':BAND_BASE+'sugar-and-the-daddies.jpg?v=20260615',
+    'WOODYS RAMPAGE':BAND_BASE+'woodys-rampage.jpg?v=20260615',
+    'BIG MIKE & THE R&B KINGS':BAND_BASE+'big-mike-rb-kings.webp?v=20260615',
+    'SIERRA GREEN':BAND_BASE+'sierra-green.jpg?v=20260615',
+    'SIERRA & GREEN NOTES':BAND_BASE+'sierra-green.jpg?v=20260615',
+    'KIM IN THE WIND BAND':BAND_BASE+'kim-in-the-wind.webp?v=20260615',
+    'KAT KILEY EXPERIENCE':BAND_BASE+'kat-kiley-experience.webp?v=20260615'
   };
 
   function normalize(s){
