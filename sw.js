@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bmc-guest-pwa-v35';
+const CACHE_NAME = 'bmc-guest-pwa-v36';
 const CORE_ASSETS = [
   '/',
   '/index.html',
@@ -11,7 +11,8 @@ const CORE_ASSETS = [
   '/assets/bot/hero-quality-patch.js',
   '/assets/bot/jazzycat-restore-patch.js',
   '/assets/bot/cosmic-restore-patch.js',
-  '/assets/bot/management-schedule-patch.js'
+  '/assets/bot/management-schedule-patch.js',
+  '/assets/bot/schedule-authority-patch.js'
 ];
 
 const INDEX_NO_CIRCLES_PATCH = `<style id="bmc-index-no-circles">
@@ -23,6 +24,7 @@ const HERO_QUALITY_PATCH = `<script src="assets/bot/hero-quality-patch.js?v=hero
 const JAZZYCAT_RESTORE_PATCH = `<script src="assets/bot/jazzycat-restore-patch.js?v=jazzycat-original-1"></script>`;
 const COSMIC_RESTORE_PATCH = `<script src="assets/bot/cosmic-restore-patch.js?v=cosmic-restore-1"></script>`;
 const MANAGEMENT_SCHEDULE_PATCH = `<script src="assets/bot/management-schedule-patch.js?v=full-schedule-restore-1"></script>`;
+const SCHEDULE_AUTHORITY_PATCH = `<script src="assets/bot/schedule-authority-patch.js?v=upcoming-shows-authority-1"></script>`;
 const VENUE_GALLERY_PATCH = `<script src="assets/venue/venue-gallery-local-patch.js?v=local-venue-2"></script>`;
 
 function patchIndexHtml(html) {
@@ -32,6 +34,7 @@ function patchIndexHtml(html) {
   if (!patched.includes('jazzycat-restore-patch.js')) patched = patched.replace('</body>', JAZZYCAT_RESTORE_PATCH + '</body>');
   if (!patched.includes('cosmic-restore-patch.js')) patched = patched.replace('</body>', COSMIC_RESTORE_PATCH + '</body>');
   if (!patched.includes('management-schedule-patch.js')) patched = patched.replace('</body>', MANAGEMENT_SCHEDULE_PATCH + '</body>');
+  if (!patched.includes('schedule-authority-patch.js')) patched = patched.replace('</body>', SCHEDULE_AUTHORITY_PATCH + '</body>');
   if (!patched.includes('venue-gallery-local-patch.js')) patched = patched.replace('</body>', VENUE_GALLERY_PATCH + '</body>');
   return patched;
 }
