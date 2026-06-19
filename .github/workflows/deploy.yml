@@ -24,11 +24,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22
-          cache: npm
+      - name: Enable pnpm
+        run: corepack enable
       - name: Install dependencies
-        run: npm ci
+        run: corepack pnpm install --lockfile=false
       - name: Build
-        run: npm run build
+        run: corepack pnpm run build
         env:
           GITHUB_PAGES: 'true'
           VITE_BMC_PUSH_API_URL: ${{ vars.VITE_BMC_PUSH_API_URL }}
