@@ -6,11 +6,11 @@ The Worker is deliberately inactive until Ryan configures Cloudflare, creates a 
 
 ## Endpoints
 
-- `POST /api/subscribe` â€” saves an installed-PWA push subscription. The legacy `/api/push/subscribe` alias is also accepted.
-- `POST /api/unsubscribe` â€” removes a subscription by endpoint.
-- `GET /api/latest-announcement` â€” returns the latest alert for the PWA service worker. The legacy `/api/push/latest` alias is also accepted.
-- `POST /api/send` â€” protected by `Authorization: Bearer <ADMIN_TOKEN>`; stores a manual alert and sends wake-up pushes.
-- `GET /api/health` â€” basic health check.
+- `POST /api/subscribe` — saves an installed-PWA push subscription. The legacy `/api/push/subscribe` alias is also accepted.
+- `POST /api/unsubscribe` — removes a subscription by endpoint.
+- `GET /api/latest-announcement` — returns the latest alert for the PWA service worker. The legacy `/api/push/latest` alias is also accepted.
+- `POST /api/send` — protected by `Authorization: Bearer <ADMIN_TOKEN>`; stores a manual alert and sends wake-up pushes.
+- `GET /api/health` — basic health check.
 
 Public browser endpoints reject origins other than the `ALLOWED_ORIGIN` configured in `wrangler.toml`. Expired subscriptions are removed when the push service returns HTTP 404 or 410; malformed stored subscriptions are removed safely.
 

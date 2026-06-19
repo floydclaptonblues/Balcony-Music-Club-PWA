@@ -51,7 +51,7 @@ function App() {
 
   async function handleEnablePushAlerts() {
     setPushUiState('working');
-    setPushMessage('Requesting notification permissionâ€¦');
+    setPushMessage('Requesting notification permission…');
 
     try {
       await subscribeToShowAlerts({
@@ -129,7 +129,7 @@ function App() {
                 <article className="card compact" key={item.id}>
                   <p className="eyebrow">{item.dayLabel}</p>
                   <h3>{item.title}</h3>
-                  <p>{item.startTime} â€“ {item.endTime}</p>
+                  <p>{item.startTime} – {item.endTime}</p>
                 </article>
               ))}
             </div>
@@ -194,10 +194,10 @@ function App() {
 
         <Section id="notify" eyebrow="Show alerts" title="Get BMC Show Announcements">
           <article className="card stack">
-            <p>Enable Wedâ€“Sun show announcements from Balcony Music Club on this device.</p>
+            <p>Enable Wed–Sun show announcements from Balcony Music Club on this device.</p>
 
             {needsIosInstallHint ? (
-              <p className="note">Add to Home Screen on iPhone first: use Share â†’ Add to Home Screen, open the saved BMC app, then tap Enable Show Alerts.</p>
+              <p className="note">Add to Home Screen on iPhone first: use Share → Add to Home Screen, open the saved BMC app, then tap Enable Show Alerts.</p>
             ) : null}
 
             {pushStatus === 'unsupported' ? (
@@ -218,7 +218,7 @@ function App() {
               onClick={handleEnablePushAlerts}
               disabled={pushUiState === 'working' || pushStatus === 'unsupported' || pushStatus === 'missing-config' || pushStatus === 'denied'}
             >
-              {pushUiState === 'working' ? 'Enablingâ€¦' : pushUiState === 'subscribed' ? 'Show Alerts Enabled' : 'Enable Show Alerts'}
+              {pushUiState === 'working' ? 'Enabling…' : pushUiState === 'subscribed' ? 'Show Alerts Enabled' : 'Enable Show Alerts'}
             </button>
 
             {pushMessage ? <p className="note" aria-live="polite">{pushMessage}</p> : null}
@@ -250,7 +250,7 @@ function App() {
       </main>
 
       <footer className="footer">
-        <p>{venueInfo.name} â€¢ {venueInfo.addressLine1} â€¢ {venueInfo.cityRegion}</p>
+        <p>{venueInfo.name} • {venueInfo.addressLine1} • {venueInfo.cityRegion}</p>
         <p className="note">Source-ledgered PWA scaffold. No live video. No checkout. Push alerts require Cloudflare configuration.</p>
       </footer>
     </>

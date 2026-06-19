@@ -2,7 +2,7 @@
 
 ## Purpose and safety
 
-This scaffold adds an optional Cloudflare Worker for manual Wedâ€“Sun show announcements. GitHub Pages continues to host the PWA. The production PWA remains safe to build and use with no Cloudflare account, Worker URL, or VAPID key configured.
+This scaffold adds an optional Cloudflare Worker for manual Wed–Sun show announcements. GitHub Pages continues to host the PWA. The production PWA remains safe to build and use with no Cloudflare account, Worker URL, or VAPID key configured.
 
 Push is inactive unless both Vite values are present and non-placeholder:
 
@@ -94,5 +94,5 @@ The Worker stores the last alert in KV, sends a no-payload wake-up push, and the
 
 - Do not invent events, dates, bands, ticket links, or availability.
 - Send only verified, approved show details.
-- Keep manual sends concise and limited to Wedâ€“Sun show announcements.
+- Keep manual sends concise and limited to Wed–Sun show announcements.
 - Do not paste VAPID_PRIVATE_JWK or ADMIN_TOKEN into frontend files, browser environment variables, screenshots, tickets, or Git.
