@@ -6,5 +6,5 @@ export const appConfig: AppConfig = {
   publicUrl: 'https://floydclaptonblues.github.io/Balcony-Music-Club-PWA/',
   qrReady: true,
   videoEnabled: false,
-  realPushNotificationsEnabled: true,
+  realPushNotificationsEnabled: false,
 };

@@ -1,0 +1,8 @@
+# Copy to .dev.vars only for local wrangler dev testing. Do not commit .dev.vars.
+# Placeholders only: real private values must be stored with wrangler secret put.
+ALLOWED_ORIGIN=http://localhost:5173
+VAPID_SUBJECT=mailto:REPLACE_WITH_MONITORED_ADDRESS
+VAPID_PUBLIC_KEY=
+VAPID_PRIVATE_JWK=
+ADMIN_TOKEN=
+LATEST_ANNOUNCEMENT_KEY=latest-announcement

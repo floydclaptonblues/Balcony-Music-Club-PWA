@@ -81,7 +81,7 @@ export type AppConfig = {
   publicUrl: string;
   qrReady: boolean;
   videoEnabled: false;
-  realPushNotificationsEnabled: false;
+  realPushNotificationsEnabled: boolean;
 };
 
 export type SiteAsset = {

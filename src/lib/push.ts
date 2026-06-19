@@ -12,13 +12,27 @@ export type PushAlertStatus =
   | 'subscribed';
 
 const DEFAULT_DAYS: PushPreferencePayload['days'] = ['wed', 'thu', 'fri', 'sat', 'sun'];
+const PLACEHOLDER_VALUE = /(?:replace|your[-_ ]|example|<|>)/i;
+
+function configuredValue(value: string | undefined) {
+  const trimmed = value?.trim();
+  return trimmed && !PLACEHOLDER_VALUE.test(trimmed) ? trimmed : undefined;
+}
 
 function getPushApiUrl() {
-  return import.meta.env.VITE_BMC_PUSH_API_URL as string | undefined;
+  const value = configuredValue(import.meta.env.VITE_BMC_PUSH_API_URL as string | undefined);
+  if (!value) return undefined;
+
+  try {
+    const url = new URL(value);
+    return url.protocol === 'https:' || url.hostname === 'localhost' ? url.toString().replace(/\/$/, '') : undefined;
+  } catch {
+    return undefined;
+  }
 }
 
 function getVapidPublicKey() {
-  return import.meta.env.VITE_BMC_VAPID_PUBLIC_KEY as string | undefined;
+  return configuredValue(import.meta.env.VITE_BMC_VAPID_PUBLIC_KEY as string | undefined);
 }
 
 function urlBase64ToUint8Array(base64String: string) {
@@ -28,33 +42,35 @@ function urlBase64ToUint8Array(base64String: string) {
   return Uint8Array.from([...rawData].map((char) => char.charCodeAt(0)));
 }
 
+function hasPushSupport() {
+  return 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window;
+}
+
 export function getPushAlertStatus(): PushAlertStatus {
-  if (!('serviceWorker' in navigator) || !('PushManager' in window) || !('Notification' in window)) {
-    return 'unsupported';
-  }
-
-  if (!getPushApiUrl() || !getVapidPublicKey()) {
-    return 'missing-config';
-  }
-
+  if (!hasPushSupport()) return 'unsupported';
+  if (!getPushApiUrl() || !getVapidPublicKey()) return 'missing-config';
   if (Notification.permission === 'denied') return 'denied';
   if (Notification.permission === 'granted') return 'granted';
   return 'default';
 }
 
-export async function subscribeToShowAlerts(preferences: PushPreferencePayload = { shows: true, days: DEFAULT_DAYS }) {
+export async function subscribeToShowAlerts(
+  preferences: PushPreferencePayload = { shows: true, days: DEFAULT_DAYS },
+) {
   const pushApiUrl = getPushApiUrl();
   const vapidPublicKey = getVapidPublicKey();
-
   if (!pushApiUrl || !vapidPublicKey) {
-    throw new Error('Push alerts are not configured yet.');
+    throw new Error('Show alerts are not configured yet.');
   }
-
-  if (!('serviceWorker' in navigator) || !('PushManager' in window) || !('Notification' in window)) {
+  if (!hasPushSupport()) {
     throw new Error('Push notifications are not supported on this browser.');
   }
 
+  // This function is only called by the Enable Show Alerts button click handler.
   const permission = await Notification.requestPermission();
+  if (permission === 'denied') {
+    throw new Error('Notifications are blocked. Enable them in browser or device settings, then try again.');
+  }
   if (permission !== 'granted') {
     throw new Error('Notification permission was not granted.');
   }
@@ -63,30 +79,51 @@ export async function subscribeToShowAlerts(preferences: PushPreferencePayload =
     `/Balcony-Music-Club-PWA/push-sw.js?api=${encodeURIComponent(pushApiUrl)}`,
     { scope: '/Balcony-Music-Club-PWA/' },
   );
-
   const existing = await registration.pushManager.getSubscription();
   const subscription = existing || await registration.pushManager.subscribe({
     userVisibleOnly: true,
     applicationServerKey: urlBase64ToUint8Array(vapidPublicKey),
   });
 
-  const response = await fetch(`${pushApiUrl}/api/push/subscribe`, {
+  const response = await fetch(`${pushApiUrl}/api/subscribe`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ subscription, preferences }),
   });
-
   if (!response.ok) {
-    throw new Error(`Subscription save failed: ${response.status}`);
+    throw new Error(`Subscription could not be saved (${response.status}). Please try again later.`);
   }
 
   localStorage.setItem('bmc-push-subscribed', 'true');
   return subscription;
 }
 
+export async function unsubscribeFromShowAlerts() {
+  const pushApiUrl = getPushApiUrl();
+  if (!pushApiUrl || !hasPushSupport()) return;
+
+  const registration = await navigator.serviceWorker.getRegistration('/Balcony-Music-Club-PWA/');
+  const subscription = await registration?.pushManager.getSubscription();
+  if (!subscription) return;
+
+  const response = await fetch(`${pushApiUrl}/api/unsubscribe`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ subscription }),
+  });
+  if (!response.ok) {
+    throw new Error(`Unsubscribe could not be saved (${response.status}).`);
+  }
+
+  await subscription.unsubscribe();
+  localStorage.removeItem('bmc-push-subscribed');
+}
+
 export function isProbablyIosHomeScreenRequired() {
   const userAgent = navigator.userAgent.toLowerCase();
-  const isAppleMobile = /iphone|ipad|ipod/.test(userAgent);
-  const isStandalone = window.matchMedia('(display-mode: standalone)').matches || (navigator as Navigator & { standalone?: boolean }).standalone === true;
+  const isAppleMobile = /iphone|ipad|ipod/.test(userAgent)
+    || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const isStandalone = window.matchMedia('(display-mode: standalone)').matches
+    || (navigator as Navigator & { standalone?: boolean }).standalone === true;
   return isAppleMobile && !isStandalone;
 }

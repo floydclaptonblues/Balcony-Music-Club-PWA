@@ -1,62 +1,98 @@
 # BMC Push Notifications Rollout
 
-## Phase 1 goal
+## Purpose and safety
 
-Get one real manual show alert working from Cloudflare to an installed Balcony Music Club PWA.
+This scaffold adds an optional Cloudflare Worker for manual Wedâ€“Sun show announcements. GitHub Pages continues to host the PWA. The production PWA remains safe to build and use with no Cloudflare account, Worker URL, or VAPID key configured.
 
-Success means:
+Push is inactive unless both Vite values are present and non-placeholder:
 
-- The app still builds and loads without Cloudflare values.
-- The Notify section explains that iPhone users may need to install the PWA first.
-- A guest can tap **Enable Show Alerts**.
-- A subscription is stored in Cloudflare KV.
-- A protected manual send request displays a notification on the guest device.
-
-## Why Cloudflare first
-
-The BMC PWA is static and GitHub Pages-ready. Static hosting cannot safely store private push credentials or send push messages directly. Cloudflare Workers provide the small trusted backend needed for subscription storage and sending.
-
-## Required Cloudflare pieces
-
-- One Worker: `bmc-show-alerts`
-- One KV namespace: `BMC_PUSH_SUBSCRIPTIONS`
-- One public VAPID key in `wrangler.toml`
-- One private VAPID JWK secret: `VAPID_PRIVATE_JWK`
-- One admin token secret: `ADMIN_TOKEN`
-
-## Required PWA pieces
-
-- `public/push-sw.js` receives push wake events and displays the latest announcement.
-- `src/lib/push.ts` registers the service worker, requests permission, subscribes the browser, and saves the subscription to Cloudflare.
-- `.env.local` stores `VITE_BMC_PUSH_API_URL` and `VITE_BMC_VAPID_PUBLIC_KEY`.
-
-## iPhone/iPad rule
-
-iOS/iPadOS web push requires the website to be installed as a Home Screen web app before notifications work. The permission request also needs to happen after a user gesture, such as tapping **Enable Show Alerts**.
-
-## Do not automate yet
-
-Do not add scheduled Wed-Sun blasts until manual send is proven on:
-
-- Desktop Chrome or Edge
-- Android Chrome if available
-- iPhone installed Home Screen PWA
-
-## Manual send shape
-
-```json
-{
-  "title": "Tonight at Balcony Music Club",
-  "body": "6 PM and 9 PM live music. No Cover • No Charge.",
-  "url": "https://floydclaptonblues.github.io/Balcony-Music-Club-PWA/#schedule",
-  "tag": "bmc-show-alert-2026-06-19"
-}
+```dotenv
+VITE_BMC_PUSH_API_URL=
+VITE_BMC_VAPID_PUBLIC_KEY=
 ```
 
-## Safety / trust rules
+The frontend never requests notification permission automatically. A guest must tap **Enable Show Alerts**. On iPhone, the guest must first choose **Add to Home Screen on iPhone**, open the saved BMC web app, and then tap the button.
 
-- Do not invent show data.
-- Do not scrape unverified show data into notifications.
-- Keep notifications concise.
-- Prefer one daily Wed-Sun show announcement over repeated blasts.
-- Remove expired subscriptions when push endpoints return 404 or 410.
+## Exact setup for Ryan
+
+1. From `cloudflare-push-worker`, install dependencies and generate a VAPID key pair:
+
+   ```bash
+   npm install
+   npm run generate:vapid
+   ```
+
+2. Keep the generated private JWK off the frontend and out of Git. Log into Cloudflare and create the subscription store:
+
+   ```bash
+   npx wrangler login
+   npx wrangler kv namespace create BMC_PUSH_SUBSCRIPTIONS
+   ```
+
+3. Copy the returned KV namespace id into `cloudflare-push-worker/wrangler.toml`. Copy the generated public VAPID key into its `VAPID_PUBLIC_KEY` variable. Confirm `ALLOWED_ORIGIN` is the exact GitHub Pages origin (`https://floydclaptonblues.github.io`) unless the PWA moves to another origin.
+
+4. Add private values through the Cloudflare secret prompt only:
+
+   ```bash
+   npx wrangler secret put VAPID_PRIVATE_JWK
+   npx wrangler secret put ADMIN_TOKEN
+   ```
+
+5. Validate before deployment:
+
+   ```bash
+   npm run typecheck
+   npx wrangler deploy --dry-run
+   ```
+
+6. Deploy only when Ryan is ready:
+
+   ```bash
+   npm run deploy
+   ```
+
+7. Create root `.env.local` from `.env.example`, using the deployed Worker HTTPS URL and the public VAPID key. Do not add either private secret to `.env.local`.
+
+   ```dotenv
+   VITE_BMC_PUSH_API_URL=https://YOUR-WORKER.YOUR-SUBDOMAIN.workers.dev
+   VITE_BMC_VAPID_PUBLIC_KEY=YOUR_GENERATED_PUBLIC_VAPID_KEY
+   ```
+
+8. Build the PWA as usual:
+
+   ```bash
+   npm install
+   npm run build
+   ```
+
+## Manual test send
+
+After one installed PWA has subscribed, send a test wake-up notification. This example deliberately makes no claim about a real BMC event:
+
+```bash
+curl -X POST "https://YOUR-WORKER.YOUR-SUBDOMAIN.workers.dev/api/send" \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer YOUR_ADMIN_TOKEN" \
+  -d '{
+    "title": "BMC show-alert test",
+    "body": "Test notification only. Check the schedule for verified show details.",
+    "tag": "bmc-show-alert-test"
+  }'
+```
+
+The Worker stores the last alert in KV, sends a no-payload wake-up push, and the PWA service worker fetches `GET /api/latest-announcement`. If that fetch fails, the guest sees a safe fallback and the notification opens the GitHub Pages schedule.
+
+## Endpoint and storage behavior
+
+- `POST /api/subscribe` and `POST /api/unsubscribe` manage KV-backed subscriptions.
+- `POST /api/send` requires `ADMIN_TOKEN` and does not accept an arbitrary notification click URL.
+- `GET /api/latest-announcement` is the service-worker lookup.
+- CORS only grants the configured `ALLOWED_ORIGIN`; other browser origins are rejected.
+- HTTP 404 and 410 push responses remove expired subscriptions; malformed records are removed safely.
+
+## Source policy
+
+- Do not invent events, dates, bands, ticket links, or availability.
+- Send only verified, approved show details.
+- Keep manual sends concise and limited to Wedâ€“Sun show announcements.
+- Do not paste VAPID_PRIVATE_JWK or ADMIN_TOKEN into frontend files, browser environment variables, screenshots, tickets, or Git.

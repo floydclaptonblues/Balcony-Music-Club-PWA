@@ -6,10 +6,17 @@
   "scripts": {
     "dev": "wrangler dev",
     "deploy": "wrangler deploy",
-    "generate:vapid": "node scripts/generate-vapid.mjs"
+    "generate:vapid": "node scripts/generate-vapid.mjs",
+    "typecheck": "tsc --noEmit"
   },
-  "dependencies": {
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20260619.0",
+    "typescript": "^6.0.3",
     "wrangler": "^4.0.0"
   },
-  "devDependencies": {}
+  "dependencies": {
+  },
+  "engines": {
+    "node": ">=20"
+  }
 }
