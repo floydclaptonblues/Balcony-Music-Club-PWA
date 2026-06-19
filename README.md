@@ -10,7 +10,7 @@ Only use verified public-facing Balcony Music Club website content, verified Bal
 
 Do not invent bands, events, dates, ticket links, booking links, phone numbers, emails, merch links, livestreams, testimonials, venue claims, or video features.
 
-Live video, real push notifications, login/accounts, checkout/payment processing, backend/admin dashboards, and native app-store release are out of scope for this version.
+Live video, login/accounts, checkout/payment processing, native app-store release, and automated schedule scraping are out of scope for this version. Real push notifications are scaffolded through Cloudflare Workers/KV but require Cloudflare configuration before guests can subscribe.
 
 ## Install and run
 
@@ -59,6 +59,15 @@ Editable content lives in `src/data/`:
 - `appConfig.ts`
 
 Missing values are expected to fail gracefully with "not configured yet" messaging.
+
+## Push notifications
+
+Cloudflare setup instructions live in:
+
+- `cloudflare-push-worker/README.md`
+- `docs/PUSH_NOTIFICATIONS.md`
+
+The first push milestone is one manual Wed-Sun show announcement from a protected Cloudflare Worker endpoint to an installed PWA. Automatic scheduling should wait until manual send is verified across desktop, Android, and installed iPhone/iPad PWA contexts.
 
 ## Approval log
 
