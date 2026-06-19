@@ -11,12 +11,9 @@ import { venueInfo } from './data/venueInfo';
 import { ConfiguredValue } from './components/ConfiguredValue';
 import { Section } from './components/Section';
 import { futureSchedule, mailHref, telHref } from './lib/format';
-import { getPushAlertStatus, isProbablyIosHomeScreenRequired, subscribeToShowAlerts } from './lib/push';
 import './styles.css';
 
 type NavItem = { id: string; label: string };
-
-type PushUiState = 'idle' | 'working' | 'subscribed' | 'error';
 
 const navItems: NavItem[] = [
   { id: 'home', label: 'Home' },
@@ -36,34 +33,11 @@ function App() {
     events: localStorage.getItem('bmc-pref-events') === 'true',
     merch: localStorage.getItem('bmc-pref-merch') === 'true',
   }));
-  const [pushUiState, setPushUiState] = useState<PushUiState>(() => (
-    localStorage.getItem('bmc-push-subscribed') === 'true' ? 'subscribed' : 'idle'
-  ));
-  const [pushMessage, setPushMessage] = useState('');
-  const pushStatus = getPushAlertStatus();
-  const needsIosInstallHint = isProbablyIosHomeScreenRequired();
 
   function togglePreference(key: keyof typeof preferences) {
     const next = { ...preferences, [key]: !preferences[key] };
     setPreferences(next);
     localStorage.setItem(`bmc-pref-${key}`, String(next[key]));
-  }
-
-  async function handleEnablePushAlerts() {
-    setPushUiState('working');
-    setPushMessage('Requesting notification permission…');
-
-    try {
-      await subscribeToShowAlerts({
-        shows: true,
-        days: ['wed', 'thu', 'fri', 'sat', 'sun'],
-      });
-      setPushUiState('subscribed');
-      setPushMessage('Show alerts are enabled for this device.');
-    } catch (error) {
-      setPushUiState('error');
-      setPushMessage(error instanceof Error ? error.message : 'Push alerts could not be enabled.');
-    }
   }
 
   return (
@@ -192,46 +166,15 @@ function App() {
           </article>
         </Section>
 
-        <Section id="notify" eyebrow="Show alerts" title="Get BMC Show Announcements">
+        <Section id="notify" eyebrow="Local only" title="Notification Preferences">
           <article className="card stack">
-            <p>Enable Wed–Sun show announcements from Balcony Music Club on this device.</p>
-
-            {needsIosInstallHint ? (
-              <p className="note">Add to Home Screen on iPhone first: use Share → Add to Home Screen, open the saved BMC app, then tap Enable Show Alerts.</p>
-            ) : null}
-
-            {pushStatus === 'unsupported' ? (
-              <p className="note">This browser does not support web push notifications.</p>
-            ) : null}
-
-            {pushStatus === 'missing-config' ? (
-              <p className="note">Push alerts are ready in the app, but the Cloudflare Worker URL and VAPID public key still need to be configured.</p>
-            ) : null}
-
-            {pushStatus === 'denied' ? (
-              <p className="note">Notifications are blocked for this browser. Enable them in browser or device settings to receive BMC show alerts.</p>
-            ) : null}
-
-            <button
-              className="button"
-              type="button"
-              onClick={handleEnablePushAlerts}
-              disabled={pushUiState === 'working' || pushStatus === 'unsupported' || pushStatus === 'missing-config' || pushStatus === 'denied'}
-            >
-              {pushUiState === 'working' ? 'Enabling…' : pushUiState === 'subscribed' ? 'Show Alerts Enabled' : 'Enable Show Alerts'}
-            </button>
-
-            {pushMessage ? <p className="note" aria-live="polite">{pushMessage}</p> : null}
-
-            <details className="details-block">
-              <summary>Alert preferences</summary>
-              {Object.entries(preferences).map(([key, value]) => (
-                <label className="toggle" key={key}>
-                  <span>{key === 'schedule' ? 'Band schedule updates' : key === 'events' ? 'Special events' : 'Store / merch updates'}</span>
-                  <input type="checkbox" checked={value} onChange={() => togglePreference(key as keyof typeof preferences)} />
-                </label>
-              ))}
-            </details>
+            <p>This version does not send real push notifications. These switches save local guest preferences only.</p>
+            {Object.entries(preferences).map(([key, value]) => (
+              <label className="toggle" key={key}>
+                <span>{key === 'schedule' ? 'Band schedule updates' : key === 'events' ? 'Special events' : 'Store / merch updates'}</span>
+                <input type="checkbox" checked={value} onChange={() => togglePreference(key as keyof typeof preferences)} />
+              </label>
+            ))}
           </article>
         </Section>
 
@@ -251,7 +194,7 @@ function App() {
 
       <footer className="footer">
         <p>{venueInfo.name} • {venueInfo.addressLine1} • {venueInfo.cityRegion}</p>
-        <p className="note">Source-ledgered PWA scaffold. No live video. No checkout. Push alerts require Cloudflare configuration.</p>
+        <p className="note">Source-ledgered PWA scaffold. No live video. No real push. No checkout.</p>
       </footer>
     </>
   );

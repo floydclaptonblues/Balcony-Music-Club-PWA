@@ -1,6 +1,8 @@
 const params = new URL(self.location.href).searchParams;
 const PUSH_API_URL = params.get('api');
-const DEFAULT_APP_URL = new URL('/Balcony-Music-Club-PWA/#schedule', self.location.origin).href;
+const APP_BASE_URL = new URL('./', self.location.href);
+const DEFAULT_APP_URL = new URL('#schedule', APP_BASE_URL).href;
+const APP_ICON_URL = new URL('icons/icon.svg', APP_BASE_URL).href;
 const DEFAULT_NOTIFICATION = {
   title: 'Balcony Music Club',
   body: 'A BMC alert arrived. Open the schedule for verified details.',
@@ -34,8 +36,8 @@ self.addEventListener('push', (event) => {
 
     await self.registration.showNotification(announcement.title, {
       body: announcement.body,
-      icon: '/Balcony-Music-Club-PWA/icons/icon.svg',
-      badge: '/Balcony-Music-Club-PWA/icons/icon.svg',
+      icon: APP_ICON_URL,
+      badge: APP_ICON_URL,
       tag: announcement.tag,
       data: { url: DEFAULT_APP_URL },
     });

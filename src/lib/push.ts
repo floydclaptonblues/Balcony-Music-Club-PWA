@@ -13,6 +13,8 @@ export type PushAlertStatus =
 
 const DEFAULT_DAYS: PushPreferencePayload['days'] = ['wed', 'thu', 'fri', 'sat', 'sun'];
 const PLACEHOLDER_VALUE = /(?:replace|your[-_ ]|example|<|>)/i;
+const APP_BASE_PATH = import.meta.env.BASE_URL;
+const PUSH_SCOPE_PATH = `${APP_BASE_PATH}push-alerts/`;
 
 function configuredValue(value: string | undefined) {
   const trimmed = value?.trim();
@@ -76,8 +78,8 @@ export async function subscribeToShowAlerts(
   }
 
   const registration = await navigator.serviceWorker.register(
-    `/Balcony-Music-Club-PWA/push-sw.js?api=${encodeURIComponent(pushApiUrl)}`,
-    { scope: '/Balcony-Music-Club-PWA/' },
+    `${APP_BASE_PATH}push-sw.js?api=${encodeURIComponent(pushApiUrl)}`,
+    { scope: PUSH_SCOPE_PATH },
   );
   const existing = await registration.pushManager.getSubscription();
   const subscription = existing || await registration.pushManager.subscribe({
@@ -102,7 +104,7 @@ export async function unsubscribeFromShowAlerts() {
   const pushApiUrl = getPushApiUrl();
   if (!pushApiUrl || !hasPushSupport()) return;
 
-  const registration = await navigator.serviceWorker.getRegistration('/Balcony-Music-Club-PWA/');
+  const registration = await navigator.serviceWorker.getRegistration(PUSH_SCOPE_PATH);
   const subscription = await registration?.pushManager.getSubscription();
   if (!subscription) return;
 

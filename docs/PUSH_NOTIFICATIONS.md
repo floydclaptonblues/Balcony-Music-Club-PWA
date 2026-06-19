@@ -29,7 +29,7 @@ The frontend never requests notification permission automatically. A guest must 
    npx wrangler kv namespace create BMC_PUSH_SUBSCRIPTIONS
    ```
 
-3. Copy the returned KV namespace id into `cloudflare-push-worker/wrangler.toml`. Copy the generated public VAPID key into its `VAPID_PUBLIC_KEY` variable. Confirm `ALLOWED_ORIGIN` is the exact GitHub Pages origin (`https://floydclaptonblues.github.io`) unless the PWA moves to another origin.
+3. Copy the returned KV namespace id into `cloudflare-push-worker/wrangler.toml`. Copy the generated public VAPID key into its `VAPID_PUBLIC_KEY` variable. Confirm `ALLOWED_ORIGIN` is the exact custom-domain origin (`https://app.balconymusicclub.com`).
 
 4. Add private values through the Cloudflare secret prompt only:
 

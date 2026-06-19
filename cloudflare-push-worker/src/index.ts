@@ -34,7 +34,7 @@ type Announcement = {
   sentAt?: string;
 };
 
-const APP_SCHEDULE_URL = 'https://floydclaptonblues.github.io/Balcony-Music-Club-PWA/#schedule';
+const APP_SCHEDULE_URL = 'https://app.balconymusicclub.com/#schedule';
 const DEFAULT_ALERT = {
   title: 'Balcony Music Club',
   body: 'Show alerts are enabled. Open the schedule for verified details.',
