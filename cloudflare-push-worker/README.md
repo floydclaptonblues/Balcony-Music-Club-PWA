@@ -14,6 +14,19 @@ The Worker is deliberately inactive until Ryan configures Cloudflare, creates a 
 
 Public browser endpoints reject origins other than the `ALLOWED_ORIGIN` configured in `wrangler.toml`. Expired subscriptions are removed when the push service returns HTTP 404 or 410; malformed stored subscriptions are removed safely.
 
+## Admin console and scheduled alerts
+
+After deployment, open `https://bmc-show-alerts.floydclaptonblues.workers.dev/admin`.
+
+The Worker-hosted console keeps the entered `ADMIN_TOKEN` in browser `sessionStorage` only. It provides immediate sends, America/Chicago (New Orleans venue time) scheduling, a pending-alert list, and cancellation. The new protected routes are:
+
+- `POST /api/admin/send-now`
+- `POST /api/admin/schedule`
+- `GET /api/admin/scheduled`
+- `DELETE /api/admin/scheduled/:id`
+
+Scheduled records use the separate `scheduled-alert:<id>` KV prefix, leaving existing `sub:` subscription records intact. The configured one-minute cron claims a due item as `sending`, reuses the existing push delivery and expired-subscription cleanup, then records it as `sent` with delivery counts. Both admin forms require an HTTPS destination URL. The legacy `/api/send` route remains available and keeps its schedule URL default.
+
 ## Ryan's Cloudflare setup
 
 From this directory:

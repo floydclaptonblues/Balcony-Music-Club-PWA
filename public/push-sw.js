@@ -9,6 +9,15 @@ const DEFAULT_NOTIFICATION = {
   tag: 'bmc-show-alert',
 };
 
+function notificationDestinationUrl(value) {
+  try {
+    const url = new URL(value);
+    return url.protocol === 'https:' ? url.href : DEFAULT_APP_URL;
+  } catch {
+    return DEFAULT_APP_URL;
+  }
+}
+
 async function getLatestAnnouncement() {
   if (!PUSH_API_URL) {
     throw new Error('Push API URL is unavailable.');
@@ -34,18 +43,20 @@ self.addEventListener('push', (event) => {
       // A wake-up push should still leave the guest with a useful, safe notification.
     }
 
+    const destinationUrl = notificationDestinationUrl(announcement.url);
     await self.registration.showNotification(announcement.title, {
       body: announcement.body,
       icon: APP_ICON_URL,
       badge: APP_ICON_URL,
       tag: announcement.tag,
-      data: { url: DEFAULT_APP_URL },
+      data: { url: destinationUrl },
     });
   })());
 });
 
 self.addEventListener('notificationclick', (event) => {
   event.notification.close();
+  const destinationUrl = notificationDestinationUrl(event.notification.data?.url);
 
   event.waitUntil((async () => {
     const windowClients = await clients.matchAll({
@@ -56,14 +67,14 @@ self.addEventListener('notificationclick', (event) => {
       if ('focus' in client) {
         await client.focus();
         if ('navigate' in client) {
-          await client.navigate(DEFAULT_APP_URL);
+          await client.navigate(destinationUrl);
         }
         return;
       }
     }
 
     if (clients.openWindow) {
-      await clients.openWindow(DEFAULT_APP_URL);
+      await clients.openWindow(destinationUrl);
     }
   })());
 });
