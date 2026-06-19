@@ -39,7 +39,7 @@ const pushStatus = getPushAlertStatus();
 const alreadySubscribed = localStorage.getItem('bmc-push-subscribed') === 'true';
 const unavailableMessages: Record<string, string> = {
   unsupported: 'This browser does not support web push notifications.',
-  'missing-config': 'Show alerts are ready in the app, but the Cloudflare Worker URL and VAPID public key still need to be configured.',
+  'missing-config': 'Show alerts are not configured in this Pages build. The public Worker URL and public VAPID key are required; no private keys belong in this app.',
   denied: 'Notifications are blocked for this browser. Enable them in browser or device settings to receive BMC show alerts.',
 };
 

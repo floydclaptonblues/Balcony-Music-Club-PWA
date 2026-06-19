@@ -3,6 +3,17 @@ type PushPreferencePayload = {
   days: Array<'wed' | 'thu' | 'fri' | 'sat' | 'sun'>;
 };
 
+type PushRuntimeConfig = {
+  apiUrl?: string;
+  vapidPublicKey?: string;
+};
+
+declare global {
+  interface Window {
+    BMC_PUSH_CONFIG?: PushRuntimeConfig;
+  }
+}
+
 export type PushAlertStatus =
   | 'unsupported'
   | 'missing-config'
@@ -22,7 +33,8 @@ function configuredValue(value: string | undefined) {
 }
 
 function getPushApiUrl() {
-  const value = configuredValue(import.meta.env.VITE_BMC_PUSH_API_URL as string | undefined);
+  const value = configuredValue(window.BMC_PUSH_CONFIG?.apiUrl)
+    ?? configuredValue(import.meta.env.VITE_BMC_PUSH_API_URL as string | undefined);
   if (!value) return undefined;
 
   try {
@@ -34,7 +46,8 @@ function getPushApiUrl() {
 }
 
 function getVapidPublicKey() {
-  return configuredValue(import.meta.env.VITE_BMC_VAPID_PUBLIC_KEY as string | undefined);
+  return configuredValue(window.BMC_PUSH_CONFIG?.vapidPublicKey)
+    ?? configuredValue(import.meta.env.VITE_BMC_VAPID_PUBLIC_KEY as string | undefined);
 }
 
 function urlBase64ToUint8Array(base64String: string) {
@@ -77,23 +90,41 @@ export async function subscribeToShowAlerts(
     throw new Error('Notification permission was not granted.');
   }
 
-  const registration = await navigator.serviceWorker.register(
-    `${APP_BASE_PATH}push-sw.js?api=${encodeURIComponent(pushApiUrl)}`,
-    { scope: PUSH_SCOPE_PATH },
-  );
-  const existing = await registration.pushManager.getSubscription();
-  const subscription = existing || await registration.pushManager.subscribe({
-    userVisibleOnly: true,
-    applicationServerKey: urlBase64ToUint8Array(vapidPublicKey),
-  });
+  let registration: ServiceWorkerRegistration;
+  try {
+    registration = await navigator.serviceWorker.register(
+      `${APP_BASE_PATH}push-sw.js?api=${encodeURIComponent(pushApiUrl)}`,
+      { scope: PUSH_SCOPE_PATH },
+    );
+  } catch {
+    throw new Error('The BMC alerts service worker could not start. Refresh the app and try again.');
+  }
 
-  const response = await fetch(`${pushApiUrl}/api/subscribe`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ subscription, preferences }),
-  });
+  let subscription: PushSubscription;
+  try {
+    const existing = await registration.pushManager.getSubscription();
+    subscription = existing || await registration.pushManager.subscribe({
+      userVisibleOnly: true,
+      applicationServerKey: urlBase64ToUint8Array(vapidPublicKey),
+    });
+  } catch {
+    throw new Error('The browser could not create a push subscription. Confirm the public VAPID key and browser notification settings.');
+  }
+
+  let response: Response;
+  try {
+    response = await fetch(`${pushApiUrl}/api/subscribe`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ subscription, preferences }),
+    });
+  } catch {
+    throw new Error('Could not reach the BMC alerts service. Check the connection, confirm Worker CORS allows https://app.balconymusicclub.com, and redeploy the Worker after changing its origin.');
+  }
   if (!response.ok) {
-    throw new Error(`Subscription could not be saved (${response.status}). Please try again later.`);
+    const body = await response.json().catch(() => undefined) as { error?: unknown } | undefined;
+    const detail = typeof body?.error === 'string' ? `: ${body.error}` : '';
+    throw new Error(`The BMC alerts service rejected the subscription (HTTP ${response.status}${detail}).`);
   }
 
   localStorage.setItem('bmc-push-subscribed', 'true');

@@ -4,12 +4,14 @@
 
 This scaffold adds an optional Cloudflare Worker for manual Wed–Sun show announcements. GitHub Pages continues to host the PWA. The production PWA remains safe to build and use with no Cloudflare account, Worker URL, or VAPID key configured.
 
-Push is inactive unless both Vite values are present and non-placeholder:
+Push is inactive unless both public values are present and non-placeholder:
 
 ```dotenv
 VITE_BMC_PUSH_API_URL=
 VITE_BMC_VAPID_PUBLIC_KEY=
 ```
+
+During GitHub Pages deployment, the workflow writes those public-only values into `public/push-config.js`. The static page loads that file before the inline Notify handler. Never put `VAPID_PRIVATE_JWK` or `ADMIN_TOKEN` in this file or in GitHub Pages variables.
 
 The frontend never requests notification permission automatically. A guest must tap **Enable Show Alerts**. On iPhone, the guest must first choose **Add to Home Screen on iPhone**, open the saved BMC web app, and then tap the button.
 
@@ -51,12 +53,9 @@ The frontend never requests notification permission automatically. A guest must 
    npm run deploy
    ```
 
-7. Create root `.env.local` from `.env.example`, using the deployed Worker HTTPS URL and the public VAPID key. Do not add either private secret to `.env.local`.
+7. Set the GitHub Actions repository variables `VITE_BMC_PUSH_API_URL` and `VITE_BMC_VAPID_PUBLIC_KEY` to the deployed Worker HTTPS URL and public VAPID key. The Pages workflow writes them to the public `push-config.js` file at build time. Do not use either private secret as a Pages variable.
 
-   ```dotenv
-   VITE_BMC_PUSH_API_URL=https://YOUR-WORKER.YOUR-SUBDOMAIN.workers.dev
-   VITE_BMC_VAPID_PUBLIC_KEY=YOUR_GENERATED_PUBLIC_VAPID_KEY
-   ```
+   For local testing only, create root `.env.local` from `.env.example`, or temporarily populate `public/push-config.js` with those same public values. Do not commit the populated config file.
 
 8. Build the PWA as usual:
 

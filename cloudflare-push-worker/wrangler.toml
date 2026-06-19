@@ -7,7 +7,7 @@ compatibility_date = "2026-06-19"
 # Then paste the returned id below.
 [[kv_namespaces]]
 binding = "PUSH_SUBSCRIPTIONS"
-id = "REPLACE_WITH_KV_NAMESPACE_ID"
+id = "42c9c09191f14160a0d4b2b80a7f3746"
 
 [vars]
 ALLOWED_ORIGIN = "https://app.balconymusicclub.com"

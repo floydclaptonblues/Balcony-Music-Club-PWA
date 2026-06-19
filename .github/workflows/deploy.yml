@@ -28,6 +28,11 @@ jobs:
         run: corepack enable
       - name: Install dependencies
         run: corepack pnpm install --lockfile=false
+      - name: Write public push configuration
+        run: node -e "const fs = require('node:fs'); fs.writeFileSync('public/push-config.js', 'window.BMC_PUSH_CONFIG = ' + JSON.stringify({ apiUrl: process.env.VITE_BMC_PUSH_API_URL || '', vapidPublicKey: process.env.VITE_BMC_VAPID_PUBLIC_KEY || '' }) + ';\\n');"
+        env:
+          VITE_BMC_PUSH_API_URL: ${{ vars.VITE_BMC_PUSH_API_URL }}
+          VITE_BMC_VAPID_PUBLIC_KEY: ${{ vars.VITE_BMC_VAPID_PUBLIC_KEY }}
       - name: Build
         run: corepack pnpm run build
         env:
