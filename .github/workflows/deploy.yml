@@ -32,6 +32,7 @@ jobs:
         run: corepack pnpm run build
         env:
           GITHUB_PAGES: 'true'
+          GITHUB_PAGES_CUSTOM_DOMAIN: 'true'
           VITE_BMC_PUSH_API_URL: ${{ vars.VITE_BMC_PUSH_API_URL }}
           VITE_BMC_VAPID_PUBLIC_KEY: ${{ vars.VITE_BMC_VAPID_PUBLIC_KEY }}
       - name: Upload artifact
