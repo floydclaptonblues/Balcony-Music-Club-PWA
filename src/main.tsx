@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { appConfig } from './data/appConfig';
 import { bands } from './data/bands';
@@ -11,6 +11,12 @@ import { venueInfo } from './data/venueInfo';
 import { ConfiguredValue } from './components/ConfiguredValue';
 import { Section } from './components/Section';
 import { futureSchedule, mailHref, telHref } from './lib/format';
+import {
+  getPushAlertStatus,
+  isProbablyIosHomeScreenRequired,
+  subscribeToShowAlerts,
+  type PushAlertStatus,
+} from './lib/push';
 import './styles.css';
 
 type NavItem = { id: string; label: string };
@@ -26,6 +32,12 @@ const navItems: NavItem[] = [
   { id: 'save', label: 'Save' },
 ];
 
+const pushUnavailableMessages: Partial<Record<PushAlertStatus, string>> = {
+  unsupported: 'This browser does not support web push notifications.',
+  'missing-config': 'Show alerts are ready in the app, but the Cloudflare Worker URL and VAPID public key still need to be configured.',
+  denied: 'Notifications are blocked for this browser. Enable them in browser or device settings to receive BMC show alerts.',
+};
+
 function App() {
   const upcoming = useMemo(() => futureSchedule(schedule), []);
   const [preferences, setPreferences] = useState(() => ({
@@ -33,12 +45,49 @@ function App() {
     events: localStorage.getItem('bmc-pref-events') === 'true',
     merch: localStorage.getItem('bmc-pref-merch') === 'true',
   }));
+  const [pushStatus, setPushStatus] = useState<PushAlertStatus>(() => getPushAlertStatus());
+  const [pushMessage, setPushMessage] = useState('');
+  const [isEnablingPush, setIsEnablingPush] = useState(false);
+  const [isPushSubscribed, setIsPushSubscribed] = useState(() => localStorage.getItem('bmc-push-subscribed') === 'true');
+  const [showIosInstallHint, setShowIosInstallHint] = useState(false);
+
+  useEffect(() => {
+    setShowIosInstallHint(isProbablyIosHomeScreenRequired());
+  }, []);
 
   function togglePreference(key: keyof typeof preferences) {
     const next = { ...preferences, [key]: !preferences[key] };
     setPreferences(next);
     localStorage.setItem(`bmc-pref-${key}`, String(next[key]));
   }
+
+  async function enablePushAlerts() {
+    setIsEnablingPush(true);
+    setPushMessage('Requesting notification permission…');
+
+    try {
+      await subscribeToShowAlerts({
+        shows: true,
+        days: ['wed', 'thu', 'fri', 'sat', 'sun'],
+      });
+      setIsPushSubscribed(true);
+      setPushStatus('subscribed');
+      setPushMessage('Show alerts are enabled for this device.');
+    } catch (error) {
+      setPushStatus(getPushAlertStatus());
+      setPushMessage(error instanceof Error ? error.message : 'Push alerts could not be enabled.');
+    } finally {
+      setIsEnablingPush(false);
+    }
+  }
+
+  const pushUnavailableMessage = pushUnavailableMessages[pushStatus];
+  const pushButtonDisabled = isPushSubscribed || isEnablingPush || Boolean(pushUnavailableMessage);
+  const pushButtonLabel = isPushSubscribed
+    ? 'Show Alerts Enabled'
+    : isEnablingPush
+      ? 'Enabling…'
+      : 'Enable Show Alerts';
 
   return (
     <>
@@ -166,35 +215,55 @@ function App() {
           </article>
         </Section>
 
-        <Section id="notify" eyebrow="Local only" title="Notification Preferences">
+        <Section id="notify" eyebrow="Show alerts" title="Get BMC Show Announcements">
           <article className="card stack">
-            <p>This version does not send real push notifications. These switches save local guest preferences only.</p>
-            {Object.entries(preferences).map(([key, value]) => (
-              <label className="toggle" key={key}>
-                <span>{key === 'schedule' ? 'Band schedule updates' : key === 'events' ? 'Special events' : 'Store / merch updates'}</span>
-                <input type="checkbox" checked={value} onChange={() => togglePreference(key as keyof typeof preferences)} />
-              </label>
-            ))}
+            <p>Enable Wed–Sun show announcements from Balcony Music Club on this device.</p>
+            {showIosInstallHint ? (
+              <p className="note">On iPhone, use Share → Add to Home Screen, open the saved BMC app, then tap Enable Show Alerts.</p>
+            ) : null}
+            <button className="button" type="button" onClick={enablePushAlerts} disabled={pushButtonDisabled}>
+              {pushButtonLabel}
+            </button>
+            <p className="note" aria-live="polite">{pushMessage || pushUnavailableMessage || 'You can still keep local guest preferences below.'}</p>
+            <div className="grid two">
+              <div>
+                <h4>Show alert topics</h4>
+                <ul>
+                  <li>Tonight’s BMC show announcements</li>
+                  <li>Wed–Sun schedule reminders</li>
+                  <li>Special event notices when approved</li>
+                </ul>
+              </div>
+              <div>
+                <h4>Local guest preferences</h4>
+                {Object.entries(preferences).map(([key, value]) => (
+                  <label className="toggle" key={key}>
+                    <span>{key === 'schedule' ? 'Band schedule updates' : key === 'events' ? 'Special events' : 'Store / merch updates'}</span>
+                    <input type="checkbox" checked={value} onChange={() => togglePreference(key as keyof typeof preferences)} />
+                  </label>
+                ))}
+              </div>
+            </div>
           </article>
         </Section>
 
         <Section id="save" eyebrow="QR + install" title="Scan & Save App">
           <article className="card stack">
             <p><strong>Public URL:</strong> <ConfiguredValue value={appConfig.publicUrl} /></p>
-            <p>Once GitHub Pages is approved and live, this URL becomes the QR target for guests.</p>
+            <p>Open this app on your phone and save it for quick BMC schedule and show-alert access.</p>
             <ol>
               <li>Open the public URL on your phone.</li>
               <li>Use the browser share/menu button.</li>
               <li>Choose Add to Home Screen or Install App when offered.</li>
             </ol>
-            <p className="note">QR generation is prepared but intentionally waits for the real public URL.</p>
+            <p className="note">iPhone users need the Home Screen app for Web Push alerts.</p>
           </article>
         </Section>
       </main>
 
       <footer className="footer">
         <p>{venueInfo.name} • {venueInfo.addressLine1} • {venueInfo.cityRegion}</p>
-        <p className="note">Source-ledgered PWA scaffold. No live video. No real push. No checkout.</p>
+        <p className="note">Source-ledgered PWA scaffold. No live video. Cloudflare show-alert push pilot enabled.</p>
       </footer>
     </>
   );
