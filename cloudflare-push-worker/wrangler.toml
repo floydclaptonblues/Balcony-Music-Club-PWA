@@ -15,5 +15,5 @@ id = "42c9c09191f14160a0d4b2b80a7f3746"
 [vars]
 ALLOWED_ORIGIN = "https://app.balconymusicclub.com"
 VAPID_SUBJECT = "mailto:BMC@marullomgmt.com"
-VAPID_PUBLIC_KEY = "REPLACE_WITH_VAPID_PUBLIC_KEY"
+VAPID_PUBLIC_KEY = "BL0jj8p9mDyZrWLqQEsLUyFmz5e0xKGjGcmOUTqfUzD85fxoXIqUp7MdxHdHMUQ99dmhHWU1fDhns-ERFnWG2PU"
 LATEST_ANNOUNCEMENT_KEY = "latest-announcement"
