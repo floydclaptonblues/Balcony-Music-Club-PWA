@@ -3,7 +3,7 @@ main = "src/index.ts"
 compatibility_date = "2026-06-19"
 
 [triggers]
-crons = ["* * * * *"]
+crons = ["*/5 * * * *"]
 
 # Replace after Cloudflare setup.
 # Run: npx wrangler kv namespace create BMC_PUSH_SUBSCRIPTIONS
