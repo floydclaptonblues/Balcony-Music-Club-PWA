@@ -47,7 +47,7 @@
     function askJazzyCat(q){const bot=window.BMC_JAZZYCAT;const text=(q||'').toLowerCase();if(!bot)return'JazzyCat knowledge is not loaded yet.';const hit=bot.answers.find(item=>item.keys.some(k=>text.includes(k)));return hit?hit.answer:bot.fallback;}function setupBot(){const bot=window.BMC_JAZZYCAT;const log=document.getElementById('botLog');const form=document.getElementById('botForm');const input=document.getElementById('botInput');const quick=document.getElementById('quickRow');if(!bot||!log||!form||!input||!quick)return;log.textContent=bot.welcome;quick.innerHTML=bot.quick.map(q=>'<button class="button ghost" type="button">'+q+'</button>').join('');quick.querySelectorAll('button').forEach(btn=>btn.addEventListener('click',()=>{input.value=btn.textContent;log.textContent=askJazzyCat(input.value);}));form.addEventListener('submit',e=>{e.preventDefault();log.textContent=askJazzyCat(input.value);});}
     renderHero();renderPhotos();renderSchedule();setupBot();
   </script>
-  <script type="module">
+  <script type="text/plain" id="legacy-push-subscription-code">
     const pushConfig=window.BMC_PUSH_CONFIG||{};
     const pushApiUrl=pushConfig.apiUrl||'%VITE_BMC_PUSH_API_URL%';
     const vapidPublicKey=pushConfig.vapidPublicKey||'%VITE_BMC_VAPID_PUBLIC_KEY%';
@@ -91,5 +91,6 @@
       button.addEventListener('click',enableShowAlerts);
     }
   </script>
+  <script type="module" src="/bmc-push-override.js"></script>
 </body>
 </html>

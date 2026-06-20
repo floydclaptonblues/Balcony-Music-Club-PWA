@@ -1,153 +1,204 @@
-(() => {
-  const STORAGE_KEY = 'bmc-push-subscribed';
-  const DEFAULT_PREFS = { shows: true, days: ['wed', 'thu', 'fri', 'sat', 'sun'] };
+const PUSH_SCOPE = '/push-alerts/';
+const PUSH_WORKER = '/push-sw.js';
+const PUSH_CONFIG = '/push-config.js';
+const DAYS = ['wed', 'thu', 'fri', 'sat', 'sun'];
+const PLACEHOLDER = /(?:replace|your[-_ ]|example|<|>|%VITE_)/i;
 
-  function setStatus(message) {
-    const status = document.getElementById('pushAlertStatus');
-    if (status) status.textContent = message;
+const status = document.getElementById('pushAlertStatus');
+const button = document.getElementById('enableShowAlerts');
+const hint = document.getElementById('pushInstallHint');
+
+function setStatus(message) {
+  if (status) status.textContent = message;
+}
+
+function configured(value) {
+  return typeof value === 'string' && value.trim() && !PLACEHOLDER.test(value) ? value.trim() : '';
+}
+
+function hasPushSupport() {
+  return 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window;
+}
+
+function urlBase64ToUint8Array(value) {
+  const padding = '='.repeat((4 - (value.length % 4)) % 4);
+  const base64 = (value + padding).replace(/-/g, '+').replace(/_/g, '/');
+  return Uint8Array.from([...atob(base64)].map((character) => character.charCodeAt(0)));
+}
+
+function addResetButton() {
+  if (!button) return undefined;
+
+  const reset = document.createElement('button');
+  reset.id = 'resetShowAlerts';
+  reset.type = 'button';
+  reset.className = 'button ghost';
+  reset.textContent = 'Reset Alerts';
+  reset.hidden = true;
+  button.insertAdjacentText('afterend', ' ');
+  button.insertAdjacentElement('afterend', reset);
+  return reset;
+}
+
+const resetButton = addResetButton();
+
+function setSubscriptionUi(subscribed) {
+  if (button) {
+    button.disabled = subscribed;
+    button.textContent = subscribed ? 'Show Alerts Enabled' : 'Enable Show Alerts';
   }
+  if (resetButton) resetButton.hidden = !subscribed;
+}
 
-  function configured(value) {
-    const placeholder = /(?:replace|your[-_ ]|example|<|>|%VITE_)/i;
-    return value && value.trim && value.trim() && !placeholder.test(value) ? value.trim() : '';
-  }
+function currentConfig() {
+  const config = window.BMC_PUSH_CONFIG || {};
+  const api = configured(config.apiUrl).replace(/\/$/, '');
+  const key = configured(config.vapidPublicKey);
+  return api && key ? { api, key } : undefined;
+}
 
-  function hasSupport() {
-    return 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window;
-  }
+function loadPushConfig() {
+  return new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = PUSH_CONFIG + '?v=' + Date.now();
+    script.onload = () => {
+      script.remove();
+      const config = currentConfig();
+      if (config) resolve(config);
+      else reject(new Error('Show alerts are not configured. The public Worker URL or VAPID public key is missing.'));
+    };
+    script.onerror = () => {
+      script.remove();
+      reject(new Error('Could not load /push-config.js. Refresh the app and try again.'));
+    };
+    document.head.appendChild(script);
+  });
+}
 
-  function urlBase64ToUint8Array(base64String) {
-    const padding = '='.repeat((4 - (base64String.length % 4)) % 4);
-    const base64 = (base64String + padding).replace(/-/g, '+').replace(/_/g, '/');
-    const rawData = window.atob(base64);
-    return Uint8Array.from([...rawData].map((ch) => ch.charCodeAt(0)));
-  }
+async function getPushRegistration() {
+  return navigator.serviceWorker.getRegistration(PUSH_SCOPE);
+}
 
-  async function getRootRegistration(api) {
-    const existing = await navigator.serviceWorker.getRegistration('/');
-    if (existing) {
-      await existing.update().catch(() => undefined);
-      return existing;
-    }
-    return navigator.serviceWorker.register(`/push-sw.js?api=${encodeURIComponent(api)}`, { scope: '/' });
-  }
-
-  async function readRealSubscription(api) {
-    const registration = await getRootRegistration(api);
-    const subscription = await registration.pushManager.getSubscription();
-    return { registration, subscription };
-  }
-
-  async function enableFreshShowAlerts(button, api, vapidPublicKey) {
+async function refreshPushUi() {
+  if (!button) return;
+  if (!hasPushSupport()) {
+    setSubscriptionUi(false);
     button.disabled = true;
-    button.textContent = 'Enabling…';
-    setStatus('Requesting notification permission…');
+    setStatus('This browser does not support web push notifications.');
+    return;
+  }
 
+  try {
+    const registration = await getPushRegistration();
+    const subscription = registration ? await registration.pushManager.getSubscription() : null;
+    if (subscription) {
+      setSubscriptionUi(true);
+      setStatus('Show alerts are enabled for this device.');
+      return;
+    }
+  } catch {
+    setStatus('Could not verify the current show-alert subscription. Please try enabling alerts again.');
+  }
+
+  localStorage.removeItem('bmc-push-subscribed');
+  setSubscriptionUi(false);
+  if (Notification.permission === 'denied') {
+    setStatus('Notifications are blocked for this browser. Enable them in browser or device settings to receive BMC show alerts.');
+  } else {
+    setStatus('Show alerts are available on supported browsers.');
+  }
+}
+
+async function workerError(response) {
+  const body = await response.json().catch(() => undefined);
+  const detail = typeof body?.error === 'string' ? ': ' + body.error : '';
+  return 'HTTP ' + response.status + detail;
+}
+
+async function enableShowAlerts() {
+  if (!button || !hasPushSupport()) {
+    setStatus('This browser does not support web push notifications.');
+    return;
+  }
+
+  button.disabled = true;
+  button.textContent = 'Enabling...';
+  setStatus('Loading show-alert configuration...');
+
+  try {
+    const config = await loadPushConfig();
+    const permission = await Notification.requestPermission();
+    if (permission !== 'granted') {
+      throw new Error(permission === 'denied'
+        ? 'Notifications are blocked in browser/device settings.'
+        : 'Notification permission was not granted.');
+    }
+
+    const registration = await navigator.serviceWorker.register(
+      PUSH_WORKER + '?api=' + encodeURIComponent(config.api),
+      { scope: PUSH_SCOPE },
+    );
+    const existing = await registration.pushManager.getSubscription();
+    if (existing) await existing.unsubscribe();
+
+    const subscription = await registration.pushManager.subscribe({
+      userVisibleOnly: true,
+      applicationServerKey: urlBase64ToUint8Array(config.key),
+    });
+    let response;
     try {
-      const permission = await Notification.requestPermission();
-      if (permission !== 'granted') {
-        throw new Error(permission === 'denied'
-          ? 'Notifications are blocked in browser/device settings.'
-          : 'Notification permission was not granted.');
-      }
-
-      const registration = await getRootRegistration(api);
-      await navigator.serviceWorker.ready;
-
-      const oldSubscription = await registration.pushManager.getSubscription();
-      if (oldSubscription) await oldSubscription.unsubscribe();
-
-      const subscription = await registration.pushManager.subscribe({
-        userVisibleOnly: true,
-        applicationServerKey: urlBase64ToUint8Array(vapidPublicKey),
-      });
-
-      const payload = {
-        subscription: subscription.toJSON(),
-        preferences: DEFAULT_PREFS,
-      };
-
-      const response = await fetch(`${api}/api/subscribe`, {
+      response = await fetch(config.api + '/api/subscribe', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
+        body: JSON.stringify({ subscription: subscription.toJSON(), preferences: { shows: true, days: ['wed', 'thu', 'fri', 'sat', 'sun'] } }),
       });
-
-      const body = await response.json().catch(() => null);
-      if (!response.ok || !body || body.ok !== true) {
-        const detail = body && typeof body.error === 'string' ? `: ${body.error}` : '';
-        throw new Error(`The BMC alerts service rejected the subscription (HTTP ${response.status}${detail}).`);
-      }
-
-      localStorage.setItem(STORAGE_KEY, 'true');
-      button.disabled = true;
-      button.textContent = 'Show Alerts Enabled';
-      setStatus('Show alerts are enabled for this device.');
-      console.log('[BMC push] Fresh subscription saved to Worker KV.');
-    } catch (error) {
-      localStorage.removeItem(STORAGE_KEY);
-      button.disabled = false;
-      button.textContent = 'Enable Show Alerts';
-      setStatus(error instanceof Error ? error.message : 'Push alerts could not be enabled.');
-      console.error('[BMC push] Enable failed:', error);
+    } catch {
+      throw new Error('Could not reach the BMC alerts service. Check the connection and try again.');
     }
+    if (!response.ok) {
+      throw new Error('The BMC alerts service rejected the subscription (' + await workerError(response) + ').');
+    }
+
+    localStorage.setItem('bmc-push-subscribed', 'true');
+    setSubscriptionUi(true);
+    setStatus('Show alerts are enabled for this device.');
+  } catch (error) {
+    localStorage.removeItem('bmc-push-subscribed');
+    setSubscriptionUi(false);
+    setStatus(error instanceof Error ? error.message : 'Push alerts could not be enabled.');
   }
+}
 
-  async function installOverride() {
-    const original = document.getElementById('enableShowAlerts');
-    if (!original) return;
+async function resetShowAlerts() {
+  if (!resetButton) return;
 
-    const cfg = window.BMC_PUSH_CONFIG || {};
-    const api = configured(cfg.apiUrl || '');
-    const vapidPublicKey = configured(cfg.vapidPublicKey || '');
-
-    const button = original.cloneNode(true);
-    original.replaceWith(button);
-
-    button.disabled = false;
-    button.textContent = 'Enable Show Alerts';
-    localStorage.removeItem(STORAGE_KEY);
-
-    if (!api || !vapidPublicKey) {
-      button.disabled = true;
-      setStatus('Show alerts need the Worker URL and VAPID public key configuration.');
-      return;
-    }
-
-    if (!hasSupport()) {
-      button.disabled = true;
-      setStatus('This browser does not support web push notifications.');
-      return;
-    }
-
-    if (Notification.permission === 'denied') {
-      button.disabled = true;
-      setStatus('Notifications are blocked for this browser. Enable them in browser or device settings to receive BMC show alerts.');
-      return;
-    }
-
-    try {
-      const { subscription } = await readRealSubscription(api);
-      if (subscription) {
-        button.disabled = true;
-        button.textContent = 'Show Alerts Enabled';
-        localStorage.setItem(STORAGE_KEY, 'true');
-        setStatus('Show alerts are enabled for this device.');
-      } else {
-        setStatus('Show alerts are not enabled on this device yet.');
-      }
-    } catch (error) {
-      localStorage.removeItem(STORAGE_KEY);
-      setStatus('Show alerts are ready. Tap Enable Show Alerts to subscribe.');
-      console.warn('[BMC push] Subscription check failed:', error);
-    }
-
-    button.addEventListener('click', () => enableFreshShowAlerts(button, api, vapidPublicKey));
+  resetButton.disabled = true;
+  setStatus('Resetting show alerts...');
+  try {
+    const registration = await getPushRegistration();
+    const subscription = registration ? await registration.pushManager.getSubscription() : null;
+    if (subscription) await subscription.unsubscribe();
+    localStorage.removeItem('bmc-push-subscribed');
+    setSubscriptionUi(false);
+    setStatus('Show alerts were reset for this device.');
+  } catch (error) {
+    setStatus(error instanceof Error ? error.message : 'Could not reset show alerts.');
+  } finally {
+    resetButton.disabled = false;
   }
+}
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', installOverride, { once: true });
-  } else {
-    installOverride();
-  }
-})();
+function showIosHint() {
+  const userAgent = navigator.userAgent.toLowerCase();
+  const appleMobile = /iphone|ipad|ipod/.test(userAgent)
+    || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const standalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+  if (hint && appleMobile && !standalone) hint.hidden = false;
+}
+
+showIosHint();
+if (button) {
+  button.addEventListener('click', enableShowAlerts);
+  refreshPushUi();
+}
+if (resetButton) resetButton.addEventListener('click', resetShowAlerts);
