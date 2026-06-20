@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BMC Push Repair</title>
+  <style>
+    :root{font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:#120728;color:#fff6e8;color-scheme:dark}
+    body{margin:0;padding:24px;background:linear-gradient(180deg,#120728,#05020b);min-height:100svh}
+    main{max-width:780px;margin:0 auto}
+    h1{font-size:clamp(2rem,7vw,4rem);line-height:.9;margin:0 0 12px;color:#fff1cb;text-shadow:3px 3px 0 #000;text-transform:uppercase;letter-spacing:.04em}
+    p{line-height:1.5;color:#e4d6f2}
+    .card{border:2px solid rgba(255,216,87,.55);background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.025)),#211037;padding:18px;margin:16px 0;box-shadow:0 10px 34px rgba(0,0,0,.35)}
+    button,a.button{display:inline-flex;align-items:center;justify-content:center;margin:6px 8px 6px 0;min-height:42px;padding:10px 14px;border:2px solid #000;background:linear-gradient(180deg,#ffe57a,#d6a926);color:#241028;font-weight:900;text-transform:uppercase;letter-spacing:.04em;text-decoration:none;cursor:pointer}
+    button.secondary{background:linear-gradient(180deg,#4c1f7e,#2d1248);color:#fff6e8}
+    button:disabled{opacity:.55;cursor:wait}
+    pre{white-space:pre-wrap;word-break:break-word;background:#08030f;border:1px solid rgba(255,216,87,.35);padding:12px;min-height:120px;color:#dfffe8}
+    .ok{color:#8ad5a0}.bad{color:#ff9f8c}.muted{color:#bba8d0;font-size:.92rem}
+  </style>
+</head>
+<body>
+  <main>
+    <h1>BMC Push Repair</h1>
+    <p>This page bypasses the pretty app UI and repairs the actual browser push subscription + Cloudflare Worker save. Use it when the button says enabled but KV still shows zero subscribers.</p>
+
+    <section class="card">
+      <button id="repair">Repair / Create Fresh Subscription</button>
+      <button id="reset" class="secondary">Reset Browser Push Only</button>
+      <a class="button secondary" href="/#notify">Back to BMC App</a>
+      <p id="status" class="muted" aria-live="polite">Ready.</p>
+    </section>
+
+    <section class="card">
+      <h2>Truth log</h2>
+      <pre id="log"></pre>
+    </section>
+  </main>
+
+  <script>
+    const PUSH_SCOPE = '/push-alerts/';
+    const PUSH_WORKER = '/push-sw.js';
+    const PUSH_CONFIG = '/push-config.js';
+    const DAYS = ['wed', 'thu', 'fri', 'sat', 'sun'];
+    const logEl = document.getElementById('log');
+    const statusEl = document.getElementById('status');
+    const repairButton = document.getElementById('repair');
+    const resetButton = document.getElementById('reset');
+
+    function log(message, value) {
+      const line = value === undefined ? message : message + ' ' + JSON.stringify(value, null, 2);
+      logEl.textContent += line + '\n';
+      logEl.scrollTop = logEl.scrollHeight;
+      console.log(message, value ?? '');
+    }
+
+    function setStatus(message, good) {
+      statusEl.textContent = message;
+      statusEl.className = good === true ? 'ok' : good === false ? 'bad' : 'muted';
+      log(message);
+    }
+
+    function urlBase64ToUint8Array(value) {
+      const padding = '='.repeat((4 - (value.length % 4)) % 4);
+      const base64 = (value + padding).replace(/-/g, '+').replace(/_/g, '/');
+      return Uint8Array.from([...atob(base64)].map((character) => character.charCodeAt(0)));
+    }
+
+    async function loadPushConfig() {
+      await new Promise((resolve, reject) => {
+        const old = document.querySelector('script[data-push-config]');
+        if (old) old.remove();
+        const script = document.createElement('script');
+        script.dataset.pushConfig = 'true';
+        script.src = PUSH_CONFIG + '?repair=' + Date.now();
+        script.onload = resolve;
+        script.onerror = () => reject(new Error('Could not load /push-config.js'));
+        document.head.appendChild(script);
+      });
+      const cfg = window.BMC_PUSH_CONFIG || {};
+      if (!cfg.apiUrl || !cfg.vapidPublicKey) throw new Error('push-config.js is missing apiUrl or vapidPublicKey.');
+      const config = { api: cfg.apiUrl.replace(/\/$/, ''), key: cfg.vapidPublicKey };
+      log('Loaded config:', { api: config.api, vapidPublicKeyPrefix: config.key.slice(0, 12) + '...' });
+      return config;
+    }
+
+    async function getRegistration() {
+      return navigator.serviceWorker.getRegistration(PUSH_SCOPE);
+    }
+
+    async function saveToWorker(config, subscription) {
+      const payload = {
+        subscription: subscription.toJSON(),
+        preferences: { shows: true, days: DAYS },
+      };
+      log('Saving payload shape:', {
+        endpointPrefix: payload.subscription.endpoint.slice(0, 60) + '...',
+        hasP256dh: Boolean(payload.subscription.keys && payload.subscription.keys.p256dh),
+        hasAuth: Boolean(payload.subscription.keys && payload.subscription.keys.auth),
+      });
+      const response = await fetch(config.api + '/api/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      const text = await response.text();
+      log('Worker /api/subscribe response:', { status: response.status, body: text });
+      if (!response.ok) throw new Error('Worker rejected subscription: HTTP ' + response.status + ' ' + text);
+    }
+
+    async function resetBrowserPush(config) {
+      const registration = await getRegistration();
+      const subscription = registration ? await registration.pushManager.getSubscription() : null;
+      if (subscription && config) {
+        try {
+          await fetch(config.api + '/api/unsubscribe', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ endpoint: subscription.endpoint }),
+          });
+          log('Asked Worker to forget existing endpoint.');
+        } catch (error) {
+          log('Worker unsubscribe request failed; continuing browser reset.', String(error));
+        }
+      }
+      if (subscription) {
+        await subscription.unsubscribe();
+        log('Unsubscribed local browser PushManager subscription.');
+      } else {
+        log('No local PushManager subscription existed.');
+      }
+      localStorage.removeItem('bmc-push-subscribed');
+    }
+
+    async function repair() {
+      if (!('serviceWorker' in navigator) || !('PushManager' in window) || !('Notification' in window)) {
+        throw new Error('This browser does not support Web Push.');
+      }
+      logEl.textContent = '';
+      repairButton.disabled = true;
+      resetButton.disabled = true;
+      try {
+        setStatus('Loading push configuration...');
+        const config = await loadPushConfig();
+
+        setStatus('Requesting notification permission...');
+        const permission = await Notification.requestPermission();
+        log('Notification permission:', permission);
+        if (permission !== 'granted') throw new Error('Notification permission is ' + permission);
+
+        setStatus('Resetting stale browser push subscription...');
+        await resetBrowserPush(config);
+
+        setStatus('Registering push service worker...');
+        const registration = await navigator.serviceWorker.register(
+          PUSH_WORKER + '?api=' + encodeURIComponent(config.api) + '&repair=' + Date.now(),
+          { scope: PUSH_SCOPE },
+        );
+        await navigator.serviceWorker.ready;
+        log('Registered push service worker:', { scope: registration.scope, active: Boolean(registration.active) });
+
+        setStatus('Creating fresh browser push subscription...');
+        const subscription = await registration.pushManager.subscribe({
+          userVisibleOnly: true,
+          applicationServerKey: urlBase64ToUint8Array(config.key),
+        });
+        log('Created endpoint:', subscription.endpoint);
+
+        setStatus('Saving subscription to BMC Worker KV...');
+        await saveToWorker(config, subscription);
+
+        localStorage.setItem('bmc-push-subscribed', 'true');
+        setStatus('SUCCESS: Browser subscription was saved to the BMC Worker. Now check KV for one sub: key.', true);
+      } catch (error) {
+        localStorage.removeItem('bmc-push-subscribed');
+        setStatus(error instanceof Error ? error.message : 'Unknown push repair failure.', false);
+      } finally {
+        repairButton.disabled = false;
+        resetButton.disabled = false;
+      }
+    }
+
+    async function resetOnly() {
+      logEl.textContent = '';
+      repairButton.disabled = true;
+      resetButton.disabled = true;
+      try {
+        const config = await loadPushConfig().catch(() => undefined);
+        await resetBrowserPush(config);
+        setStatus('Browser push state reset. Click Repair / Create Fresh Subscription next.', true);
+      } catch (error) {
+        setStatus(error instanceof Error ? error.message : 'Unknown reset failure.', false);
+      } finally {
+        repairButton.disabled = false;
+        resetButton.disabled = false;
+      }
+    }
+
+    repairButton.addEventListener('click', repair);
+    resetButton.addEventListener('click', resetOnly);
+
+    (async () => {
+      try {
+        const registration = await getRegistration();
+        const subscription = registration ? await registration.pushManager.getSubscription() : null;
+        log('Initial local state:', { registration: Boolean(registration), subscription: Boolean(subscription), scope: registration?.scope || null });
+      } catch (error) {
+        log('Initial local state check failed:', String(error));
+      }
+    })();
+  </script>
+</body>
+</html>
