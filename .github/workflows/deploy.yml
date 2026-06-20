@@ -62,16 +62,38 @@ jobs:
           GITHUB_PAGES_CUSTOM_DOMAIN: 'true'
           VITE_BMC_PUSH_API_URL: ${{ vars.VITE_BMC_PUSH_API_URL }}
           VITE_BMC_VAPID_PUBLIC_KEY: ${{ vars.VITE_BMC_VAPID_PUBLIC_KEY }}
-      - name: Ensure public push configuration is in artifact
+      - name: Ensure push files and override are in artifact
         run: |
           node - <<'NODE'
           const fs = require('node:fs');
+          const path = require('node:path');
           const config = {
             apiUrl: process.env.VITE_BMC_PUSH_API_URL,
             vapidPublicKey: process.env.VITE_BMC_VAPID_PUBLIC_KEY,
           };
+
           fs.mkdirSync('dist', { recursive: true });
           fs.writeFileSync('dist/push-config.js', `window.BMC_PUSH_CONFIG = ${JSON.stringify(config)};\n`);
+
+          const overrideSource = path.join('public', 'bmc-push-override.js');
+          const overrideTarget = path.join('dist', 'bmc-push-override.js');
+          if (!fs.existsSync(overrideSource)) {
+            console.error('Missing public/bmc-push-override.js');
+            process.exit(1);
+          }
+          fs.copyFileSync(overrideSource, overrideTarget);
+
+          const indexPath = path.join('dist', 'index.html');
+          if (!fs.existsSync(indexPath)) {
+            console.error('Missing dist/index.html');
+            process.exit(1);
+          }
+          let html = fs.readFileSync(indexPath, 'utf8');
+          if (!html.includes('bmc-push-override.js')) {
+            const tag = `<script src="bmc-push-override.js?v=${process.env.GITHUB_SHA || 'local'}"></script>`;
+            html = html.replace(/\s*<\/body>/i, `\n  ${tag}\n</body>`);
+            fs.writeFileSync(indexPath, html);
+          }
           NODE
         env:
           VITE_BMC_PUSH_API_URL: ${{ vars.VITE_BMC_PUSH_API_URL }}
