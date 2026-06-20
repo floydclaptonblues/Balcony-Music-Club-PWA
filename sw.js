@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bmc-guest-pwa-v36';
+const CACHE_NAME = 'bmc-guest-pwa-v37-push-repair';
 const CORE_ASSETS = [
   '/',
   '/index.html',
@@ -12,7 +12,10 @@ const CORE_ASSETS = [
   '/assets/bot/jazzycat-restore-patch.js',
   '/assets/bot/cosmic-restore-patch.js',
   '/assets/bot/management-schedule-patch.js',
-  '/assets/bot/schedule-authority-patch.js'
+  '/assets/bot/schedule-authority-patch.js',
+  '/push-config.js',
+  '/bmc-push-override.js',
+  '/push-repair.html'
 ];
 
 const INDEX_NO_CIRCLES_PATCH = `<style id="bmc-index-no-circles">
@@ -59,8 +62,8 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(
       fetch(event.request, { cache: 'no-store' })
         .then((response) => response.text())
-        .then((body) => new Response(patchIndexHtml(body), { headers: { 'Content-Type': 'text/html; charset=utf-8' } }))
-        .catch(() => caches.match(event.request).then((cached) => cached ? cached.text().then((body) => new Response(patchIndexHtml(body), { headers: { 'Content-Type': 'text/html; charset=utf-8' } })) : Response.error()))
+        .then((body) => new Response(patchIndexHtml(body), { headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' } }))
+        .catch(() => caches.match(event.request).then((cached) => cached ? cached.text().then((body) => new Response(patchIndexHtml(body), { headers: { 'Content-Type': 'text/html; charset=utf-8', 'Cache-Control': 'no-store' } })) : Response.error()))
     );
     return;
   }
