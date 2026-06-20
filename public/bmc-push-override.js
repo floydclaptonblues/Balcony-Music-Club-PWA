@@ -4,12 +4,70 @@ const PUSH_CONFIG = '/push-config.js';
 const DAYS = ['wed', 'thu', 'fri', 'sat', 'sun'];
 const PLACEHOLDER = /(?:replace|your[-_ ]|example|<|>|%VITE_)/i;
 
-const status = document.getElementById('pushAlertStatus');
-const button = document.getElementById('enableShowAlerts');
-const hint = document.getElementById('pushInstallHint');
+let status;
+let button;
+let hint;
+let resetButton;
+
+function ensureNotifyPanel() {
+  const main = document.querySelector('main') || document.body;
+  let notify = document.getElementById('notify');
+
+  if (!notify) {
+    notify = document.createElement('section');
+    notify.id = 'notify';
+    notify.className = 'panel';
+    notify.innerHTML = `
+      <span class="ribbon">Show Alerts</span>
+      <h2>Get BMC Show Announcements</h2>
+      <article class="card">
+        <p>Enable Wed–Sun show announcements from Balcony Music Club on this device.</p>
+        <button id="enableShowAlerts" class="button primary" type="button">Enable Show Alerts</button>
+        <p id="pushAlertStatus" class="note" aria-live="polite">Checking show-alert status…</p>
+        <div class="card" aria-label="Alert topics">
+          <h3>Alert Topics</h3>
+          <ul>
+            <li>Tonight’s BMC show announcements</li>
+            <li>Wed–Sun schedule reminders</li>
+            <li>Special event notices when approved</li>
+          </ul>
+        </div>
+        <p id="pushInstallHint" class="note" hidden>On iPhone/iPad, install this app to the Home Screen before enabling push alerts.</p>
+      </article>
+    `;
+    const save = document.getElementById('save');
+    if (save && save.parentElement) save.parentElement.insertBefore(notify, save);
+    else main.appendChild(notify);
+  }
+
+  if (!document.getElementById('enableShowAlerts')) {
+    const card = notify.querySelector('.card') || notify;
+    const enable = document.createElement('button');
+    enable.id = 'enableShowAlerts';
+    enable.className = 'button primary';
+    enable.type = 'button';
+    enable.textContent = 'Enable Show Alerts';
+    card.insertBefore(enable, card.firstChild);
+  }
+
+  if (!document.getElementById('pushAlertStatus')) {
+    const note = document.createElement('p');
+    note.id = 'pushAlertStatus';
+    note.className = 'note';
+    note.setAttribute('aria-live', 'polite');
+    note.textContent = 'Checking show-alert status…';
+    const enable = document.getElementById('enableShowAlerts');
+    enable?.insertAdjacentElement('afterend', note);
+  }
+
+  status = document.getElementById('pushAlertStatus');
+  button = document.getElementById('enableShowAlerts');
+  hint = document.getElementById('pushInstallHint');
+}
 
 function setStatus(message) {
   if (status) status.textContent = message;
+  console.log('[BMC push]', message);
 }
 
 function configured(value) {
@@ -28,8 +86,10 @@ function urlBase64ToUint8Array(value) {
 
 function addResetButton() {
   if (!button) return undefined;
+  let reset = document.getElementById('resetShowAlerts');
+  if (reset) return reset;
 
-  const reset = document.createElement('button');
+  reset = document.createElement('button');
   reset.id = 'resetShowAlerts';
   reset.type = 'button';
   reset.className = 'button ghost';
@@ -39,8 +99,6 @@ function addResetButton() {
   button.insertAdjacentElement('afterend', reset);
   return reset;
 }
-
-const resetButton = addResetButton();
 
 function setSubscriptionUi(subscribed) {
   if (button) {
@@ -59,10 +117,12 @@ function currentConfig() {
 
 function loadPushConfig() {
   return new Promise((resolve, reject) => {
+    const old = document.querySelector('script[data-bmc-push-config]');
+    if (old) old.remove();
     const script = document.createElement('script');
+    script.dataset.bmcPushConfig = 'true';
     script.src = PUSH_CONFIG + '?v=' + Date.now();
     script.onload = () => {
-      script.remove();
       const config = currentConfig();
       if (config) resolve(config);
       else reject(new Error('Show alerts are not configured. The public Worker URL or VAPID public key is missing.'));
@@ -80,29 +140,45 @@ async function getPushRegistration() {
 }
 
 async function workerError(response) {
-  const body = await response.json().catch(() => undefined);
-  const detail = typeof body?.error === 'string' ? ': ' + body.error : '';
-  return 'HTTP ' + response.status + detail;
+  const text = await response.text().catch(() => '');
+  try {
+    const body = JSON.parse(text);
+    const detail = typeof body?.error === 'string' ? ': ' + body.error : '';
+    return 'HTTP ' + response.status + detail;
+  } catch {
+    return 'HTTP ' + response.status + (text ? ': ' + text.slice(0, 180) : '');
+  }
 }
 
 async function saveSubscription(config, subscription) {
+  const payload = {
+    subscription: subscription.toJSON(),
+    preferences: { shows: true, days: DAYS },
+  };
+  console.log('[BMC push] saving subscription payload', {
+    endpoint: payload.subscription?.endpoint,
+    hasP256dh: Boolean(payload.subscription?.keys?.p256dh),
+    hasAuth: Boolean(payload.subscription?.keys?.auth),
+  });
+
   let response;
   try {
     response = await fetch(config.api + '/api/subscribe', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        subscription: subscription.toJSON(),
-        preferences: { shows: true, days: DAYS },
-      }),
+      body: JSON.stringify(payload),
     });
-  } catch {
+  } catch (error) {
+    console.error('[BMC push] subscribe fetch failed', error);
     throw new Error('Could not reach the BMC alerts service. Check the connection and try again.');
   }
 
   if (!response.ok) {
     throw new Error('The BMC alerts service rejected the subscription (' + await workerError(response) + ').');
   }
+
+  const responseText = await response.text().catch(() => '');
+  console.log('[BMC push] Worker subscribe accepted', responseText);
 }
 
 async function refreshPushUi() {
@@ -119,7 +195,7 @@ async function refreshPushUi() {
     const subscription = registration ? await registration.pushManager.getSubscription() : null;
     if (subscription) {
       setSubscriptionUi(true);
-      setStatus('Verifying show alerts with the BMC alerts service...');
+      setStatus('Verifying show alerts with the BMC alerts service…');
       try {
         const config = await loadPushConfig();
         await saveSubscription(config, subscription);
@@ -134,7 +210,8 @@ async function refreshPushUi() {
       }
       return;
     }
-  } catch {
+  } catch (error) {
+    console.error('[BMC push] verify failed', error);
     setStatus('Could not verify the current show-alert subscription. Please try enabling alerts again.');
   }
 
@@ -154,8 +231,8 @@ async function enableShowAlerts() {
   }
 
   button.disabled = true;
-  button.textContent = 'Enabling...';
-  setStatus('Loading show-alert configuration...');
+  button.textContent = 'Enabling…';
+  setStatus('Loading show-alert configuration…');
 
   try {
     const config = await loadPushConfig();
@@ -167,9 +244,10 @@ async function enableShowAlerts() {
     }
 
     const registration = await navigator.serviceWorker.register(
-      PUSH_WORKER + '?api=' + encodeURIComponent(config.api),
+      PUSH_WORKER + '?api=' + encodeURIComponent(config.api) + '&v=' + Date.now(),
       { scope: PUSH_SCOPE },
     );
+    await navigator.serviceWorker.ready.catch(() => undefined);
     const existing = await registration.pushManager.getSubscription();
     if (existing) await existing.unsubscribe();
 
@@ -184,6 +262,7 @@ async function enableShowAlerts() {
     setSubscriptionUi(true);
     setStatus('Show alerts are enabled and synced for this device.');
   } catch (error) {
+    console.error('[BMC push] enable failed', error);
     localStorage.removeItem('bmc-push-subscribed');
     setSubscriptionUi(false);
     setStatus(error instanceof Error ? error.message : 'Push alerts could not be enabled.');
@@ -194,15 +273,24 @@ async function resetShowAlerts() {
   if (!resetButton) return;
 
   resetButton.disabled = true;
-  setStatus('Resetting show alerts...');
+  setStatus('Resetting show alerts…');
   try {
+    const config = await loadPushConfig().catch(() => undefined);
     const registration = await getPushRegistration();
     const subscription = registration ? await registration.pushManager.getSubscription() : null;
+    if (subscription && config) {
+      await fetch(config.api + '/api/unsubscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ endpoint: subscription.endpoint }),
+      }).catch(() => undefined);
+    }
     if (subscription) await subscription.unsubscribe();
     localStorage.removeItem('bmc-push-subscribed');
     setSubscriptionUi(false);
     setStatus('Show alerts were reset for this device.');
   } catch (error) {
+    console.error('[BMC push] reset failed', error);
     setStatus(error instanceof Error ? error.message : 'Could not reset show alerts.');
   } finally {
     resetButton.disabled = false;
@@ -217,9 +305,19 @@ function showIosHint() {
   if (hint && appleMobile && !standalone) hint.hidden = false;
 }
 
-showIosHint();
-if (button) {
-  button.addEventListener('click', enableShowAlerts);
-  refreshPushUi();
+function bootBmcPush() {
+  ensureNotifyPanel();
+  resetButton = addResetButton();
+  showIosHint();
+  if (button) {
+    button.addEventListener('click', enableShowAlerts);
+    refreshPushUi();
+  }
+  if (resetButton) resetButton.addEventListener('click', resetShowAlerts);
 }
-if (resetButton) resetButton.addEventListener('click', resetShowAlerts);
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', bootBmcPush, { once: true });
+} else {
+  bootBmcPush();
+}
