@@ -28,8 +28,30 @@ jobs:
         run: corepack enable
       - name: Install dependencies
         run: corepack pnpm install --lockfile=false
+      - name: Validate push configuration
+        run: |
+          node - <<'NODE'
+          const required = ['VITE_BMC_PUSH_API_URL', 'VITE_BMC_VAPID_PUBLIC_KEY'];
+          const missing = required.filter((name) => !process.env[name]);
+          if (missing.length) {
+            console.error(`Missing required GitHub Actions variable(s): ${missing.join(', ')}`);
+            process.exit(1);
+          }
+          NODE
+        env:
+          VITE_BMC_PUSH_API_URL: ${{ vars.VITE_BMC_PUSH_API_URL }}
+          VITE_BMC_VAPID_PUBLIC_KEY: ${{ vars.VITE_BMC_VAPID_PUBLIC_KEY }}
       - name: Write public push configuration
-        run: node -e "const fs = require('node:fs'); fs.writeFileSync('public/push-config.js', 'window.BMC_PUSH_CONFIG = ' + JSON.stringify({ apiUrl: process.env.VITE_BMC_PUSH_API_URL || '', vapidPublicKey: process.env.VITE_BMC_VAPID_PUBLIC_KEY || '' }) + ';\\n');"
+        run: |
+          node - <<'NODE'
+          const fs = require('node:fs');
+          const config = {
+            apiUrl: process.env.VITE_BMC_PUSH_API_URL,
+            vapidPublicKey: process.env.VITE_BMC_VAPID_PUBLIC_KEY,
+          };
+          fs.mkdirSync('public', { recursive: true });
+          fs.writeFileSync('public/push-config.js', `window.BMC_PUSH_CONFIG = ${JSON.stringify(config)};\n`);
+          NODE
         env:
           VITE_BMC_PUSH_API_URL: ${{ vars.VITE_BMC_PUSH_API_URL }}
           VITE_BMC_VAPID_PUBLIC_KEY: ${{ vars.VITE_BMC_VAPID_PUBLIC_KEY }}
@@ -38,6 +60,20 @@ jobs:
         env:
           GITHUB_PAGES: 'true'
           GITHUB_PAGES_CUSTOM_DOMAIN: 'true'
+          VITE_BMC_PUSH_API_URL: ${{ vars.VITE_BMC_PUSH_API_URL }}
+          VITE_BMC_VAPID_PUBLIC_KEY: ${{ vars.VITE_BMC_VAPID_PUBLIC_KEY }}
+      - name: Ensure public push configuration is in artifact
+        run: |
+          node - <<'NODE'
+          const fs = require('node:fs');
+          const config = {
+            apiUrl: process.env.VITE_BMC_PUSH_API_URL,
+            vapidPublicKey: process.env.VITE_BMC_VAPID_PUBLIC_KEY,
+          };
+          fs.mkdirSync('dist', { recursive: true });
+          fs.writeFileSync('dist/push-config.js', `window.BMC_PUSH_CONFIG = ${JSON.stringify(config)};\n`);
+          NODE
+        env:
           VITE_BMC_PUSH_API_URL: ${{ vars.VITE_BMC_PUSH_API_URL }}
           VITE_BMC_VAPID_PUBLIC_KEY: ${{ vars.VITE_BMC_VAPID_PUBLIC_KEY }}
       - name: Upload artifact
