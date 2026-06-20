@@ -79,6 +79,32 @@ async function getPushRegistration() {
   return navigator.serviceWorker.getRegistration(PUSH_SCOPE);
 }
 
+async function workerError(response) {
+  const body = await response.json().catch(() => undefined);
+  const detail = typeof body?.error === 'string' ? ': ' + body.error : '';
+  return 'HTTP ' + response.status + detail;
+}
+
+async function saveSubscription(config, subscription) {
+  let response;
+  try {
+    response = await fetch(config.api + '/api/subscribe', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        subscription: subscription.toJSON(),
+        preferences: { shows: true, days: DAYS },
+      }),
+    });
+  } catch {
+    throw new Error('Could not reach the BMC alerts service. Check the connection and try again.');
+  }
+
+  if (!response.ok) {
+    throw new Error('The BMC alerts service rejected the subscription (' + await workerError(response) + ').');
+  }
+}
+
 async function refreshPushUi() {
   if (!button) return;
   if (!hasPushSupport()) {
@@ -93,7 +119,19 @@ async function refreshPushUi() {
     const subscription = registration ? await registration.pushManager.getSubscription() : null;
     if (subscription) {
       setSubscriptionUi(true);
-      setStatus('Show alerts are enabled for this device.');
+      setStatus('Verifying show alerts with the BMC alerts service...');
+      try {
+        const config = await loadPushConfig();
+        await saveSubscription(config, subscription);
+        localStorage.setItem('bmc-push-subscribed', 'true');
+        setStatus('Show alerts are enabled and synced for this device.');
+      } catch (error) {
+        localStorage.removeItem('bmc-push-subscribed');
+        setSubscriptionUi(false);
+        setStatus(error instanceof Error
+          ? error.message + ' Press Enable Show Alerts to create a fresh subscription.'
+          : 'Show alerts could not sync with the BMC alerts service. Press Enable Show Alerts to try again.');
+      }
       return;
     }
   } catch {
@@ -107,12 +145,6 @@ async function refreshPushUi() {
   } else {
     setStatus('Show alerts are available on supported browsers.');
   }
-}
-
-async function workerError(response) {
-  const body = await response.json().catch(() => undefined);
-  const detail = typeof body?.error === 'string' ? ': ' + body.error : '';
-  return 'HTTP ' + response.status + detail;
 }
 
 async function enableShowAlerts() {
@@ -145,23 +177,12 @@ async function enableShowAlerts() {
       userVisibleOnly: true,
       applicationServerKey: urlBase64ToUint8Array(config.key),
     });
-    let response;
-    try {
-      response = await fetch(config.api + '/api/subscribe', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ subscription: subscription.toJSON(), preferences: { shows: true, days: ['wed', 'thu', 'fri', 'sat', 'sun'] } }),
-      });
-    } catch {
-      throw new Error('Could not reach the BMC alerts service. Check the connection and try again.');
-    }
-    if (!response.ok) {
-      throw new Error('The BMC alerts service rejected the subscription (' + await workerError(response) + ').');
-    }
+
+    await saveSubscription(config, subscription);
 
     localStorage.setItem('bmc-push-subscribed', 'true');
     setSubscriptionUi(true);
-    setStatus('Show alerts are enabled for this device.');
+    setStatus('Show alerts are enabled and synced for this device.');
   } catch (error) {
     localStorage.removeItem('bmc-push-subscribed');
     setSubscriptionUi(false);
