@@ -14,6 +14,9 @@ concurrency:
   group: pages
   cancel-in-progress: false
 
+env:
+  BMC_CURRENT_VAPID_PUBLIC_KEY: BL0jj8p9mDyZrWLqQEsLUyFmz5e0xKGjGcmOUTqfUzD85fxoXIqUp7MdxHdHMUQ99dmhHWU1fDhns-ERFnWG2PU
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -34,13 +37,13 @@ jobs:
           const required = ['VITE_BMC_PUSH_API_URL', 'VITE_BMC_VAPID_PUBLIC_KEY'];
           const missing = required.filter((name) => !process.env[name]);
           if (missing.length) {
-            console.error(`Missing required GitHub Actions variable(s): ${missing.join(', ')}`);
+            console.error(`Missing required push configuration value(s): ${missing.join(', ')}`);
             process.exit(1);
           }
           NODE
         env:
           VITE_BMC_PUSH_API_URL: ${{ vars.VITE_BMC_PUSH_API_URL }}
-          VITE_BMC_VAPID_PUBLIC_KEY: ${{ vars.VITE_BMC_VAPID_PUBLIC_KEY }}
+          VITE_BMC_VAPID_PUBLIC_KEY: ${{ env.BMC_CURRENT_VAPID_PUBLIC_KEY }}
       - name: Write public push configuration
         run: |
           node - <<'NODE'
@@ -54,14 +57,14 @@ jobs:
           NODE
         env:
           VITE_BMC_PUSH_API_URL: ${{ vars.VITE_BMC_PUSH_API_URL }}
-          VITE_BMC_VAPID_PUBLIC_KEY: ${{ vars.VITE_BMC_VAPID_PUBLIC_KEY }}
+          VITE_BMC_VAPID_PUBLIC_KEY: ${{ env.BMC_CURRENT_VAPID_PUBLIC_KEY }}
       - name: Build
         run: corepack pnpm run build
         env:
           GITHUB_PAGES: 'true'
           GITHUB_PAGES_CUSTOM_DOMAIN: 'true'
           VITE_BMC_PUSH_API_URL: ${{ vars.VITE_BMC_PUSH_API_URL }}
-          VITE_BMC_VAPID_PUBLIC_KEY: ${{ vars.VITE_BMC_VAPID_PUBLIC_KEY }}
+          VITE_BMC_VAPID_PUBLIC_KEY: ${{ env.BMC_CURRENT_VAPID_PUBLIC_KEY }}
       - name: Ensure push files and override are in artifact
         run: |
           node - <<'NODE'
@@ -97,7 +100,7 @@ jobs:
           NODE
         env:
           VITE_BMC_PUSH_API_URL: ${{ vars.VITE_BMC_PUSH_API_URL }}
-          VITE_BMC_VAPID_PUBLIC_KEY: ${{ vars.VITE_BMC_VAPID_PUBLIC_KEY }}
+          VITE_BMC_VAPID_PUBLIC_KEY: ${{ env.BMC_CURRENT_VAPID_PUBLIC_KEY }}
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
