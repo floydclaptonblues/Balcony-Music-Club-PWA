@@ -19,7 +19,7 @@ function ensureNotifyPanel() {
     notify.className = 'panel';
     notify.innerHTML = `
       <span class="ribbon">Show Alerts</span>
-      <h2>Get BMC Show Announcements</h2>
+      <h2>Get BMC Alerts</h2>
       <article class="card">
         <p>Enable Wed–Sun show announcements from Balcony Music Club on this device.</p>
         <button id="enableShowAlerts" class="button primary" type="button">Enable Show Alerts</button>
@@ -38,6 +38,11 @@ function ensureNotifyPanel() {
     const save = document.getElementById('save');
     if (save && save.parentElement) save.parentElement.insertBefore(notify, save);
     else main.appendChild(notify);
+  }
+
+  const heading = notify.querySelector('h2');
+  if (heading && heading.textContent?.trim() === 'Get BMC Show Announcements') {
+    heading.textContent = 'Get BMC Alerts';
   }
 
   if (!document.getElementById('enableShowAlerts')) {
