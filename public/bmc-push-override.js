@@ -9,6 +9,35 @@ let button;
 let hint;
 let resetButton;
 
+function applyAccent(element, index) {
+  const palette = [
+    {
+      background: 'linear-gradient(180deg,#4c1f7e,#2d1248)',
+      color: '#fff6e8',
+      textShadow: '1px 1px 0 #000',
+    },
+    {
+      background: 'linear-gradient(180deg,#4ee36f,#12843d)',
+      color: '#fff7e0',
+      textShadow: '1px 1px 0 #000',
+    },
+    {
+      background: 'linear-gradient(180deg,#ffe57a,#d6a926)',
+      color: '#241028',
+      textShadow: '1px 1px 0 rgba(255,255,255,.35)',
+    },
+  ];
+  const choice = palette[index % palette.length];
+  element.style.setProperty('background', choice.background, 'important');
+  element.style.setProperty('color', choice.color, 'important');
+  element.style.setProperty('text-shadow', choice.textShadow, 'important');
+}
+
+function applyButtonAccentColors() {
+  Array.from(document.querySelectorAll('.top nav a')).forEach(applyAccent);
+  Array.from(document.querySelectorAll('main .button, footer .button')).forEach(applyAccent);
+}
+
 function positionNotifyPanel(notify) {
   if (!notify) return;
   const main = document.querySelector('main') || document.body;
@@ -149,6 +178,7 @@ function setSubscriptionUi(subscribed) {
     button.textContent = subscribed ? 'Show Alerts Enabled' : 'Enable Show Alerts';
   }
   if (resetButton) resetButton.hidden = !subscribed;
+  applyButtonAccentColors();
 }
 
 function currentConfig() {
@@ -353,6 +383,9 @@ function bootBmcPush() {
   ensureNotifyPanel();
   resetButton = addResetButton();
   showIosHint();
+  applyButtonAccentColors();
+  setTimeout(applyButtonAccentColors, 300);
+  setTimeout(applyButtonAccentColors, 1000);
   if (button) {
     button.addEventListener('click', enableShowAlerts);
     refreshPushUi();
