@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bmc-guest-pwa-v39-unsubscribe-label';
+const CACHE_NAME = 'bmc-guest-pwa-v40-booking-bottom';
 const CORE_ASSETS = [
   '/',
   '/index.html',
