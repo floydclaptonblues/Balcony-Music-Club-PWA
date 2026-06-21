@@ -9,6 +9,41 @@ let button;
 let hint;
 let resetButton;
 
+function positionNotifyPanel(notify) {
+  if (!notify) return;
+  const main = document.querySelector('main') || document.body;
+  const book = document.getElementById('book');
+  const schedule = document.getElementById('schedule');
+
+  if (book && book.parentElement) {
+    if (notify.parentElement !== book.parentElement || notify.nextElementSibling !== book) {
+      book.parentElement.insertBefore(notify, book);
+    }
+    return;
+  }
+
+  if (schedule && schedule.parentElement) {
+    if (notify.parentElement !== schedule.parentElement || notify.nextElementSibling !== schedule) {
+      schedule.parentElement.insertBefore(notify, schedule);
+    }
+    return;
+  }
+
+  if (!notify.parentElement) main.appendChild(notify);
+}
+
+function moveNotifyNavFirst() {
+  const nav = document.querySelector('header nav, .top nav, nav');
+  if (!nav) return;
+  const notifyLink = Array.from(nav.querySelectorAll('a')).find((link) => {
+    const href = link.getAttribute('href') || '';
+    return href === '#notify' || href.endsWith('#notify');
+  });
+  if (notifyLink && nav.firstElementChild !== notifyLink) {
+    nav.insertBefore(notifyLink, nav.firstElementChild);
+  }
+}
+
 function ensureNotifyPanel() {
   const main = document.querySelector('main') || document.body;
   let notify = document.getElementById('notify');
@@ -35,15 +70,10 @@ function ensureNotifyPanel() {
         <p id="pushInstallHint" class="note" hidden>On iPhone/iPad, install this app to the Home Screen before enabling push alerts.</p>
       </article>
     `;
-    const schedule = document.getElementById('schedule');
-    if (schedule && schedule.parentElement) schedule.parentElement.insertBefore(notify, schedule);
-    else main.appendChild(notify);
+    main.appendChild(notify);
   }
 
-  const schedule = document.getElementById('schedule');
-  if (schedule && notify.parentElement === schedule.parentElement && notify.nextElementSibling !== schedule) {
-    schedule.parentElement.insertBefore(notify, schedule);
-  }
+  positionNotifyPanel(notify);
 
   const heading = notify.querySelector('h2');
   if (heading) heading.textContent = 'Get BMC Alerts';
@@ -319,6 +349,7 @@ function showIosHint() {
 }
 
 function bootBmcPush() {
+  moveNotifyNavFirst();
   ensureNotifyPanel();
   resetButton = addResetButton();
   showIosHint();
