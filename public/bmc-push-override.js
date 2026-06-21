@@ -59,19 +59,19 @@ function positionBookSecondFromBottom() {
 function positionNotifyPanel(notify) {
   if (!notify) return;
   const main = document.querySelector('main') || document.body;
-  const book = document.getElementById('book');
   const schedule = document.getElementById('schedule');
-
-  if (book && book.parentElement) {
-    if (notify.parentElement !== book.parentElement || notify.nextElementSibling !== book) {
-      book.parentElement.insertBefore(notify, book);
-    }
-    return;
-  }
+  const book = document.getElementById('book');
 
   if (schedule && schedule.parentElement) {
     if (notify.parentElement !== schedule.parentElement || notify.nextElementSibling !== schedule) {
       schedule.parentElement.insertBefore(notify, schedule);
+    }
+    return;
+  }
+
+  if (book && book.parentElement) {
+    if (notify.parentElement !== book.parentElement || notify.nextElementSibling !== book) {
+      book.parentElement.insertBefore(notify, book);
     }
     return;
   }
