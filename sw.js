@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bmc-guest-pwa-v38-button-accents';
+const CACHE_NAME = 'bmc-guest-pwa-v39-unsubscribe-label';
 const CORE_ASSETS = [
   '/',
   '/index.html',
