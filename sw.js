@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bmc-guest-pwa-v37-push-repair';
+const CACHE_NAME = 'bmc-guest-pwa-v38-button-accents';
 const CORE_ASSETS = [
   '/',
   '/index.html',
