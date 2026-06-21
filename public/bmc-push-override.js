@@ -159,13 +159,16 @@ function urlBase64ToUint8Array(value) {
 function addResetButton() {
   if (!button) return undefined;
   let reset = document.getElementById('resetShowAlerts');
-  if (reset) return reset;
+  if (reset) {
+    reset.textContent = 'Unsubscribe';
+    return reset;
+  }
 
   reset = document.createElement('button');
   reset.id = 'resetShowAlerts';
   reset.type = 'button';
   reset.className = 'button ghost';
-  reset.textContent = 'Reset Alerts';
+  reset.textContent = 'Unsubscribe';
   reset.hidden = true;
   button.insertAdjacentText('afterend', ' ');
   button.insertAdjacentElement('afterend', reset);
@@ -177,7 +180,10 @@ function setSubscriptionUi(subscribed) {
     button.disabled = subscribed;
     button.textContent = subscribed ? 'Show Alerts Enabled' : 'Enable Show Alerts';
   }
-  if (resetButton) resetButton.hidden = !subscribed;
+  if (resetButton) {
+    resetButton.textContent = 'Unsubscribe';
+    resetButton.hidden = !subscribed;
+  }
   applyButtonAccentColors();
 }
 
@@ -346,7 +352,8 @@ async function resetShowAlerts() {
   if (!resetButton) return;
 
   resetButton.disabled = true;
-  setStatus('Resetting show alerts…');
+  resetButton.textContent = 'Unsubscribing…';
+  setStatus('Unsubscribing from show alerts…');
   try {
     const config = await loadPushConfig().catch(() => undefined);
     const registration = await getPushRegistration();
@@ -361,12 +368,13 @@ async function resetShowAlerts() {
     if (subscription) await subscription.unsubscribe();
     localStorage.removeItem('bmc-push-subscribed');
     setSubscriptionUi(false);
-    setStatus('Show alerts were reset for this device.');
+    setStatus('You are unsubscribed from BMC show alerts on this device.');
   } catch (error) {
-    console.error('[BMC push] reset failed', error);
-    setStatus(error instanceof Error ? error.message : 'Could not reset show alerts.');
+    console.error('[BMC push] unsubscribe failed', error);
+    setStatus(error instanceof Error ? error.message : 'Could not unsubscribe from show alerts.');
   } finally {
     resetButton.disabled = false;
+    resetButton.textContent = 'Unsubscribe';
   }
 }
 
