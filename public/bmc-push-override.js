@@ -38,6 +38,24 @@ function applyButtonAccentColors() {
   Array.from(document.querySelectorAll('main .button, footer .button')).forEach(applyAccent);
 }
 
+function positionBookSecondFromBottom() {
+  const main = document.querySelector('main') || document.body;
+  const book = document.getElementById('book');
+  const save = document.getElementById('save');
+  if (!book) return;
+
+  if (save && save.parentElement) {
+    if (book.parentElement !== save.parentElement || book.nextElementSibling !== save) {
+      save.parentElement.insertBefore(book, save);
+    }
+    return;
+  }
+
+  if (book.parentElement !== main || book.nextElementSibling) {
+    main.appendChild(book);
+  }
+}
+
 function positionNotifyPanel(notify) {
   if (!notify) return;
   const main = document.querySelector('main') || document.body;
@@ -102,6 +120,7 @@ function ensureNotifyPanel() {
     main.appendChild(notify);
   }
 
+  positionBookSecondFromBottom();
   positionNotifyPanel(notify);
 
   const heading = notify.querySelector('h2');
