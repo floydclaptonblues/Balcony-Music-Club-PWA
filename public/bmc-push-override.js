@@ -79,14 +79,29 @@ function positionNotifyPanel(notify) {
   if (!notify.parentElement) main.appendChild(notify);
 }
 
-function moveNotifyNavFirst() {
+function arrangePrimaryNavTabs() {
   const nav = document.querySelector('header nav, .top nav, nav');
   if (!nav) return;
-  const notifyLink = Array.from(nav.querySelectorAll('a')).find((link) => {
+  const links = Array.from(nav.querySelectorAll('a'));
+  const saveLink = links.find((link) => {
+    const href = link.getAttribute('href') || '';
+    return href === '#save' || href.endsWith('#save');
+  });
+  const notifyLink = links.find((link) => {
     const href = link.getAttribute('href') || '';
     return href === '#notify' || href.endsWith('#notify');
   });
-  if (notifyLink && nav.firstElementChild !== notifyLink) {
+
+  if (saveLink) {
+    saveLink.textContent = 'Install App';
+    if (nav.firstElementChild !== saveLink) {
+      nav.insertBefore(saveLink, nav.firstElementChild);
+    }
+  }
+
+  if (notifyLink && saveLink && saveLink.nextElementSibling !== notifyLink) {
+    nav.insertBefore(notifyLink, saveLink.nextElementSibling);
+  } else if (notifyLink && !saveLink && nav.firstElementChild !== notifyLink) {
     nav.insertBefore(notifyLink, nav.firstElementChild);
   }
 }
@@ -130,6 +145,9 @@ function ensureNotifyPanel() {
   if (intro) {
     intro.textContent = 'Tap Enable Show Alerts below. Your browser will ask for notification permission before BMC can send Wed–Sun show announcements to this device.';
   }
+
+  const saveHeading = document.querySelector('#save h2');
+  if (saveHeading) saveHeading.textContent = 'Install App';
 
   if (!document.getElementById('enableShowAlerts')) {
     const card = notify.querySelector('.card') || notify;
@@ -406,11 +424,13 @@ function showIosHint() {
 }
 
 function bootBmcPush() {
-  moveNotifyNavFirst();
+  arrangePrimaryNavTabs();
   ensureNotifyPanel();
   resetButton = addResetButton();
   showIosHint();
   applyButtonAccentColors();
+  setTimeout(arrangePrimaryNavTabs, 300);
+  setTimeout(arrangePrimaryNavTabs, 1000);
   setTimeout(applyButtonAccentColors, 300);
   setTimeout(applyButtonAccentColors, 1000);
   if (button) {
