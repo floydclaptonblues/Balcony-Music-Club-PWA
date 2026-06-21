@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bmc-guest-pwa-v40-booking-bottom';
+const CACHE_NAME = 'bmc-guest-pwa-v41-alerts-lineup';
 const CORE_ASSETS = [
   '/',
   '/index.html',
