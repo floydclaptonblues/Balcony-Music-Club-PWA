@@ -21,7 +21,7 @@ function ensureNotifyPanel() {
       <span class="ribbon">Show Alerts</span>
       <h2>Get BMC Alerts</h2>
       <article class="card">
-        <p>Enable Wed–Sun show announcements from Balcony Music Club on this device.</p>
+        <p>Tap Enable Show Alerts below. Your browser will ask for notification permission before BMC can send Wed–Sun show announcements to this device.</p>
         <button id="enableShowAlerts" class="button primary" type="button">Enable Show Alerts</button>
         <p id="pushAlertStatus" class="note" aria-live="polite">Checking show-alert status…</p>
         <div class="card" aria-label="Alert topics">
@@ -35,14 +35,22 @@ function ensureNotifyPanel() {
         <p id="pushInstallHint" class="note" hidden>On iPhone/iPad, install this app to the Home Screen before enabling push alerts.</p>
       </article>
     `;
-    const save = document.getElementById('save');
-    if (save && save.parentElement) save.parentElement.insertBefore(notify, save);
+    const schedule = document.getElementById('schedule');
+    if (schedule && schedule.parentElement) schedule.parentElement.insertBefore(notify, schedule);
     else main.appendChild(notify);
   }
 
+  const schedule = document.getElementById('schedule');
+  if (schedule && notify.parentElement === schedule.parentElement && notify.nextElementSibling !== schedule) {
+    schedule.parentElement.insertBefore(notify, schedule);
+  }
+
   const heading = notify.querySelector('h2');
-  if (heading && heading.textContent?.trim() === 'Get BMC Show Announcements') {
-    heading.textContent = 'Get BMC Alerts';
+  if (heading) heading.textContent = 'Get BMC Alerts';
+
+  const intro = notify.querySelector('article.card > p');
+  if (intro) {
+    intro.textContent = 'Tap Enable Show Alerts below. Your browser will ask for notification permission before BMC can send Wed–Sun show announcements to this device.';
   }
 
   if (!document.getElementById('enableShowAlerts')) {
