@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bmc-guest-pwa-v41-alerts-lineup';
+const CACHE_NAME = 'bmc-guest-pwa-v42-install-app-first';
 const CORE_ASSETS = [
   '/',
   '/index.html',
