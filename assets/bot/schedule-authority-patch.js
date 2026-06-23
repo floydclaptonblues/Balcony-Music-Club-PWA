@@ -15,7 +15,7 @@
     {date:'2026-06-19',acts:[['6:00 PM','8:30 PM','JOSH BENITEZ BAND'],['9:00 PM','11:30 PM','BIG MIKE & THE R&B KINGS']]},
     {date:'2026-06-20',acts:[['3:00 PM','5:30 PM','ANDRE LOVETT BAND'],['6:00 PM','8:30 PM','T MARIE'],['9:00 PM','11:30 PM','MOTHER RUCKUS']]},
     {date:'2026-06-21',acts:[['3:00 PM','5:30 PM','SIERRA & GREEN NOTES'],['6:00 PM','8:30 PM','SUGAR & THE DADDIES'],['9:00 PM','11:30 PM','JAM BRASS BAND']]},
-    {date:'2026-06-24',acts:[['6:00 PM','8:30 PM','RUMPSHAKERS'],['9:00 PM','11:30 PM','Ashley Paige & The Soulcial Club']]},
+    {date:'2026-06-24',acts:[['6:00 PM','8:30 PM','Louisiana Parish Line'],['9:00 PM','11:30 PM','Ashley Paige & The Soulcial Club']]},
     {date:'2026-06-25',acts:[['6:00 PM','8:30 PM','DAPPER DANDIES'],['9:00 PM','11:30 PM','KAT KILEY EXPERIENCE']]},
     {date:'2026-06-26',acts:[['6:00 PM','8:30 PM','JOSH BENITEZ BAND'],['9:00 PM','11:30 PM','BIG MIKE & THE R&B KINGS']]},
     {date:'2026-06-27',acts:[['3:00 PM','5:30 PM','ANDRE LOVETT BAND'],['6:00 PM','8:30 PM','MOTHER RUCKUS'],['9:00 PM','11:30 PM','SIERRA GREEN']]},
@@ -36,7 +36,8 @@
     'SIERRA GREEN':BAND_BASE+'sierra-green.jpg?v=20260615',
     'SIERRA & GREEN NOTES':BAND_BASE+'sierra-green.jpg?v=20260615',
     'KIM IN THE WIND BAND':BAND_BASE+'kim-in-the-wind.webp?v=20260615',
-    'KAT KILEY EXPERIENCE':BAND_BASE+'kat-kiley-experience.webp?v=20260615'
+    'KAT KILEY EXPERIENCE':BAND_BASE+'kat-kiley-experience.webp?v=20260615',
+    'LOUISIANA PARISH LINE':BAND_BASE+'14FA40D0-F6EC-48BB-9A69-08C469C16B73.PNG?v=20260624'
   };
 
   function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
@@ -46,7 +47,8 @@
   function weekWindow(now){var d=new Date(now.getFullYear(),now.getMonth(),now.getDate(),12);var sinceMon=(d.getDay()+6)%7;var mon=new Date(d);mon.setDate(d.getDate()-sinceMon);var wed=new Date(mon);wed.setDate(mon.getDate()+2);var sun=new Date(mon);sun.setDate(mon.getDate()+6);return {start:iso(wed),end:iso(sun)};}
   function key(name){return String(name||'').replace(/’/g,"'").replace(/\s+/g,' ').trim().toUpperCase();}
   function imgFor(name){return BAND_IMAGES[key(name)]||'';}
-  function headlinerPhoto(day){var act=day.acts[day.acts.length-1];var src=act?imgFor(act[2]):'';return src?'<img class="bmc-band-photo" src="'+esc(src)+'" alt="'+esc(act[2])+' at Balcony Music Club" loading="lazy" decoding="async" onerror="this.remove()">':'';}
+  function photoAct(day){if(day&&day.date==='2026-06-24'){var lpl=day.acts.find(function(a){return key(a[2])==='LOUISIANA PARISH LINE';});if(lpl)return lpl;}return day.acts[day.acts.length-1];}
+  function headlinerPhoto(day){var act=photoAct(day);var src=act?imgFor(act[2]):'';return src?'<img class="bmc-band-photo" src="'+esc(src)+'" alt="'+esc(act[2])+' at Balcony Music Club" loading="lazy" decoding="async" onerror="this.remove()">':'';}
   function actsHtml(day){return day.acts.map(function(a,i){return '<div class="act '+(i===day.acts.length-1?'is-featured-headliner':'')+'"><b>'+esc(a[2])+'</b><span>'+esc(a[0])+'–'+esc(a[1])+'</span></div>';}).join('');}
   function dayCard(day){return '<article class="card show-day"><h3>'+pretty(day.date)+'</h3>'+headlinerPhoto(day)+actsHtml(day)+'</article>';}
 
