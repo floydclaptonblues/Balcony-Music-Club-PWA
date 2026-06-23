@@ -1,0 +1,6 @@
+Louisiana Parish Line image drop slot
+
+Place the supplied poster image at:
+assets/bands/bmc-band-assets/assets/bands/14FA40D0-F6EC-48BB-9A69-08C469C16B73.PNG
+
+The BMC schedule authority patch now looks for that exact filename for the June 24, 2026 6:00 PM-8:30 PM Louisiana Parish Line listing.
