@@ -11,6 +11,7 @@ export const bands: Band[] = [
   { id: 'sugar-the-daddies', name: 'SUGAR & THE DADDIES', sourceIds: ['website-shows'] },
   { id: 'jam-brass-band', name: 'JAM BRASS BAND', sourceIds: ['website-shows'] },
   { id: 'rumpshakers', name: 'RUMPSHAKERS', sourceIds: ['website-shows'] },
+  { id: 'louisiana-parish-line', name: 'LOUISIANA PARISH LINE', sourceIds: ['website-shows'] },
   { id: 'under-the-covers', name: 'UNDER THE COVERS', sourceIds: ['website-shows'] },
   { id: 'maurice-cade-ess', name: 'MAURICE CADE & ESS', sourceIds: ['website-shows'] },
   { id: 'kat-kiley-experience', name: 'KAT KILEY EXPERIENCE', sourceIds: ['website-shows'] },
