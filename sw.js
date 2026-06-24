@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bmc-guest-pwa-v44-july-2026-calendar';
+const CACHE_NAME = 'bmc-guest-pwa-v45-parish-line-photo';
 const CORE_ASSETS = [
   '/',
   '/index.html',
@@ -13,6 +13,7 @@ const CORE_ASSETS = [
   '/assets/bot/cosmic-restore-patch.js',
   '/assets/bot/management-schedule-patch.js',
   '/assets/bot/schedule-authority-patch.js',
+  '/assets/bands/bmc-band-assets/assets/bands/14FA40D0-F6EC-48BB-9A69-08C469C16B73.PNG',
   '/push-config.js',
   '/bmc-push-override.js',
   '/push-repair.html'
@@ -27,7 +28,7 @@ const HERO_QUALITY_PATCH = `<script src="assets/bot/hero-quality-patch.js?v=hero
 const JAZZYCAT_RESTORE_PATCH = `<script src="assets/bot/jazzycat-restore-patch.js?v=jazzycat-original-1"></script>`;
 const COSMIC_RESTORE_PATCH = `<script src="assets/bot/cosmic-restore-patch.js?v=cosmic-restore-1"></script>`;
 const MANAGEMENT_SCHEDULE_PATCH = `<script src="assets/bot/management-schedule-patch.js?v=full-schedule-restore-1"></script>`;
-const SCHEDULE_AUTHORITY_PATCH = `<script src="assets/bot/schedule-authority-patch.js?v=july-calendar-202607"></script>`;
+const SCHEDULE_AUTHORITY_PATCH = `<script src="assets/bot/schedule-authority-patch.js?v=parish-line-photo-20260717"></script>`;
 const VENUE_GALLERY_PATCH = `<script src="assets/venue/venue-gallery-local-patch.js?v=local-venue-2"></script>`;
 
 function patchIndexHtml(html) {
