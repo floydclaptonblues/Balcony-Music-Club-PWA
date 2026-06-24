@@ -41,6 +41,7 @@
   ];
 
   var BAND_BASE='assets/bands/bmc-band-assets/assets/bands/';
+  var PARISH_LINE_POSTER=BAND_BASE+'14FA40D0-F6EC-48BB-9A69-08C469C16B73.PNG?v=20260717-photo';
   var BAND_IMAGES={
     'ANDRE LOVETT BAND':BAND_BASE+'andre-lovett-band.jpg?v=20260615',
     'ASHLEY PAIGE & THE SOULCIAL CLUB':BAND_BASE+'ashley-paige-soulcial-club.jpg?v=20260615',
@@ -59,8 +60,8 @@
     'KIM IN THE WIND':BAND_BASE+'kim-in-the-wind.webp?v=20260615',
     'KIM INDA WIND':BAND_BASE+'kim-in-the-wind.webp?v=20260615',
     'KAT KILEY EXPERIENCE':BAND_BASE+'kat-kiley-experience.webp?v=20260615',
-    'LOUISIANA PARISH LINE':BAND_BASE+'14FA40D0-F6EC-48BB-9A69-08C469C16B73.PNG?v=20260624',
-    'PARISH LINE':BAND_BASE+'14FA40D0-F6EC-48BB-9A69-08C469C16B73.PNG?v=20260624'
+    'LOUISIANA PARISH LINE':PARISH_LINE_POSTER,
+    'PARISH LINE':PARISH_LINE_POSTER
   };
 
   function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
@@ -70,11 +71,13 @@
   function weekWindow(now){var d=new Date(now.getFullYear(),now.getMonth(),now.getDate(),12);var sinceMon=(d.getDay()+6)%7;var mon=new Date(d);mon.setDate(d.getDate()-sinceMon);var wed=new Date(mon);wed.setDate(mon.getDate()+2);var sun=new Date(mon);sun.setDate(mon.getDate()+6);return {start:iso(wed),end:iso(sun)};}
   function key(name){return String(name||'').replace(/’/g,"'").replace(/\s+/g,' ').trim().toUpperCase();}
   function isPlaceholder(act){return !act||key(act[2])==='TBA'||key(act[2])==='TO BE ANNOUNCED';}
+  function isParishLineName(name){var k=key(name);return k==='LOUISIANA PARISH LINE'||k==='PARISH LINE';}
   function imgFor(name){return BAND_IMAGES[key(name)]||'';}
   function featuredIndex(day){for(var i=day.acts.length-1;i>=0;i--){if(!isPlaceholder(day.acts[i]))return i;}return day.acts.length-1;}
-  function photoAct(day){if(day&&day.date==='2026-06-24'){var lpl=day.acts.find(function(a){return key(a[2])==='LOUISIANA PARISH LINE';});if(lpl)return lpl;}var idx=featuredIndex(day);return day.acts[idx];}
+  function parishLineAct(day){if(!day)return null;if(day.date==='2026-06-24'||day.date==='2026-07-17'){for(var i=0;i<day.acts.length;i++){if(isParishLineName(day.acts[i][2]))return day.acts[i];}}return null;}
+  function photoAct(day){var parish=parishLineAct(day);if(parish)return parish;var idx=featuredIndex(day);return day.acts[idx];}
   function headlinerPhoto(day){var act=photoAct(day);var src=act?imgFor(act[2]):'';return src?'<img class="bmc-band-photo" src="'+esc(src)+'" alt="'+esc(act[2])+' at Balcony Music Club" loading="lazy" decoding="async" onerror="this.remove()">':'';}
-  function actsHtml(day){var featured=featuredIndex(day);return day.acts.map(function(a,i){return '<div class="act '+(i===featured?'is-featured-headliner':'')+'"><b>'+esc(a[2])+'</b><span>'+esc(a[0])+'–'+esc(a[1])+'</span></div>';}).join('');}
+  function actsHtml(day){var featured=featuredIndex(day);var photo=photoAct(day);return day.acts.map(function(a,i){var isFeatured=(a===photo)||(i===featured&&(!photo||!imgFor(photo[2])));return '<div class="act '+(isFeatured?'is-featured-headliner':'')+'"><b>'+esc(a[2])+'</b><span>'+esc(a[0])+'–'+esc(a[1])+'</span></div>';}).join('');}
   function dayCard(day){return '<article class="card show-day"><h3>'+pretty(day.date)+'</h3>'+headlinerPhoto(day)+actsHtml(day)+'</article>';}
 
   function installStyle(){
