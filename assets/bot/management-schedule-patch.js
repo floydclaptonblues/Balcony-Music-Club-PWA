@@ -1,19 +1,37 @@
 (function(){
   var ARTIST='Ashley Paige & The Soulcial Club';
   var BAND_BASE='assets/bands/bmc-band-assets/assets/bands/';
+  var UPCOMING_ARTIST_BASE='https://floydclaptonblues.github.io/UpcomingShows/assets/artists/';
+  var PHOTO_VERSION='?v=20260630-photo-match';
+  function uploadedPhoto(file){return UPCOMING_ARTIST_BASE+file+PHOTO_VERSION;}
   var BAND_IMAGES={
     'ANDRE LOVETT BAND':BAND_BASE+'andre-lovett-band.jpg?v=20260615',
-    'ASHLEY PAIGE & THE SOULCIAL CLUB':BAND_BASE+'ashley-paige-soulcial-club.jpg?v=20260615',
+    'ASHLEY PAIGE & THE SOULCIAL CLUB':uploadedPhoto('Ashley%20Paige%20and%20the%20Soulcial%20Club.jpeg'),
+    'ASHLEY PAIGE & SOULCIAL CLUB':uploadedPhoto('Ashley%20Paige%20and%20the%20Soulcial%20Club.jpeg'),
     'DAPPER DANDIES':BAND_BASE+'dapper-dandies.jpg?v=20260615',
-    'MAURICE CADE & ESS':BAND_BASE+'maurice-cade-ess.jpg?v=20260615',
-    'MOTHER RUCKUS':BAND_BASE+'mother-ruckus.jpg?v=20260615',
+    'MAURICE CADE & ESS':uploadedPhoto('Maurice%20Cade%20%26%20ESS%20Sunday%206pm.jpg'),
+    'MOTHER RUCKUS':uploadedPhoto('Mother%20Ruckus.png'),
+    'DEEJ FLAVA & MOTHER RUCKUS':uploadedPhoto('Mother%20Ruckus.png'),
     'SUGAR & THE DADDIES':BAND_BASE+'sugar-and-the-daddies.jpg?v=20260615',
     'WOODYS RAMPAGE':BAND_BASE+'woodys-rampage.jpg?v=20260615',
+    "WOODY'S RAMPAGE":BAND_BASE+'woodys-rampage.jpg?v=20260615',
     'BIG MIKE & THE R&B KINGS':BAND_BASE+'big-mike-rb-kings.webp?v=20260615',
+    'BIG MIKE & R&B KINGS':BAND_BASE+'big-mike-rb-kings.webp?v=20260615',
     'SIERRA GREEN':BAND_BASE+'sierra-green.jpg?v=20260615',
     'SIERRA & GREEN NOTES':BAND_BASE+'sierra-green.jpg?v=20260615',
     'KIM IN THE WIND BAND':BAND_BASE+'kim-in-the-wind.webp?v=20260615',
-    'KAT KILEY EXPERIENCE':BAND_BASE+'kat-kiley-experience.webp?v=20260615'
+    'KIM IN THE WIND':BAND_BASE+'kim-in-the-wind.webp?v=20260615',
+    'KAT KILEY EXPERIENCE':BAND_BASE+'kat-kiley-experience.webp?v=20260615',
+    'LOUISIANA PARISH LINE':uploadedPhoto('Louisiana%20Parish%20Line.png'),
+    'PARISH LINE':uploadedPhoto('Louisiana%20Parish%20Line.png'),
+    'FUNKY SOLES':uploadedPhoto('Funky%20Soles%20Featuring%20Tahj%20Derosier.png'),
+    'FUNKY SOLES FEATURING TAHJ DEROSIER':uploadedPhoto('Funky%20Soles%20Featuring%20Tahj%20Derosier.png'),
+    'ADO SOUL & THE TRIBE':uploadedPhoto('Ado%20Soul%20Tribe.png'),
+    'ADO SOUL TRIBE':uploadedPhoto('Ado%20Soul%20Tribe.png'),
+    'YUNG DEX BRASS BAND':uploadedPhoto('Yung%20Dex%20Ya%20Feel%20Me%20Brass%20Band.png'),
+    'GABE STILLMAN BAND':uploadedPhoto('Gabe%20Stillman.png'),
+    'GABE STILLMAN':uploadedPhoto('Gabe%20Stillman.png'),
+    'THEE PLAYMATEZ':uploadedPhoto('Thee%20PlayMateZ.png')
   };
 
   function normalize(s){
@@ -22,6 +40,7 @@
       .replace(/UNDER COVERS/g,ARTIST)
       .replace(/KIM INDA WIND BAND/g,'KIM IN THE WIND BAND')
       .replace(/Kim Inda Wind Band/g,'Kim In The Wind Band')
+      .replace(/’/g,"'")
       .replace(/\s+/g,' ')
       .trim()
       .toUpperCase();
