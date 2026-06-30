@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bmc-guest-pwa-v45-parish-line-photo';
+const CACHE_NAME = 'bmc-guest-pwa-v46-july-artist-photo-match';
 const CORE_ASSETS = [
   '/',
   '/index.html',
@@ -27,8 +27,8 @@ body:before,body:after{display:none!important;content:none!important;background:
 const HERO_QUALITY_PATCH = `<script src="assets/bot/hero-quality-patch.js?v=hero-quality-1"></script>`;
 const JAZZYCAT_RESTORE_PATCH = `<script src="assets/bot/jazzycat-restore-patch.js?v=jazzycat-original-1"></script>`;
 const COSMIC_RESTORE_PATCH = `<script src="assets/bot/cosmic-restore-patch.js?v=cosmic-restore-1"></script>`;
-const MANAGEMENT_SCHEDULE_PATCH = `<script src="assets/bot/management-schedule-patch.js?v=full-schedule-restore-1"></script>`;
-const SCHEDULE_AUTHORITY_PATCH = `<script src="assets/bot/schedule-authority-patch.js?v=parish-line-photo-20260717"></script>`;
+const MANAGEMENT_SCHEDULE_PATCH = `<script src="assets/bot/management-schedule-patch.js?v=artist-photo-match-20260630"></script>`;
+const SCHEDULE_AUTHORITY_PATCH = `<script src="assets/bot/schedule-authority-patch.js?v=artist-photo-match-20260630"></script>`;
 const VENUE_GALLERY_PATCH = `<script src="assets/venue/venue-gallery-local-patch.js?v=local-venue-2"></script>`;
 
 function patchIndexHtml(html) {
