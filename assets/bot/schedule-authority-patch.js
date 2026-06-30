@@ -42,9 +42,10 @@
 
   var BAND_BASE='assets/bands/bmc-band-assets/assets/bands/';
   var UPCOMING_ARTIST_BASE='https://floydclaptonblues.github.io/UpcomingShows/assets/artists/';
-  var PHOTO_VERSION='?v=20260630-photo-match';
+  var PHOTO_VERSION='?v=20260630-july4-photo-fix';
   function uploadedPhoto(file){return UPCOMING_ARTIST_BASE+file+PHOTO_VERSION;}
   var PARISH_LINE_POSTER=uploadedPhoto('Louisiana%20Parish%20Line.png');
+  var THEE_PLAYMATEZ_PHOTO=uploadedPhoto('Thee%20PlayMateZ.png');
   var BAND_IMAGES={
     'ANDRE LOVETT BAND':BAND_BASE+'andre-lovett-band.jpg?v=20260615',
     'ASHLEY PAIGE & THE SOULCIAL CLUB':uploadedPhoto('Ashley%20Paige%20and%20the%20Soulcial%20Club.jpeg'),
@@ -71,9 +72,15 @@
     'ADO SOUL & THE TRIBE':uploadedPhoto('Ado%20Soul%20Tribe.png'),
     'ADO SOUL TRIBE':uploadedPhoto('Ado%20Soul%20Tribe.png'),
     'YUNG DEX BRASS BAND':uploadedPhoto('Yung%20Dex%20Ya%20Feel%20Me%20Brass%20Band.png'),
+    'YUNG DEX YA FEEL ME BRASS BAND':uploadedPhoto('Yung%20Dex%20Ya%20Feel%20Me%20Brass%20Band.png'),
     'GABE STILLMAN BAND':uploadedPhoto('Gabe%20Stillman.png'),
     'GABE STILLMAN':uploadedPhoto('Gabe%20Stillman.png'),
-    'THEE PLAYMATEZ':uploadedPhoto('Thee%20PlayMateZ.png')
+    'THEE PLAYMATEZ':THEE_PLAYMATEZ_PHOTO,
+    'THEEPLAYMATEZ':THEE_PLAYMATEZ_PHOTO,
+    'THEE FONK':THEE_PLAYMATEZ_PHOTO,
+    'THEE FONK JAM':THEE_PLAYMATEZ_PHOTO,
+    'THEE FONK JAM FEAT. TAMARIET':THEE_PLAYMATEZ_PHOTO,
+    'THEE FONK JAM FEAT TAMARIET':THEE_PLAYMATEZ_PHOTO
   };
 
   function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
@@ -88,15 +95,16 @@
   function featuredIndex(day){for(var i=day.acts.length-1;i>=0;i--){if(!isPlaceholder(day.acts[i]))return i;}return day.acts.length-1;}
   function parishLineAct(day){if(!day)return null;if(day.date==='2026-06-24'||day.date==='2026-07-17'){for(var i=0;i<day.acts.length;i++){if(isParishLineName(day.acts[i][2]))return day.acts[i];}}return null;}
   function photoAct(day){var parish=parishLineAct(day);if(parish)return parish;var idx=featuredIndex(day);return day.acts[idx];}
-  function headlinerPhoto(day){var act=photoAct(day);var src=act?imgFor(act[2]):'';return src?'<img class="bmc-band-photo" src="'+esc(src)+'" alt="'+esc(act[2])+' at Balcony Music Club" loading="lazy" decoding="async" onerror="this.remove()">':'';}
-  function actsHtml(day){var featured=featuredIndex(day);var photo=photoAct(day);return day.acts.map(function(a,i){var isFeatured=(a===photo)||(i===featured&&(!photo||!imgFor(photo[2])));return '<div class="act '+(isFeatured?'is-featured-headliner':'')+'"><b>'+esc(a[2])+'</b><span>'+esc(a[0])+'–'+esc(a[1])+'</span></div>';}).join('');}
+  function headlinerPhoto(day){var act=photoAct(day);var src=act?imgFor(act[2]):'';return src?'<img class="bmc-band-photo bmc-band-photo--feature" src="'+esc(src)+'" alt="'+esc(act[2])+' at Balcony Music Club" loading="lazy" decoding="async" onerror="this.remove()">':'';}
+  function actPhoto(a){var src=a?imgFor(a[2]):'';return src?'<img class="bmc-band-photo bmc-band-photo--act" src="'+esc(src)+'" alt="'+esc(a[2])+' at Balcony Music Club" loading="lazy" decoding="async" onerror="this.remove()">':'';}
+  function actsHtml(day){var featured=featuredIndex(day);var photo=photoAct(day);return day.acts.map(function(a,i){var isFeatured=(a===photo)||(i===featured&&(!photo||!imgFor(photo[2])));return '<div class="act '+(isFeatured?'is-featured-headliner':'')+'">'+actPhoto(a)+'<b>'+esc(a[2])+'</b><span>'+esc(a[0])+'–'+esc(a[1])+'</span></div>';}).join('');}
   function dayCard(day){return '<article class="card show-day"><h3>'+pretty(day.date)+'</h3>'+headlinerPhoto(day)+actsHtml(day)+'</article>';}
 
   function installStyle(){
     if(document.getElementById('bmc-schedule-authority-style'))return;
     var style=document.createElement('style');
     style.id='bmc-schedule-authority-style';
-    style.textContent='.bmc-band-photo{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border:2px solid rgba(255,216,87,.58);border-radius:14px;margin:8px 0 10px;background:#120728;box-shadow:0 12px 28px rgba(0,0,0,.32)}.show-day .bmc-band-photo{max-height:220px}.today-lineup .bmc-band-photo{margin-top:10px}.act.is-featured-headliner{border-top:1px dashed rgba(255,255,255,.24);padding-top:8px;margin-top:8px}';
+    style.textContent='.bmc-band-photo{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border:2px solid rgba(255,216,87,.58);border-radius:14px;margin:8px 0 10px;background:#120728;box-shadow:0 12px 28px rgba(0,0,0,.32)}.show-day .bmc-band-photo{max-height:220px}.today-lineup .bmc-band-photo{margin-top:10px}.act .bmc-band-photo--act{max-height:150px;margin:0 0 8px;border-radius:10px}.bmc-band-photo--feature + .act .bmc-band-photo--act{margin-top:2px}.act.is-featured-headliner{border-top:1px dashed rgba(255,255,255,.24);padding-top:8px;margin-top:8px}';
     document.head.appendChild(style);
   }
 
