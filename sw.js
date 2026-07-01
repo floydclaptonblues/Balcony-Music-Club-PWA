@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bmc-guest-pwa-v49-marquee-artist-day';
+const CACHE_NAME = 'bmc-guest-pwa-v50-john-lisi-management';
 const CORE_ASSETS = [
   '/',
   '/index.html',
@@ -27,7 +27,7 @@ const HERO_QUALITY_PATCH = `<script src="assets/bot/hero-quality-patch.js?v=hero
 const JAZZYCAT_RESTORE_PATCH = `<script src="assets/bot/jazzycat-restore-patch.js?v=jazzycat-original-1"></script>`;
 const COSMIC_RESTORE_PATCH = `<script src="assets/bot/cosmic-restore-patch.js?v=cosmic-restore-1"></script>`;
 const MANAGEMENT_SCHEDULE_PATCH = ``;
-const SCHEDULE_AUTHORITY_PATCH = `<script src="assets/bot/schedule-authority-patch.js?v=marquee-artist-day-20260701"></script>`;
+const SCHEDULE_AUTHORITY_PATCH = `<script src="assets/bot/schedule-authority-patch.js?v=john-lisi-management-20260701"></script>`;
 const VENUE_GALLERY_PATCH = `<script src="assets/venue/venue-gallery-local-patch.js?v=local-venue-2"></script>`;
 
 function patchIndexHtml(html) {
