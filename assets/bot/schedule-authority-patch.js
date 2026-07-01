@@ -42,7 +42,7 @@
 
   var BAND_BASE='assets/bands/bmc-band-assets/assets/bands/';
   var UPCOMING_ARTIST_BASE='https://floydclaptonblues.github.io/UpcomingShows/assets/artists/';
-  var PHOTO_VERSION='?v=20260630-july4-photo-fix';
+  var PHOTO_VERSION='?v=20260701-compact-act-photos';
   function uploadedPhoto(file){return UPCOMING_ARTIST_BASE+file+PHOTO_VERSION;}
   var PARISH_LINE_POSTER=uploadedPhoto('Louisiana%20Parish%20Line.png');
   var THEE_PLAYMATEZ_PHOTO=uploadedPhoto('Thee%20PlayMateZ.png');
@@ -90,21 +90,17 @@
   function weekWindow(now){var d=new Date(now.getFullYear(),now.getMonth(),now.getDate(),12);var sinceMon=(d.getDay()+6)%7;var mon=new Date(d);mon.setDate(d.getDate()-sinceMon);var wed=new Date(mon);wed.setDate(mon.getDate()+2);var sun=new Date(mon);sun.setDate(mon.getDate()+6);return {start:iso(wed),end:iso(sun)};}
   function key(name){return String(name||'').replace(/’/g,"'").replace(/\s+/g,' ').trim().toUpperCase();}
   function isPlaceholder(act){return !act||key(act[2])==='TBA'||key(act[2])==='TO BE ANNOUNCED';}
-  function isParishLineName(name){var k=key(name);return k==='LOUISIANA PARISH LINE'||k==='PARISH LINE';}
   function imgFor(name){return BAND_IMAGES[key(name)]||'';}
   function featuredIndex(day){for(var i=day.acts.length-1;i>=0;i--){if(!isPlaceholder(day.acts[i]))return i;}return day.acts.length-1;}
-  function parishLineAct(day){if(!day)return null;if(day.date==='2026-06-24'||day.date==='2026-07-17'){for(var i=0;i<day.acts.length;i++){if(isParishLineName(day.acts[i][2]))return day.acts[i];}}return null;}
-  function photoAct(day){var parish=parishLineAct(day);if(parish)return parish;var idx=featuredIndex(day);return day.acts[idx];}
-  function headlinerPhoto(day){var act=photoAct(day);var src=act?imgFor(act[2]):'';return src?'<img class="bmc-band-photo bmc-band-photo--feature" src="'+esc(src)+'" alt="'+esc(act[2])+' at Balcony Music Club" loading="lazy" decoding="async" onerror="this.remove()">':'';}
   function actPhoto(a){var src=a?imgFor(a[2]):'';return src?'<img class="bmc-band-photo bmc-band-photo--act" src="'+esc(src)+'" alt="'+esc(a[2])+' at Balcony Music Club" loading="lazy" decoding="async" onerror="this.remove()">':'';}
-  function actsHtml(day){var featured=featuredIndex(day);var photo=photoAct(day);return day.acts.map(function(a,i){var isFeatured=(a===photo)||(i===featured&&(!photo||!imgFor(photo[2])));return '<div class="act '+(isFeatured?'is-featured-headliner':'')+'">'+actPhoto(a)+'<b>'+esc(a[2])+'</b><span>'+esc(a[0])+'–'+esc(a[1])+'</span></div>';}).join('');}
-  function dayCard(day){return '<article class="card show-day"><h3>'+pretty(day.date)+'</h3>'+headlinerPhoto(day)+actsHtml(day)+'</article>';}
+  function actsHtml(day){var featured=featuredIndex(day);return day.acts.map(function(a,i){return '<div class="act '+(i===featured?'is-featured-headliner':'')+'">'+actPhoto(a)+'<div class="act-copy"><b>'+esc(a[2])+'</b><span>'+esc(a[0])+'–'+esc(a[1])+'</span></div></div>';}).join('');}
+  function dayCard(day){return '<article class="card show-day"><h3>'+pretty(day.date)+'</h3>'+actsHtml(day)+'</article>';}
 
   function installStyle(){
     if(document.getElementById('bmc-schedule-authority-style'))return;
     var style=document.createElement('style');
     style.id='bmc-schedule-authority-style';
-    style.textContent='.bmc-band-photo{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border:2px solid rgba(255,216,87,.58);border-radius:14px;margin:8px 0 10px;background:#120728;box-shadow:0 12px 28px rgba(0,0,0,.32)}.show-day .bmc-band-photo{max-height:220px}.today-lineup .bmc-band-photo{margin-top:10px}.act .bmc-band-photo--act{max-height:150px;margin:0 0 8px;border-radius:10px}.bmc-band-photo--feature + .act .bmc-band-photo--act{margin-top:2px}.act.is-featured-headliner{border-top:1px dashed rgba(255,255,255,.24);padding-top:8px;margin-top:8px}';
+    style.textContent='.show-day .act,.today-lineup .act{display:grid;grid-template-columns:minmax(82px,112px) 1fr;gap:10px;align-items:center}.act-copy{min-width:0}.act-copy b,.act-copy span{display:block}.bmc-band-photo{width:100%;aspect-ratio:4/3;object-fit:cover;border:2px solid rgba(255,216,87,.58);border-radius:10px;background:#120728;box-shadow:0 8px 18px rgba(0,0,0,.28)}.act .bmc-band-photo--act{margin:0;max-height:86px}.act:not(:has(.bmc-band-photo)){grid-template-columns:1fr}.act:not(:has(.bmc-band-photo)) .act-copy{grid-column:1}.act.is-featured-headliner{border-top:1px dashed rgba(255,255,255,.24);padding-top:8px;margin-top:8px}@media(max-width:520px){.show-day .act,.today-lineup .act{grid-template-columns:minmax(72px,96px) 1fr}.act .bmc-band-photo--act{max-height:76px}}';
     document.head.appendChild(style);
   }
 
@@ -128,7 +124,7 @@
     var week=SCHEDULE.filter(function(d){return d.date>=win.start&&d.date<=win.end;});
     var today=SCHEDULE.find(function(d){return d.date===todayIso;});
     var next=week.find(function(d){return d.date>=todayIso;})||week[0];
-    var todayHtml=today?'<h3>Artist of the Day</h3>'+headlinerPhoto(today)+actsHtml(today):'<h3>Artist of the Day</h3>'+(next?'<p>Next show: '+pretty(next.date)+'</p>':'');
+    var todayHtml=today?'<h3>Artist of the Day</h3>'+actsHtml(today):'<h3>Artist of the Day</h3>'+(next?'<p>Next show: '+pretty(next.date)+'</p>':'');
     var weekHtml=week.length?week.map(dayCard).join(''):'<article class="card"><p>Lineup coming soon.</p></article>';
     section.classList.add('weekly-schedule-panel');
     section.innerHTML='<span class="ribbon">This Week\'s Lineup</span><h2>This Week\'s Lineup:</h2><div class="weekly-lineup-grid"><article class="card today-lineup">'+todayHtml+'</article><div><h3>Artists of the Week</h3><div class="week-lineup-strip">'+weekHtml+'</div></div></div><p><button id="openFullSchedule" type="button" class="button primary">Open Full Band Schedule</button></p>';
