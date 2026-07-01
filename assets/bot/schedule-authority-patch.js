@@ -22,11 +22,11 @@
     {date:"2026-06-28",acts:[["3:00 PM","5:30 PM","DEEJ FLAVA & MOTHER RUCKUS"],["6:00 PM","8:30 PM","MAURICE CADE & ESS"],["9:00 PM","11:30 PM","KIM IN THE WIND"]]},
     {date:"2026-07-02",acts:[["6:00 PM","8:30 PM","FUNKY SOLES"],["9:00 PM","11:30 PM","MOTHER RUCKUS"]]},
     {date:"2026-07-03",acts:[["6:00 PM","8:30 PM","ADO SOUL & THE TRIBE"],["9:00 PM","11:30 PM","KAT KILEY EXPERIENCE"]]},
-    {date:"2026-07-04",acts:[["3:00 PM","5:30 PM","TROPICAL WEATHER"],["6:00 PM","8:30 PM","YUNG DEX BRASS BAND"],["9:00 PM","11:30 PM","THEE FONK JAM feat. TamarieT"]]},
+    {date:"2026-07-04",acts:[["3:00 PM","5:30 PM","TROPICAL WEATHER"],["6:00 PM","8:30 PM","JOHN LISI & DELTA FUNK"],["9:00 PM","11:30 PM","THEE FONK JAM feat. TamarieT"]]},
     {date:"2026-07-05",acts:[["3:00 PM","5:30 PM","SIERRA & GREEN NOTES"],["6:00 PM","8:30 PM","JOSH BENITEZ BAND"],["9:00 PM","11:30 PM","MAURICE CADE & ESS"]]},
     {date:"2026-07-09",acts:[["6:00 PM","8:30 PM","DAPPER DANDIES"],["9:00 PM","11:30 PM","JAM BRASS BAND"]]},
     {date:"2026-07-10",acts:[["6:00 PM","8:30 PM","ADO SOUL & THE TRIBE"],["9:00 PM","11:30 PM","KAT KILEY EXPERIENCE"]]},
-    {date:"2026-07-11",acts:[["3:00 PM","5:30 PM","ANDRE LOVETT BAND"],["6:00 PM","8:30 PM","WOODY'S RAMPAGE"],["9:00 PM","11:30 PM","TBA"]]},
+    {date:"2026-07-11",acts:[["3:00 PM","5:30 PM","ANDRE LOVETT BAND"],["6:00 PM","8:30 PM","WOODY'S RAMPAGE"],["9:00 PM","11:30 PM","JOHN LISI & DELTA FUNK"]]},
     {date:"2026-07-12",acts:[["3:00 PM","5:30 PM","DEEJ FLAVA & MOTHER RUCKUS"],["6:00 PM","8:30 PM","MAURICE CADE & ESS"],["9:00 PM","11:30 PM","KIM IN THE WIND"]]},
     {date:"2026-07-16",acts:[["6:00 PM","8:30 PM","LEROY MARSHALL BAND"],["9:00 PM","11:30 PM","KAT KILEY EXPERIENCE"]]},
     {date:"2026-07-17",acts:[["6:00 PM","8:30 PM","PARISH LINE"],["9:00 PM","11:30 PM","BIG MIKE & THE R&B KINGS"]]},
@@ -42,7 +42,8 @@
 
   var BAND_BASE='assets/bands/bmc-band-assets/assets/bands/';
   var UPCOMING_ARTIST_BASE='https://floydclaptonblues.github.io/UpcomingShows/assets/artists/';
-  var PHOTO_VERSION='?v=20260701-marquee-artist-day';
+  var PHOTO_VERSION='?v=20260701-john-lisi-management';
+  var JOHN_LISI_DELTA_FUNK_PHOTO='https://images.squarespace-cdn.com/content/v1/5872a05fb8a79b5c39e888e8/1570220588454-ROAJNS29CYDX7TFZ3B09/johnlisi.jpg?format=1000w';
   function uploadedPhoto(file){return UPCOMING_ARTIST_BASE+file+PHOTO_VERSION;}
   var PARISH_LINE_POSTER=uploadedPhoto('Louisiana%20Parish%20Line.png');
   var THEE_PLAYMATEZ_PHOTO=uploadedPhoto('Thee%20PlayMateZ.png');
@@ -73,6 +74,8 @@
     'ADO SOUL TRIBE':uploadedPhoto('Ado%20Soul%20Tribe.png'),
     'YUNG DEX BRASS BAND':uploadedPhoto('Yung%20Dex%20Ya%20Feel%20Me%20Brass%20Band.png'),
     'YUNG DEX YA FEEL ME BRASS BAND':uploadedPhoto('Yung%20Dex%20Ya%20Feel%20Me%20Brass%20Band.png'),
+    'JOHN LISI & DELTA FUNK':JOHN_LISI_DELTA_FUNK_PHOTO,
+    'JOHN LISI AND DELTA FUNK':JOHN_LISI_DELTA_FUNK_PHOTO,
     'GABE STILLMAN BAND':uploadedPhoto('Gabe%20Stillman.png'),
     'GABE STILLMAN':uploadedPhoto('Gabe%20Stillman.png'),
     'THEE PLAYMATEZ':THEE_PLAYMATEZ_PHOTO,
