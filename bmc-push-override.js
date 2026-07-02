@@ -4,6 +4,7 @@
 (function(){
   var PATCH_ID='bmc-schedule-authority-direct-loader';
   var PATCH_SRC='/assets/bot/schedule-authority-patch.js?v=july-schedule-20260702';
+  var BMC_LIVE_HREF='https://bmclive.balconymusicclub.com/';
 
   function loadScheduleAuthority(){
     if(document.getElementById(PATCH_ID))return;
@@ -17,13 +18,18 @@
 
   function exposeBmcLive(){
     var nav=document.querySelector('header.top nav');
-    if(!nav||nav.querySelector('a[href="/bmc-live/"]'))return;
+    if(!nav)return;
+    Array.prototype.slice.call(nav.querySelectorAll('a')).forEach(function(existing){
+      if((existing.textContent||'').trim().toLowerCase()==='bmc live'||existing.getAttribute('href')==='/bmc-live/'||existing.getAttribute('href')===BMC_LIVE_HREF){
+        existing.parentNode.removeChild(existing);
+      }
+    });
     var link=document.createElement('a');
-    link.href='/bmc-live/';
+    link.href=BMC_LIVE_HREF;
+    link.target='_blank';
+    link.rel='noreferrer';
     link.textContent='BMC Live';
-    var schedule=nav.querySelector('a[href="#schedule"]');
-    if(schedule&&schedule.nextSibling)nav.insertBefore(link,schedule.nextSibling);
-    else nav.insertBefore(link,nav.firstChild);
+    nav.insertBefore(link,nav.firstChild);
   }
 
   function run(){loadScheduleAuthority();exposeBmcLive();}
