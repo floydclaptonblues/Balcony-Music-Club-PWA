@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#120728" />
+  <meta name="description" content="Watch Balcony Music Club live from New Orleans, embedded from YouTube with tonight's venue information." />
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <link rel="icon" href="/icons/icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/icons/icon.svg" />
+  <title>BMC Live Broadcast • Balcony Music Club</title>
+  <style>
+    :root{--ink:#fff6e8;--muted:#e4d6f2;--gold:#ffd857;--pink:#ff4ab0;--cyan:#5ee6ff;--panel:#211037;--panel2:#321956;--black:#05020b}*{box-sizing:border-box}html{scroll-behavior:smooth;background:var(--black)}body{margin:0;min-height:100svh;font-family:Geneva,Verdana,Arial,sans-serif;color:var(--ink);background:radial-gradient(circle at 20% 8%,rgba(255,74,176,.22),transparent 30%),radial-gradient(circle at 86% 14%,rgba(94,230,255,.18),transparent 28%),linear-gradient(180deg,#05020b,#120728 58%,#05020b)}body:before{content:"";position:fixed;inset:0;pointer-events:none;background:repeating-linear-gradient(to bottom,rgba(255,255,255,.055) 0 1px,transparent 1px 4px);mix-blend-mode:screen;opacity:.18}.top,main,footer{position:relative;z-index:2}.top{position:sticky;top:0;z-index:20;width:100%;background:rgba(11,6,19,.86);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:2px solid rgba(255,216,87,.38);box-shadow:0 4px 0 rgba(0,0,0,.42);padding:10px}.brand{display:flex;gap:10px;align-items:center;width:max-content;max-width:100%;text-decoration:none;color:var(--ink);margin:0 auto 10px}.mark{display:grid;place-items:center;min-width:42px;width:42px;height:42px;border:2px solid #000;background:linear-gradient(180deg,#ffe57a,#d6a926);color:#241028;font-weight:1000}.brand strong,.ui,h1,h2,h3,nav a,.button,.ribbon,.broadcast-label,.status-pill{font-family:Chicago,Charcoal,Geneva,'Arial Rounded MT Bold',Verdana,sans-serif;text-transform:uppercase;letter-spacing:.055em;font-weight:900}.brand small{display:block;color:var(--gold);font-size:11px}nav{display:flex;gap:7px;overflow-x:auto;max-width:100%;padding-bottom:2px;scrollbar-width:none}nav::-webkit-scrollbar{display:none}nav a{flex:0 0 auto;white-space:nowrap;text-decoration:none;color:var(--ink);font-size:10px;padding:8px 10px;border:2px solid #000;background:linear-gradient(180deg,#4c1f7e,#2d1248)}main{width:100%;max-width:1180px;margin:0 auto;padding:14px 10px 44px}.window,.panel,.card{width:100%;max-width:100%;border:2px solid rgba(255,216,87,.48);background:linear-gradient(180deg,rgba(255,255,255,.09),rgba(255,255,255,.025)),linear-gradient(180deg,rgba(50,25,86,.82),rgba(33,16,55,.86));box-shadow:0 0 0 1px rgba(255,216,87,.08),0 18px 42px rgba(0,0,0,.42);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}.window{overflow:hidden}.bar{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 10px;border-bottom:2px solid #000;background:linear-gradient(90deg,#7f2cc9,#d03ea8 38%,#3b78ff);color:#fff7d6;text-shadow:1px 1px 0 #000;font-size:11px}.dots span{display:inline-block;width:12px;height:12px;margin-left:4px;border:2px solid #000;background:#ddd}.hero{display:grid;gap:16px;padding:16px}.ribbon{display:inline-flex;padding:8px 11px;margin-bottom:12px;background:linear-gradient(180deg,#ffe57a,#d6a926);color:#241028;border:2px solid #000;box-shadow:0 4px 0 rgba(10,4,18,.65);font-size:10px}h1{font-size:clamp(42px,14vw,86px);line-height:.86;margin:0;color:#fff1cb;text-shadow:3px 3px 0 #000}h2{font-size:clamp(28px,8vw,52px);line-height:.94;margin:0 0 12px;color:#fff1cb;text-shadow:2px 2px 0 #000}h3{font-size:17px;line-height:1.1;margin:0 0 8px;color:#fff1cb;text-shadow:1px 1px 0 #000}p,li{font-size:15px;line-height:1.55;color:var(--muted)}.buttons{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}.button{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:10px 13px;border:2px solid #000;text-decoration:none;font-size:11px;cursor:pointer;box-shadow:inset 2px 2px 0 rgba(255,255,255,.2),inset -2px -2px 0 rgba(0,0,0,.55),0 5px 0 rgba(10,4,18,.7)}.primary{background:linear-gradient(180deg,#ff89cf,#ff4ab0 45%,#b31e78);color:#fff7e0;text-shadow:1px 1px 0 #000}.secondary{background:linear-gradient(180deg,#9bf6ff,#5ee6ff 45%,#1e86a8);color:#171026}.ghost{background:linear-gradient(180deg,#4c1f7e,#2d1248);color:#fff6e8}.live-shell{padding:10px;background:linear-gradient(180deg,rgba(116,66,0,.74),rgba(75,37,0,.62));border:2px solid #000;border-radius:18px;box-shadow:0 18px 48px rgba(255,74,176,.14)}.video-frame{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;border:3px solid rgba(255,216,87,.92);border-radius:14px;background:#020104;box-shadow:inset 0 0 0 3px rgba(94,230,255,.24)}.video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}.video-placeholder{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:22px;background:radial-gradient(circle at 50% 28%,rgba(255,216,87,.16),transparent 34%),linear-gradient(135deg,#321956,#111 48%,#5c1c7d)}.video-placeholder strong{display:block;font-family:Chicago,Charcoal,Geneva,'Arial Rounded MT Bold',Verdana,sans-serif;text-transform:uppercase;color:var(--gold);font-size:clamp(24px,7vw,52px);line-height:.95;text-shadow:3px 3px 0 #000}.video-placeholder span{display:block;margin-top:12px;color:#fff6e8}.broadcast-label{display:flex;align-items:center;gap:8px;margin-bottom:9px;color:var(--gold);font-size:12px;text-shadow:1px 1px 0 #000}.status-dot{width:12px;height:12px;border-radius:999px;background:#f33;border:2px solid #000;box-shadow:0 0 16px rgba(255,51,51,.95)}.status-pill{display:inline-flex;align-items:center;gap:8px;padding:7px 10px;border:2px solid #000;border-radius:999px;background:rgba(0,0,0,.35);color:#fff6e8;font-size:10px}.grid{display:grid;gap:12px}.panel,.card{padding:14px}.tip-grid{display:grid;gap:10px}.tip-card{min-height:160px;display:grid;place-items:center;text-align:center;border:2px dashed rgba(255,216,87,.55);border-radius:14px;background:rgba(0,0,0,.24);padding:14px}.tip-card b{display:block;color:var(--gold);font-size:16px;margin-bottom:4px}.note{font-size:12px;color:#cebfe2}.schedule-mini{display:grid;gap:8px}.schedule-mini .slot{display:grid;grid-template-columns:1fr;gap:4px;border-top:1px dashed rgba(255,255,255,.24);padding-top:8px}.schedule-mini b{color:#fff6e8}.schedule-mini span{color:var(--cyan);font-size:12px}.river{position:relative;overflow:hidden}.river:after{content:"";position:absolute;inset:auto -30% 0 -30%;height:90px;background:linear-gradient(90deg,transparent,rgba(94,230,255,.16),rgba(255,216,87,.10),rgba(255,74,176,.14),transparent);filter:blur(8px);animation:drift 9s linear infinite;pointer-events:none}@keyframes drift{from{transform:translateX(-18%)}to{transform:translateX(18%)}}footer{text-align:center;padding:24px 12px 80px;color:var(--muted)}@media(min-width:760px){.top{display:flex;align-items:center;justify-content:space-between}.brand{margin:0}.hero{grid-template-columns:1fr 1.45fr;align-items:center;padding:22px}.grid.two{grid-template-columns:1fr 1fr}.tip-grid{grid-template-columns:1fr 1fr}}@media(min-width:980px){main{padding-inline:14px}.grid.three{grid-template-columns:1fr 1fr 1fr}}
+  </style>
+</head>
+<body>
+  <header class="top"><a class="brand" href="/"><span class="mark">BMC</span><span><strong>Balcony Music Club</strong><small>504 Esplanade • New Orleans</small></span></a><nav><a href="/">Home</a><a href="/#schedule">Schedule</a><a href="/bmc-live/">BMC Live</a><a href="https://www.balconymusicclub.com/store" target="_blank" rel="noreferrer">Store</a><a href="/#contact">Contact</a></nav></header>
+  <main>
+    <section class="window river">
+      <div class="bar"><span class="ui">Balcony Music Club Live Broadcast</span><span class="dots"><span></span><span></span><span></span></span></div>
+      <div class="hero">
+        <div>
+          <span class="ribbon">YouTube Broadcast Theater</span>
+          <h1>BMC<br>Live</h1>
+          <p>Live music from Balcony Music Club in New Orleans. The broadcast is hosted on YouTube and displayed here inside the official BMC website experience.</p>
+          <div class="buttons"><a class="button primary" href="#watch">Watch Live</a><a class="button secondary" href="/#schedule">Tonight's Schedule</a><a id="openYouTube" class="button ghost" href="https://www.youtube.com/" target="_blank" rel="noreferrer">Open on YouTube</a></div>
+        </div>
+        <div id="watch" class="live-shell">
+          <div class="broadcast-label"><span class="status-dot" aria-hidden="true"></span><span>Live Broadcast Window</span></div>
+          <div class="video-frame" id="bmcVideoFrame" aria-label="Balcony Music Club YouTube live broadcast">
+            <div class="video-placeholder"><div><strong>Stream Goes Here</strong><span>Add the BMC YouTube live embed URL in this page's config.</span></div></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid two" aria-label="Broadcast details">
+      <article class="panel">
+        <span class="ribbon">Tonight</span>
+        <h2>Broadcast Notes</h2>
+        <p>This page is built for the YouTube live player, venue notes, and show-night calls to action. When the YouTube channel/live URL is ready, replace the placeholder embed URL in the page config.</p>
+        <p class="status-pill"><span class="status-dot" aria-hidden="true"></span><span id="streamStatusText">Waiting for YouTube embed URL</span></p>
+      </article>
+      <article class="panel">
+        <span class="ribbon">Artist Tips</span>
+        <h2>Tip Artist</h2>
+        <div class="tip-grid">
+          <div class="tip-card"><div><b>Cash App QR</b><span class="note">Drop the artist Cash App QR here.</span></div></div>
+          <div class="tip-card"><div><b>Venmo QR</b><span class="note">Drop the artist Venmo QR here.</span></div></div>
+        </div>
+      </article>
+    </section>
+
+    <section class="panel">
+      <span class="ribbon">Show Flow</span>
+      <h2>Tonight's Lineup</h2>
+      <div class="schedule-mini">
+        <div class="slot"><b>Early Set</b><span>Update from the current BMC schedule.</span></div>
+        <div class="slot"><b>Late Set</b><span>Update from the current BMC schedule.</span></div>
+      </div>
+      <p class="note">This block is intentionally simple so the venue can update show-night details without touching the broadcast embed.</p>
+    </section>
+  </main>
+  <footer>Balcony Music Club • 504 Esplanade Avenue • New Orleans, Louisiana<br><span class="note">YouTube-powered broadcast page for balconymusicclub.com/bmc-live.</span></footer>
+
+  <script>
+    const BMC_YOUTUBE_EMBED_URL = '';
+    const BMC_YOUTUBE_WATCH_URL = '';
+
+    function installYouTubeEmbed(){
+      const frame=document.getElementById('bmcVideoFrame');
+      const status=document.getElementById('streamStatusText');
+      const link=document.getElementById('openYouTube');
+      if(link&&BMC_YOUTUBE_WATCH_URL)link.href=BMC_YOUTUBE_WATCH_URL;
+      if(!frame||!BMC_YOUTUBE_EMBED_URL)return;
+      const iframe=document.createElement('iframe');
+      iframe.src=BMC_YOUTUBE_EMBED_URL;
+      iframe.title='Balcony Music Club live broadcast on YouTube';
+      iframe.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      iframe.allowFullscreen=true;
+      frame.innerHTML='';
+      frame.appendChild(iframe);
+      if(status)status.textContent='YouTube broadcast embed loaded';
+    }
+
+    installYouTubeEmbed();
+  </script>
+</body>
+</html>
