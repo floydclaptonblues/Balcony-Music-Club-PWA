@@ -1,7 +1,8 @@
-const CACHE_NAME = 'bmc-guest-pwa-v51-july-schedule';
+const CACHE_NAME = 'bmc-guest-pwa-v52-bmc-live';
 const CORE_ASSETS = [
   '/',
   '/index.html',
+  '/bmc-live/index.html',
   '/manifest.webmanifest',
   '/icons/icon.svg',
   '/assets/venue/photos.js',
