@@ -15,6 +15,20 @@
     document.body.appendChild(script);
   }
 
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',loadScheduleAuthority);
-  else loadScheduleAuthority();
+  function exposeBmcLive(){
+    var nav=document.querySelector('header.top nav');
+    if(!nav||nav.querySelector('a[href="/bmc-live/"]'))return;
+    var link=document.createElement('a');
+    link.href='/bmc-live/';
+    link.textContent='BMC Live';
+    var schedule=nav.querySelector('a[href="#schedule"]');
+    if(schedule&&schedule.nextSibling)nav.insertBefore(link,schedule.nextSibling);
+    else nav.insertBefore(link,nav.firstChild);
+  }
+
+  function run(){loadScheduleAuthority();exposeBmcLive();}
+
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);
+  else run();
+  window.addEventListener('load',function(){run();setTimeout(run,250);setTimeout(run,1000);});
 })();
