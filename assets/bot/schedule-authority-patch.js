@@ -1,25 +1,5 @@
 (function(){
   var SCHEDULE=[
-    {date:"2026-06-03",acts:[["6:00 PM","8:30 PM","TROPICAL WEATHER"],["9:00 PM","11:30 PM","FELIPE ANTIONIO MUSIC"]]},
-    {date:"2026-06-04",acts:[["6:00 PM","8:30 PM","JOHN LISI & DELTA FUNK"],["9:00 PM","11:30 PM","JAM BRASS BAND"]]},
-    {date:"2026-06-05",acts:[["6:00 PM","8:30 PM","COVERTONES"],["9:00 PM","11:30 PM","BIG MIKE & THE R&B KINGS"]]},
-    {date:"2026-06-06",acts:[["3:00 PM","5:30 PM","ANDRE LOVETT BAND"],["6:00 PM","8:30 PM","WOODY'S RAMPAGE"],["9:00 PM","11:30 PM","CAESAR BROTHERS"]]},
-    {date:"2026-06-07",acts:[["3:00 PM","5:30 PM","SIERRA & GREEN NOTES"],["6:00 PM","8:30 PM","MAURICE CADE & ESS"],["9:00 PM","11:30 PM","KIM IN THE WIND BAND"]]},
-    {date:"2026-06-10",acts:[["6:00 PM","8:30 PM","RUMPSHAKERS"],["9:00 PM","11:30 PM","Ashley Paige & The Soulcial Club"]]},
-    {date:"2026-06-11",acts:[["6:00 PM","8:30 PM","DAPPER DANDIES"],["9:00 PM","11:30 PM","JAM BRASS BAND"]]},
-    {date:"2026-06-12",acts:[["6:00 PM","8:30 PM","TROPICAL WEATHER"],["9:00 PM","11:30 PM","KAT KILEY EXPERIENCE"]]},
-    {date:"2026-06-13",acts:[["3:00 PM","5:30 PM","ANDRE LOVETT BAND"],["6:00 PM","8:30 PM","MOTHER RUCKUS"],["9:00 PM","11:30 PM","SIERRA GREEN"]]},
-    {date:"2026-06-14",acts:[["3:00 PM","5:30 PM","DEEJ FLAVA & MOTHER RUCKUS"],["6:00 PM","8:30 PM","MAURICE CADE & ESS"],["9:00 PM","11:30 PM","KIM IN THE WIND BAND"]]},
-    {date:"2026-06-17",acts:[["6:00 PM","8:30 PM","SUGAR & THE DADDIES"],["9:00 PM","11:30 PM","DECATUR RADIO"]]},
-    {date:"2026-06-18",acts:[["6:00 PM","8:30 PM","JOHN LISI & DELTA FUNK"],["9:00 PM","11:30 PM","KAT KILEY EXPERIENCE"]]},
-    {date:"2026-06-19",acts:[["6:00 PM","8:30 PM","JOSH BENITEZ BAND"],["9:00 PM","11:30 PM","BIG MIKE & THE R&B KINGS"]]},
-    {date:"2026-06-20",acts:[["3:00 PM","5:30 PM","ANDRE LOVETT BAND"],["6:00 PM","8:30 PM","T Marie & Bayou JuJu"],["9:00 PM","11:30 PM","MOTHER RUCKUS"]]},
-    {date:"2026-06-21",acts:[["3:00 PM","5:30 PM","SIERRA & GREEN NOTES"],["6:00 PM","8:30 PM","SUGAR & THE DADDIES"],["9:00 PM","11:30 PM","JAM BRASS BAND"]]},
-    {date:"2026-06-24",acts:[["6:00 PM","8:30 PM","Louisiana Parish Line"],["9:00 PM","11:30 PM","Ashley Paige & The Soulcial Club"]]},
-    {date:"2026-06-25",acts:[["6:00 PM","8:30 PM","DAPPER DANDIES"],["9:00 PM","11:30 PM","KAT KILEY EXPERIENCE"]]},
-    {date:"2026-06-26",acts:[["6:00 PM","8:30 PM","JOSH BENITEZ BAND"],["9:00 PM","11:30 PM","BIG MIKE & THE R&B KINGS"]]},
-    {date:"2026-06-27",acts:[["3:00 PM","5:30 PM","ANDRE LOVETT BAND"],["6:00 PM","8:30 PM","MOTHER RUCKUS"],["9:00 PM","11:30 PM","SIERRA GREEN"]]},
-    {date:"2026-06-28",acts:[["3:00 PM","5:30 PM","DEEJ FLAVA & MOTHER RUCKUS"],["6:00 PM","8:30 PM","MAURICE CADE & ESS"],["9:00 PM","11:30 PM","KIM IN THE WIND"]]},
     {date:"2026-07-02",acts:[["6:00 PM","8:30 PM","FUNKY SOLES"],["9:00 PM","11:30 PM","MOTHER RUCKUS"]]},
     {date:"2026-07-03",acts:[["6:00 PM","8:30 PM","ADO SOUL & THE TRIBE"],["9:00 PM","11:30 PM","KAT KILEY EXPERIENCE"]]},
     {date:"2026-07-04",acts:[["3:00 PM","5:30 PM","TROPICAL WEATHER"],["6:00 PM","8:30 PM","JOHN LISI & DELTA FUNK"],["9:00 PM","11:30 PM","THEE FONK JAM feat. TamarieT"]]},
@@ -42,7 +22,7 @@
 
   var BAND_BASE='assets/bands/bmc-band-assets/assets/bands/';
   var UPCOMING_ARTIST_BASE='https://floydclaptonblues.github.io/UpcomingShows/assets/artists/';
-  var PHOTO_VERSION='?v=20260701-john-lisi-management';
+  var PHOTO_VERSION='?v=20260702-july-schedule';
   var JOHN_LISI_DELTA_FUNK_PHOTO='https://images.squarespace-cdn.com/content/v1/5872a05fb8a79b5c39e888e8/1570220588454-ROAJNS29CYDX7TFZ3B09/johnlisi.jpg?format=1000w';
   function uploadedPhoto(file){return UPCOMING_ARTIST_BASE+file+PHOTO_VERSION;}
   var PARISH_LINE_POSTER=uploadedPhoto('Louisiana%20Parish%20Line.png');
