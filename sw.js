@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bmc-guest-pwa-v57-layout-rollback-july-copy';
+const CACHE_NAME = 'bmc-guest-pwa-v58-restored-layout-july-text';
 const CORE_ASSETS = [
   '/',
   '/index.html',
@@ -30,8 +30,16 @@ const MANAGEMENT_SCHEDULE_PATCH = ``;
 const SCHEDULE_AUTHORITY_PATCH = `<script src="assets/bot/schedule-authority-patch.js?v=july-schedule-20260702"></script>`;
 const VENUE_GALLERY_PATCH = `<script src="assets/venue/venue-gallery-local-patch.js?v=local-venue-2"></script>`;
 
+function patchJulyText(html) {
+  return html
+    .replace(/Scan, save, and check the June lineup\./gi, 'Scan, save, and check the July lineup.')
+    .replace(/check the June lineup/gi, 'check the July lineup')
+    .replace(/June 2026 live music/gi, 'July 2026 live music')
+    .replace(/June schedule is embedded from the approved JazzyCatBotAI schedule snapshot\./gi, 'July schedule is loaded from the approved BMC schedule snapshot.');
+}
+
 function patchIndexHtml(html) {
-  let patched = html;
+  let patched = patchJulyText(html);
   if (!patched.includes('bmc-index-no-circles')) patched = patched.replace('</head>', INDEX_NO_CIRCLES_PATCH + '</head>');
   if (!patched.includes('hero-quality-patch.js')) patched = patched.replace('</body>', HERO_QUALITY_PATCH + '</body>');
   if (!patched.includes('jazzycat-restore-patch.js')) patched = patched.replace('</body>', JAZZYCAT_RESTORE_PATCH + '</body>');
