@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#120728" />
-  <meta name="description" content="Watch Balcony Music Club live from New Orleans, embedded from YouTube with tonight's venue information." />
+  <meta name="description" content="Watch Balcony Music Club live from New Orleans, embedded from Twitch with tonight's venue information." />
   <link rel="manifest" href="/manifest.webmanifest" />
   <link rel="icon" href="/icons/icon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="/icons/icon.svg" />
@@ -20,15 +20,15 @@
       <div class="bar"><span class="ui">Balcony Music Club Live Broadcast</span><span class="dots"><span></span><span></span><span></span></span></div>
       <div class="hero">
         <div>
-          <span class="ribbon">YouTube Broadcast Theater</span>
+          <span class="ribbon">Twitch Broadcast Theater</span>
           <h1>BMC<br>Live</h1>
-          <p>Live music from Balcony Music Club in New Orleans. The broadcast is hosted on YouTube and displayed here inside the official BMC website experience.</p>
-          <div class="buttons"><a class="button primary" href="#watch">Watch Live</a><a class="button secondary" href="/#schedule">Tonight's Schedule</a><a id="openYouTube" class="button ghost" href="https://www.youtube.com/" target="_blank" rel="noreferrer">Open on YouTube</a></div>
+          <p>Live music from Balcony Music Club in New Orleans. The broadcast is hosted on Twitch and displayed here inside the official BMC website experience.</p>
+          <div class="buttons"><a class="button primary" href="#watch">Watch Live</a><a class="button secondary" href="/#schedule">Tonight's Schedule</a><a id="openTwitch" class="button ghost" href="https://www.twitch.tv/bmcnolalive" target="_blank" rel="noreferrer">Open on Twitch</a></div>
         </div>
         <div id="watch" class="live-shell">
           <div class="broadcast-label"><span class="status-dot" aria-hidden="true"></span><span>Live Broadcast Window</span></div>
-          <div class="video-frame" id="bmcVideoFrame" aria-label="Balcony Music Club YouTube live broadcast">
-            <div class="video-placeholder"><div><strong>Stream Goes Here</strong><span>Add the BMC YouTube live embed URL in this page's config.</span></div></div>
+          <div class="video-frame" id="bmcVideoFrame" aria-label="Balcony Music Club Twitch live broadcast">
+            <div class="video-placeholder"><div><strong>Stream Loading</strong><span>If the embedded player does not appear, open the BMC Twitch channel directly.</span></div></div>
           </div>
         </div>
       </div>
@@ -38,8 +38,8 @@
       <article class="panel">
         <span class="ribbon">Tonight</span>
         <h2>Broadcast Notes</h2>
-        <p>This page is built for the YouTube live player, venue notes, and show-night calls to action. When the YouTube channel/live URL is ready, replace the placeholder embed URL in the page config.</p>
-        <p class="status-pill"><span class="status-dot" aria-hidden="true"></span><span id="streamStatusText">Waiting for YouTube embed URL</span></p>
+        <p>This page is currently wired to the BMC Twitch live channel while YouTube Live activation is unavailable. Start the stream in Twitch/OBS and the player will load here.</p>
+        <p class="status-pill"><span class="status-dot" aria-hidden="true"></span><span id="streamStatusText">Twitch broadcast embed loading</span></p>
       </article>
       <article class="panel">
         <span class="ribbon">Artist Tips</span>
@@ -61,29 +61,44 @@
       <p class="note">This block is intentionally simple so the venue can update show-night details without touching the broadcast embed.</p>
     </section>
   </main>
-  <footer>Balcony Music Club • 504 Esplanade Avenue • New Orleans, Louisiana<br><span class="note">YouTube-powered broadcast page for balconymusicclub.com/bmc-live.</span></footer>
+  <footer>Balcony Music Club • 504 Esplanade Avenue • New Orleans, Louisiana<br><span class="note">Twitch-powered broadcast page for balconymusicclub.com/bmc-live.</span></footer>
 
   <script>
-    const BMC_YOUTUBE_EMBED_URL = '';
-    const BMC_YOUTUBE_WATCH_URL = '';
+    const BMC_TWITCH_CHANNEL = 'bmcnolalive';
+    const BMC_TWITCH_WATCH_URL = `https://www.twitch.tv/${BMC_TWITCH_CHANNEL}`;
+    const BMC_TWITCH_PARENT_HOSTS = Array.from(new Set([
+      window.location.hostname,
+      'balconymusicclub.com',
+      'www.balconymusicclub.com'
+    ].filter(Boolean)));
 
-    function installYouTubeEmbed(){
+    function buildTwitchEmbedUrl(){
+      const params = new URLSearchParams({
+        channel: BMC_TWITCH_CHANNEL,
+        autoplay: 'true',
+        muted: 'true'
+      });
+      BMC_TWITCH_PARENT_HOSTS.forEach(host => params.append('parent', host));
+      return `https://player.twitch.tv/?${params.toString()}`;
+    }
+
+    function installTwitchEmbed(){
       const frame=document.getElementById('bmcVideoFrame');
       const status=document.getElementById('streamStatusText');
-      const link=document.getElementById('openYouTube');
-      if(link&&BMC_YOUTUBE_WATCH_URL)link.href=BMC_YOUTUBE_WATCH_URL;
-      if(!frame||!BMC_YOUTUBE_EMBED_URL)return;
+      const link=document.getElementById('openTwitch');
+      if(link)link.href=BMC_TWITCH_WATCH_URL;
+      if(!frame||!BMC_TWITCH_CHANNEL)return;
       const iframe=document.createElement('iframe');
-      iframe.src=BMC_YOUTUBE_EMBED_URL;
-      iframe.title='Balcony Music Club live broadcast on YouTube';
-      iframe.allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      iframe.src=buildTwitchEmbedUrl();
+      iframe.title='Balcony Music Club live broadcast on Twitch';
+      iframe.allow='autoplay; fullscreen; picture-in-picture';
       iframe.allowFullscreen=true;
       frame.innerHTML='';
       frame.appendChild(iframe);
-      if(status)status.textContent='YouTube broadcast embed loaded';
+      if(status)status.textContent='Twitch broadcast embed loaded';
     }
 
-    installYouTubeEmbed();
+    installTwitchEmbed();
   </script>
 </body>
 </html>
