@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bmc-guest-pwa-v51-july-schedule';
+const CACHE_NAME = 'bmc-guest-pwa-v57-layout-rollback-july-copy';
 const CORE_ASSETS = [
   '/',
   '/index.html',
