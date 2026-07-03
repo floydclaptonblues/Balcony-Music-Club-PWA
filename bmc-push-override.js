@@ -15,6 +15,21 @@
     document.body.appendChild(script);
   }
 
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',loadScheduleAuthority);
-  else loadScheduleAuthority();
+  function patchStaticJulyCopy(){
+    var marquee=document.querySelector('.marquee p');
+    if(marquee)marquee.textContent='Scan, save, and check the July lineup.';
+    var scheduleRibbon=document.querySelector('#schedule .ribbon');
+    if(scheduleRibbon)scheduleRibbon.textContent='July 2026 live music';
+    var scheduleNote=document.querySelector('#schedule .note');
+    if(scheduleNote)scheduleNote.textContent='July schedule is loaded from the approved BMC schedule snapshot.';
+  }
+
+  function run(){
+    patchStaticJulyCopy();
+    loadScheduleAuthority();
+  }
+
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run);
+  else run();
+  window.addEventListener('load',function(){run();setTimeout(run,250);setTimeout(run,1000);});
 })();
