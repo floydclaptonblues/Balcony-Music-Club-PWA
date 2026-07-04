@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bmc-guest-pwa-v69-alert-topic-copy';
+const CACHE_NAME = 'bmc-guest-pwa-v70-remove-duplicate-alert-card';
 const CORE_ASSETS = [
   '/',
   '/index.html',
@@ -62,6 +62,7 @@ function patchJulyText(html) {
 
 function patchAlertTopicCopy(html) {
   return html
+    .replace(/<article class="card"><h3>Alert topics<\/h3><ul><li>Tonight’s BMC show announcements<\/li><li>Wed–Sun schedule reminders<\/li><li>Special event notices when approved<\/li><\/ul><\/article>/g, '')
     .replace(/<h3>Local guest preferences<\/h3>/g, '<h3>ALERT TOPICS</h3>')
     .replace(/<span>Band schedule updates<\/span>/g, '<span>Drink Specials!</span>')
     .replace(/<span>Special events<\/span>/g, '<span>Exclusive Member Discounts!</span>')
