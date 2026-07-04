@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bmc-guest-pwa-v68-musical-note-stars-layer';
+const CACHE_NAME = 'bmc-guest-pwa-v69-alert-topic-copy';
 const CORE_ASSETS = [
   '/',
   '/index.html',
@@ -60,6 +60,14 @@ function patchJulyText(html) {
     .replace(/June schedule is embedded from the approved JazzyCatBotAI schedule snapshot\./gi, 'July schedule is loaded from the approved BMC schedule snapshot.');
 }
 
+function patchAlertTopicCopy(html) {
+  return html
+    .replace(/<h3>Local guest preferences<\/h3>/g, '<h3>ALERT TOPICS</h3>')
+    .replace(/<span>Band schedule updates<\/span>/g, '<span>Drink Specials!</span>')
+    .replace(/<span>Special events<\/span>/g, '<span>Exclusive Member Discounts!</span>')
+    .replace(/<span>Store \/ merch updates<\/span>/g, '<span>Special Event Invitations!</span>');
+}
+
 function patchMusicNoteStars(html) {
   let patched = html;
   if (!patched.includes('bmc-music-note-stars')) patched = patched.replace('</head>', MUSIC_NOTE_STARS_PATCH + '</head>');
@@ -68,7 +76,7 @@ function patchMusicNoteStars(html) {
 }
 
 function patchIndexHtml(html) {
-  let patched = patchMusicNoteStars(patchJulyText(html));
+  let patched = patchAlertTopicCopy(patchMusicNoteStars(patchJulyText(html)));
   if (!patched.includes('bmc-index-no-circles')) patched = patched.replace('</head>', INDEX_NO_CIRCLES_PATCH + '</head>');
   if (!patched.includes('hero-quality-patch.js')) patched = patched.replace('</body>', HERO_QUALITY_PATCH + '</body>');
   if (!patched.includes('jazzycat-restore-patch.js')) patched = patched.replace('</body>', JAZZYCAT_RESTORE_PATCH + '</body>');
