@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bmc-guest-pwa-v70-remove-duplicate-alert-card';
+const CACHE_NAME = 'bmc-guest-pwa-v71-music-notes-6x-double';
 const CORE_ASSETS = [
   '/',
   '/index.html',
@@ -25,17 +25,27 @@ body:before,body:after{display:none!important;content:none!important;background:
 </style>`;
 const MUSIC_NOTE_STARS_PATCH = `<style id="bmc-music-note-stars">
 .music-stars{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden;opacity:.92;mix-blend-mode:screen;}
-.music-stars .note-star{position:absolute;display:block;color:rgba(255,229,122,.7);font-family:Georgia,serif;font-weight:900;text-shadow:0 0 8px rgba(255,216,87,.45),0 0 18px rgba(94,230,255,.18);animation:musicStarDrift 72s linear infinite;}
-.music-stars .n1{left:8%;top:14%;font-size:16px;animation-duration:76s;}
-.music-stars .n2{left:23%;top:72%;font-size:12px;color:rgba(94,230,255,.55);animation-duration:96s;}
-.music-stars .n3{left:39%;top:24%;font-size:18px;color:rgba(255,137,207,.52);animation-duration:88s;}
-.music-stars .n4{left:57%;top:82%;font-size:14px;color:rgba(255,229,122,.58);animation-duration:104s;}
-.music-stars .n5{left:72%;top:18%;font-size:13px;color:rgba(255,255,255,.52);animation-duration:90s;}
-.music-stars .n6{left:88%;top:58%;font-size:20px;color:rgba(94,230,255,.48);animation-duration:112s;}
-.music-stars .n7{left:14%;top:44%;font-size:11px;color:rgba(255,255,255,.38);animation-duration:120s;}
-.music-stars .n8{left:64%;top:42%;font-size:15px;color:rgba(255,229,122,.50);animation-duration:84s;}
-.music-stars .n9{left:81%;top:76%;font-size:12px;color:rgba(255,137,207,.42);animation-duration:108s;}
-.music-stars .n10{left:46%;top:61%;font-size:10px;color:rgba(94,230,255,.42);animation-duration:118s;}
+.music-stars .note-star{position:absolute;display:block;color:rgba(255,229,122,.7);font-family:Georgia,serif;font-weight:900;text-shadow:0 0 10px rgba(255,216,87,.48),0 0 24px rgba(94,230,255,.22);animation:musicStarDrift 72s linear infinite;}
+.music-stars .n1{left:8%;top:14%;font-size:96px;animation-duration:76s;}
+.music-stars .n2{left:23%;top:72%;font-size:72px;color:rgba(94,230,255,.55);animation-duration:96s;}
+.music-stars .n3{left:39%;top:24%;font-size:108px;color:rgba(255,137,207,.52);animation-duration:88s;}
+.music-stars .n4{left:57%;top:82%;font-size:84px;color:rgba(255,229,122,.58);animation-duration:104s;}
+.music-stars .n5{left:72%;top:18%;font-size:78px;color:rgba(255,255,255,.52);animation-duration:90s;}
+.music-stars .n6{left:88%;top:58%;font-size:120px;color:rgba(94,230,255,.48);animation-duration:112s;}
+.music-stars .n7{left:14%;top:44%;font-size:66px;color:rgba(255,255,255,.38);animation-duration:120s;}
+.music-stars .n8{left:64%;top:42%;font-size:90px;color:rgba(255,229,122,.50);animation-duration:84s;}
+.music-stars .n9{left:81%;top:76%;font-size:72px;color:rgba(255,137,207,.42);animation-duration:108s;}
+.music-stars .n10{left:46%;top:61%;font-size:60px;color:rgba(94,230,255,.42);animation-duration:118s;}
+.music-stars .n11{left:5%;top:62%;font-size:102px;color:rgba(255,229,122,.46);animation-duration:92s;}
+.music-stars .n12{left:18%;top:27%;font-size:84px;color:rgba(94,230,255,.44);animation-duration:116s;}
+.music-stars .n13{left:31%;top:86%;font-size:114px;color:rgba(255,137,207,.38);animation-duration:100s;}
+.music-stars .n14{left:52%;top:12%;font-size:72px;color:rgba(255,255,255,.42);animation-duration:126s;}
+.music-stars .n15{left:69%;top:66%;font-size:96px;color:rgba(255,229,122,.44);animation-duration:98s;}
+.music-stars .n16{left:92%;top:31%;font-size:78px;color:rgba(94,230,255,.38);animation-duration:132s;}
+.music-stars .n17{left:35%;top:48%;font-size:66px;color:rgba(255,255,255,.34);animation-duration:122s;}
+.music-stars .n18{left:76%;top:7%;font-size:108px;color:rgba(255,137,207,.36);animation-duration:106s;}
+.music-stars .n19{left:3%;top:82%;font-size:72px;color:rgba(94,230,255,.36);animation-duration:134s;}
+.music-stars .n20{left:58%;top:55%;font-size:120px;color:rgba(255,229,122,.32);animation-duration:140s;}
 .music-stars:before,.music-stars:after{content:"";position:absolute;inset:-12%;background-repeat:repeat;will-change:transform;}
 .music-stars:before{background-size:180px 180px,240px 240px;background-image:radial-gradient(circle at 24px 32px,rgba(255,229,122,.82) 0 1.2px,transparent 2px),radial-gradient(circle at 142px 118px,rgba(94,230,255,.58) 0 1px,transparent 2px);animation:musicDustA 96s linear infinite;}
 .music-stars:after{background-size:260px 260px,320px 320px;background-image:radial-gradient(circle at 80px 72px,rgba(255,255,255,.46) 0 1px,transparent 2px),radial-gradient(circle at 218px 210px,rgba(255,137,207,.34) 0 1px,transparent 2px);animation:musicDustB 130s linear infinite;}
@@ -44,7 +54,7 @@ const MUSIC_NOTE_STARS_PATCH = `<style id="bmc-music-note-stars">
 @keyframes musicDustB{from{transform:translate3d(0,0,0) scale(1.04)}to{transform:translate3d(78px,-92px,0) scale(1.1)}}
 @media (prefers-reduced-motion:reduce){.music-stars .note-star,.music-stars:before,.music-stars:after{animation:none}}
 </style>`;
-const MUSIC_NOTE_STARS_LAYER = `<div class="music-stars" aria-hidden="true"><span class="note-star n1">&#9834;</span><span class="note-star n2">&#9835;</span><span class="note-star n3">&#9836;</span><span class="note-star n4">&#9834;</span><span class="note-star n5">&#9835;</span><span class="note-star n6">&#9836;</span><span class="note-star n7">&#9834;</span><span class="note-star n8">&#9835;</span><span class="note-star n9">&#9834;</span><span class="note-star n10">&#9836;</span></div>`;
+const MUSIC_NOTE_STARS_LAYER = `<div class="music-stars" aria-hidden="true"><span class="note-star n1">&#9834;</span><span class="note-star n2">&#9835;</span><span class="note-star n3">&#9836;</span><span class="note-star n4">&#9834;</span><span class="note-star n5">&#9835;</span><span class="note-star n6">&#9836;</span><span class="note-star n7">&#9834;</span><span class="note-star n8">&#9835;</span><span class="note-star n9">&#9834;</span><span class="note-star n10">&#9836;</span><span class="note-star n11">&#9835;</span><span class="note-star n12">&#9834;</span><span class="note-star n13">&#9836;</span><span class="note-star n14">&#9835;</span><span class="note-star n15">&#9834;</span><span class="note-star n16">&#9836;</span><span class="note-star n17">&#9835;</span><span class="note-star n18">&#9834;</span><span class="note-star n19">&#9836;</span><span class="note-star n20">&#9835;</span></div>`;
 const HERO_QUALITY_PATCH = `<script src="assets/bot/hero-quality-patch.js?v=hero-quality-1"></script>`;
 const JAZZYCAT_RESTORE_PATCH = `<script src="assets/bot/jazzycat-restore-patch.js?v=jazzycat-original-1"></script>`;
 const COSMIC_RESTORE_PATCH = `<script src="assets/bot/cosmic-restore-patch.js?v=cosmic-restore-1"></script>`;
