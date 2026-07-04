@@ -3,7 +3,7 @@
 // Keep it present so the service worker install does not fail on cache.addAll().
 (function(){
   var PATCH_ID='bmc-schedule-authority-direct-loader';
-  var PATCH_SRC='/assets/bot/schedule-authority-patch.js?v=20260704-clean-mobile-source';
+  var PATCH_SRC='/assets/bot/schedule-authority-patch.js?v=20260704-syntax-safe-mobile';
 
   function loadScheduleAuthority(){
     if(document.getElementById(PATCH_ID))return;
