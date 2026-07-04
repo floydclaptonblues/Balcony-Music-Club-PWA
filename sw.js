@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bmc-guest-pwa-v65-band-photo-wire';
+const CACHE_NAME = 'bmc-guest-pwa-v66-push-activation';
 const CORE_ASSETS = [
   '/',
   '/index.html',
