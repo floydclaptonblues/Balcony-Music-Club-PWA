@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bmc-guest-pwa-v71-music-notes-6x-double';
+const CACHE_NAME = 'bmc-guest-pwa-v72-music-notes-3d-orbit';
 const CORE_ASSETS = [
   '/',
   '/index.html',
@@ -24,32 +24,32 @@ body:before,body:after{display:none!important;content:none!important;background:
 .bmc-ironwork{display:none!important;}
 </style>`;
 const MUSIC_NOTE_STARS_PATCH = `<style id="bmc-music-note-stars">
-.music-stars{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden;opacity:.92;mix-blend-mode:screen;}
-.music-stars .note-star{position:absolute;display:block;color:rgba(255,229,122,.7);font-family:Georgia,serif;font-weight:900;text-shadow:0 0 10px rgba(255,216,87,.48),0 0 24px rgba(94,230,255,.22);animation:musicStarDrift 72s linear infinite;}
-.music-stars .n1{left:8%;top:14%;font-size:96px;animation-duration:76s;}
-.music-stars .n2{left:23%;top:72%;font-size:72px;color:rgba(94,230,255,.55);animation-duration:96s;}
-.music-stars .n3{left:39%;top:24%;font-size:108px;color:rgba(255,137,207,.52);animation-duration:88s;}
-.music-stars .n4{left:57%;top:82%;font-size:84px;color:rgba(255,229,122,.58);animation-duration:104s;}
-.music-stars .n5{left:72%;top:18%;font-size:78px;color:rgba(255,255,255,.52);animation-duration:90s;}
-.music-stars .n6{left:88%;top:58%;font-size:120px;color:rgba(94,230,255,.48);animation-duration:112s;}
-.music-stars .n7{left:14%;top:44%;font-size:66px;color:rgba(255,255,255,.38);animation-duration:120s;}
-.music-stars .n8{left:64%;top:42%;font-size:90px;color:rgba(255,229,122,.50);animation-duration:84s;}
-.music-stars .n9{left:81%;top:76%;font-size:72px;color:rgba(255,137,207,.42);animation-duration:108s;}
-.music-stars .n10{left:46%;top:61%;font-size:60px;color:rgba(94,230,255,.42);animation-duration:118s;}
-.music-stars .n11{left:5%;top:62%;font-size:102px;color:rgba(255,229,122,.46);animation-duration:92s;}
-.music-stars .n12{left:18%;top:27%;font-size:84px;color:rgba(94,230,255,.44);animation-duration:116s;}
-.music-stars .n13{left:31%;top:86%;font-size:114px;color:rgba(255,137,207,.38);animation-duration:100s;}
-.music-stars .n14{left:52%;top:12%;font-size:72px;color:rgba(255,255,255,.42);animation-duration:126s;}
-.music-stars .n15{left:69%;top:66%;font-size:96px;color:rgba(255,229,122,.44);animation-duration:98s;}
-.music-stars .n16{left:92%;top:31%;font-size:78px;color:rgba(94,230,255,.38);animation-duration:132s;}
-.music-stars .n17{left:35%;top:48%;font-size:66px;color:rgba(255,255,255,.34);animation-duration:122s;}
-.music-stars .n18{left:76%;top:7%;font-size:108px;color:rgba(255,137,207,.36);animation-duration:106s;}
-.music-stars .n19{left:3%;top:82%;font-size:72px;color:rgba(94,230,255,.36);animation-duration:134s;}
-.music-stars .n20{left:58%;top:55%;font-size:120px;color:rgba(255,229,122,.32);animation-duration:140s;}
+.music-stars{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden;opacity:.92;mix-blend-mode:screen;perspective:900px;perspective-origin:50% 50%;transform-style:preserve-3d;}
+.music-stars .note-star{position:absolute;display:block;color:rgba(255,229,122,.7);font-family:Georgia,serif;font-weight:900;text-shadow:0 0 10px rgba(255,216,87,.48),0 0 24px rgba(94,230,255,.22);transform-style:preserve-3d;backface-visibility:visible;will-change:transform;animation:musicNoteOrbit 72s ease-in-out infinite;}
+.music-stars .n1{left:8%;top:14%;font-size:96px;animation-duration:76s;animation-delay:-4s;}
+.music-stars .n2{left:23%;top:72%;font-size:72px;color:rgba(94,230,255,.55);animation-duration:96s;animation-delay:-18s;}
+.music-stars .n3{left:39%;top:24%;font-size:108px;color:rgba(255,137,207,.52);animation-duration:88s;animation-delay:-32s;}
+.music-stars .n4{left:57%;top:82%;font-size:84px;color:rgba(255,229,122,.58);animation-duration:104s;animation-delay:-11s;}
+.music-stars .n5{left:72%;top:18%;font-size:78px;color:rgba(255,255,255,.52);animation-duration:90s;animation-delay:-41s;}
+.music-stars .n6{left:88%;top:58%;font-size:120px;color:rgba(94,230,255,.48);animation-duration:112s;animation-delay:-27s;}
+.music-stars .n7{left:14%;top:44%;font-size:66px;color:rgba(255,255,255,.38);animation-duration:120s;animation-delay:-54s;}
+.music-stars .n8{left:64%;top:42%;font-size:90px;color:rgba(255,229,122,.50);animation-duration:84s;animation-delay:-8s;}
+.music-stars .n9{left:81%;top:76%;font-size:72px;color:rgba(255,137,207,.42);animation-duration:108s;animation-delay:-63s;}
+.music-stars .n10{left:46%;top:61%;font-size:60px;color:rgba(94,230,255,.42);animation-duration:118s;animation-delay:-21s;}
+.music-stars .n11{left:5%;top:62%;font-size:102px;color:rgba(255,229,122,.46);animation-duration:92s;animation-delay:-48s;}
+.music-stars .n12{left:18%;top:27%;font-size:84px;color:rgba(94,230,255,.44);animation-duration:116s;animation-delay:-36s;}
+.music-stars .n13{left:31%;top:86%;font-size:114px;color:rgba(255,137,207,.38);animation-duration:100s;animation-delay:-15s;}
+.music-stars .n14{left:52%;top:12%;font-size:72px;color:rgba(255,255,255,.42);animation-duration:126s;animation-delay:-70s;}
+.music-stars .n15{left:69%;top:66%;font-size:96px;color:rgba(255,229,122,.44);animation-duration:98s;animation-delay:-26s;}
+.music-stars .n16{left:92%;top:31%;font-size:78px;color:rgba(94,230,255,.38);animation-duration:132s;animation-delay:-59s;}
+.music-stars .n17{left:35%;top:48%;font-size:66px;color:rgba(255,255,255,.34);animation-duration:122s;animation-delay:-44s;}
+.music-stars .n18{left:76%;top:7%;font-size:108px;color:rgba(255,137,207,.36);animation-duration:106s;animation-delay:-12s;}
+.music-stars .n19{left:3%;top:82%;font-size:72px;color:rgba(94,230,255,.36);animation-duration:134s;animation-delay:-81s;}
+.music-stars .n20{left:58%;top:55%;font-size:120px;color:rgba(255,229,122,.32);animation-duration:140s;animation-delay:-51s;}
 .music-stars:before,.music-stars:after{content:"";position:absolute;inset:-12%;background-repeat:repeat;will-change:transform;}
 .music-stars:before{background-size:180px 180px,240px 240px;background-image:radial-gradient(circle at 24px 32px,rgba(255,229,122,.82) 0 1.2px,transparent 2px),radial-gradient(circle at 142px 118px,rgba(94,230,255,.58) 0 1px,transparent 2px);animation:musicDustA 96s linear infinite;}
 .music-stars:after{background-size:260px 260px,320px 320px;background-image:radial-gradient(circle at 80px 72px,rgba(255,255,255,.46) 0 1px,transparent 2px),radial-gradient(circle at 218px 210px,rgba(255,137,207,.34) 0 1px,transparent 2px);animation:musicDustB 130s linear infinite;}
-@keyframes musicStarDrift{from{transform:translate3d(0,0,0) rotate(0deg)}to{transform:translate3d(-42px,-88px,0) rotate(12deg)}}
+@keyframes musicNoteOrbit{0%{transform:translate3d(0,0,0) rotateX(-8deg) rotateY(-10deg) rotateZ(0deg)}25%{transform:translate3d(16px,-18px,24px) rotateX(7deg) rotateY(18deg) rotateZ(4deg)}50%{transform:translate3d(0,-34px,0) rotateX(-5deg) rotateY(34deg) rotateZ(-3deg)}75%{transform:translate3d(-16px,-18px,-18px) rotateX(8deg) rotateY(18deg) rotateZ(5deg)}100%{transform:translate3d(0,0,0) rotateX(-8deg) rotateY(350deg) rotateZ(0deg)}}
 @keyframes musicDustA{from{transform:translate3d(0,0,0)}to{transform:translate3d(-96px,-136px,0)}}
 @keyframes musicDustB{from{transform:translate3d(0,0,0) scale(1.04)}to{transform:translate3d(78px,-92px,0) scale(1.1)}}
 @media (prefers-reduced-motion:reduce){.music-stars .note-star,.music-stars:before,.music-stars:after{animation:none}}
