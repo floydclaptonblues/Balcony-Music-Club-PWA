@@ -19,100 +19,30 @@
     {date:"2026-07-30",acts:[["6:00 PM","8:30 PM","TBA"],["9:00 PM","11:30 PM","KAT KILEY EXPERIENCE"]]},
     {date:"2026-07-31",acts:[["6:00 PM","8:30 PM","MOTHER RUCKUS"],["9:00 PM","11:30 PM","BIG MIKE & R&B KINGS"]]}
   ];
-
-  var BAND_BASE="assets/bands/bmc-band-assets/assets/bands/";
-  var UP="https://floydclaptonblues.github.io/UpcomingShows/assets/artists/";
-  var V="?v=20260704-mobile-safe";
+  var BAND_BASE='assets/bands/bmc-band-assets/assets/bands/';
+  var UP='https://floydclaptonblues.github.io/UpcomingShows/assets/artists/';
+  var V='?v=20260704-restored';
   function up(file){return UP+file+V;}
+  var JOHN='https://images.squarespace-cdn.com/content/v1/5872a05fb8a79b5c39e888e8/1570220588454-ROAJNS29CYDX7TFZ3B09/johnlisi.jpg?format=1000w';
+  var PLAY=up('Thee%20PlayMateZ.png');
   var IMAGES={
-    "ANDRE LOVETT BAND":BAND_BASE+"andre-lovett-band.jpg?v=20260615",
-    "DAPPER DANDIES":BAND_BASE+"dapper-dandies.jpg?v=20260615",
-    "SUGAR & THE DADDIES":BAND_BASE+"sugar-and-the-daddies.jpg?v=20260615",
-    "WOODY'S RAMPAGE":BAND_BASE+"woodys-rampage.jpg?v=20260615",
-    "WOODYS RAMPAGE":BAND_BASE+"woodys-rampage.jpg?v=20260615",
-    "BIG MIKE & THE R&B KINGS":BAND_BASE+"big-mike-rb-kings.webp?v=20260615",
-    "BIG MIKE & R&B KINGS":BAND_BASE+"big-mike-rb-kings.webp?v=20260615",
-    "SIERRA GREEN":BAND_BASE+"sierra-green.jpg?v=20260615",
-    "SIERRA & GREEN NOTES":BAND_BASE+"sierra-green.jpg?v=20260615",
-    "KIM IN THE WIND":BAND_BASE+"kim-in-the-wind.webp?v=20260615",
-    "KAT KILEY EXPERIENCE":BAND_BASE+"kat-kiley-experience.webp?v=20260615",
-    "MAURICE CADE & ESS":up("Maurice%20Cade%20%26%20ESS%20Sunday%206pm.jpg"),
-    "MOTHER RUCKUS":up("Mother%20Ruckus.png"),
-    "DEEJ FLAVA & MOTHER RUCKUS":up("Mother%20Ruckus.png"),
-    "FUNKY SOLES":up("Funky%20Soles%20Featuring%20Tahj%20Derosier.png"),
-    "ADO SOUL & THE TRIBE":up("Ado%20Soul%20Tribe.png"),
-    "ADO SOUL TRIBE":up("Ado%20Soul%20Tribe.png"),
-    "GABE STILLMAN BAND":up("Gabe%20Stillman.png"),
-    "GABE STILLMAN":up("Gabe%20Stillman.png"),
-    "PARISH LINE":up("Louisiana%20Parish%20Line.png"),
-    "LOUISIANA PARISH LINE":up("Louisiana%20Parish%20Line.png"),
-    "THEE FONK JAM":up("Thee%20PlayMateZ.png"),
-    "THEE FONK JAM FEAT. TAMARIET":up("Thee%20PlayMateZ.png"),
-    "THEE FONK JAM FEAT TAMARIET":up("Thee%20PlayMateZ.png"),
-    "JOHN LISI & DELTA FUNK":"https://images.squarespace-cdn.com/content/v1/5872a05fb8a79b5c39e888e8/1570220588454-ROAJNS29CYDX7TFZ3B09/johnlisi.jpg?format=1000w"
+    'ANDRE LOVETT BAND':BAND_BASE+'andre-lovett-band.jpg?v=20260615','DAPPER DANDIES':BAND_BASE+'dapper-dandies.jpg?v=20260615','SUGAR & THE DADDIES':BAND_BASE+'sugar-and-the-daddies.jpg?v=20260615',"WOODY'S RAMPAGE":BAND_BASE+'woodys-rampage.jpg?v=20260615','WOODYS RAMPAGE':BAND_BASE+'woodys-rampage.jpg?v=20260615','BIG MIKE & THE R&B KINGS':BAND_BASE+'big-mike-rb-kings.webp?v=20260615','BIG MIKE & R&B KINGS':BAND_BASE+'big-mike-rb-kings.webp?v=20260615','SIERRA & GREEN NOTES':BAND_BASE+'sierra-green.jpg?v=20260615','SIERRA GREEN':BAND_BASE+'sierra-green.jpg?v=20260615','KIM IN THE WIND':BAND_BASE+'kim-in-the-wind.webp?v=20260615','KAT KILEY EXPERIENCE':BAND_BASE+'kat-kiley-experience.webp?v=20260615','FUNKY SOLES':up('Funky%20Soles%20Featuring%20Tahj%20Derosier.png'),'ADO SOUL & THE TRIBE':up('Ado%20Soul%20Tribe.png'),'MAURICE CADE & ESS':up('Maurice%20Cade%20%26%20ESS%20Sunday%206pm.jpg'),'MOTHER RUCKUS':up('Mother%20Ruckus.png'),'DEEJ FLAVA & MOTHER RUCKUS':up('Mother%20Ruckus.png'),'PARISH LINE':up('Louisiana%20Parish%20Line.png'),'GABE STILLMAN BAND':up('Gabe%20Stillman.png'),'ASHLEY PAIGE & SOULCIAL CLUB':up('Ashley%20Paige%20and%20the%20Soulcial%20Club.jpeg'),'THEE FONK JAM':PLAY,'THEE FONK JAM FEAT. TAMARIET':PLAY,'THEE FONK JAM FEAT TAMARIET':PLAY,'JOHN LISI & DELTA FUNK':JOHN,'JOHN LISI AND DELTA FUNK':JOHN
   };
-
-  function esc(s){return String(s||"").replace(/[&<>\"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c];});}
-  function key(s){return String(s||"").replace(/’/g,"'").replace(/\s+/g," ").trim().toUpperCase();}
-  function imgFor(name){return IMAGES[key(name)]||"";}
-  function dFromIso(s){return new Date(s+"T12:00:00");}
-  function iso(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
-  function pretty(s){return dFromIso(s).toLocaleDateString(undefined,{weekday:"long",month:"short",day:"numeric"});}
-  function venueToday(){
-    var parts=new Intl.DateTimeFormat("en-US",{timeZone:"America/Chicago",year:"numeric",month:"numeric",day:"numeric"}).formatToParts(new Date());
-    var out={}; parts.forEach(function(p){out[p.type]=p.value;});
-    return new Date(Number(out.year),Number(out.month)-1,Number(out.day),12);
-  }
+  function esc(s){return String(s||'').replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+  function key(s){return String(s||'').replace(/’/g,"'").replace(/\s+/g,' ').trim().toUpperCase();}
+  function imgFor(name){return IMAGES[key(name)]||'';}
+  function dFromIso(s){return new Date(s+'T12:00:00');}
+  function iso(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+  function pretty(s){return dFromIso(s).toLocaleDateString(undefined,{weekday:'long',month:'short',day:'numeric'});}
+  function venueToday(){var p=new Intl.DateTimeFormat('en-US',{timeZone:'America/Chicago',year:'numeric',month:'numeric',day:'numeric'}).formatToParts(new Date());var o={};p.forEach(function(x){o[x.type]=x.value;});return new Date(Number(o.year),Number(o.month)-1,Number(o.day),12);}
   function weekWindow(now){var d=new Date(now.getFullYear(),now.getMonth(),now.getDate(),12);var sinceMon=(d.getDay()+6)%7;var mon=new Date(d);mon.setDate(d.getDate()-sinceMon);var wed=new Date(mon);wed.setDate(mon.getDate()+2);var sun=new Date(mon);sun.setDate(mon.getDate()+6);return {start:iso(wed),end:iso(sun)};}
-  function isPlaceholder(a){return !a||key(a[2])==="TBA"||key(a[2])==="TO BE ANNOUNCED";}
-  function weekDays(){var w=weekWindow(venueToday());var days=SCHEDULE.filter(function(day){return day.date>=w.start&&day.date<=w.end;});return days.length?days:SCHEDULE.slice(0,4);}
-  function focusDay(days){var today=iso(venueToday());return days.find(function(d){return d.date===today;})||days[0]||SCHEDULE[0];}
-  function photo(act,klass){var src=imgFor(act[2]);return src?'<img class="'+klass+'" src="'+esc(src)+'" alt="'+esc(act[2])+' at BMC" loading="lazy" decoding="async">':'<div class="'+klass+' no-photo"><span>♪</span></div>';}
-  function aodCard(act){return '<article class="bmc-aod-card">'+photo(act,"bmc-aod-photo")+'<div class="bmc-aod-copy"><span>'+esc(act[0])+'–'+esc(act[1])+'</span><b>'+esc(act[2])+'</b></div></article>';}
-  function actRow(act){return '<div class="bmc-week-act">'+photo(act,"bmc-week-photo")+'<div class="bmc-week-copy"><b>'+esc(act[2])+'</b><span>'+esc(act[0])+'–'+esc(act[1])+'</span></div></div>';}
-  function dayCard(day){return '<article class="card show-day bmc-week-day"><h3>'+pretty(day.date)+'</h3>'+day.acts.map(actRow).join("")+'</article>';}
-
-  function installStyle(){
-    var old=document.getElementById("bmc-schedule-authority-style");
-    if(old) old.remove();
-    var css=[
-      "#schedule,#schedule *{box-sizing:border-box}",
-      "#schedule{max-width:100%;overflow:hidden}",
-      "#schedule .schedule-list{display:block;width:100%;max-width:100%;overflow:hidden}",
-      ".bmc-aod-heading{margin:0 0 10px;color:#fff6e8;text-transform:uppercase;letter-spacing:.06em;text-shadow:2px 2px 0 #000}",
-      ".bmc-aod-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;width:100%;max-width:100%;margin:0 0 14px;overflow:hidden}",
-      ".bmc-aod-card{display:grid;grid-template-columns:88px minmax(0,1fr);align-items:center;width:100%;min-width:0;overflow:hidden;border:2px solid rgba(255,216,87,.68);border-radius:12px;background:linear-gradient(180deg,rgba(12,9,35,.96),rgba(0,0,0,.94))}",
-      ".bmc-aod-photo{display:block;width:88px;height:72px;object-fit:cover;background:#07030f}",
-      ".bmc-aod-photo.no-photo{display:grid;place-items:center;color:#ffd857;font-size:22px}",
-      ".bmc-aod-copy{min-width:0;padding:7px 9px;overflow:hidden}",
-      ".bmc-aod-copy span{display:inline-block;max-width:100%;font-size:10px;font-weight:900;color:#5ee6ff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}",
-      ".bmc-aod-copy b{display:block;font-size:13px;line-height:1.12;color:#fff6e8;text-transform:uppercase;overflow-wrap:anywhere}",
-      ".bmc-week-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;width:100%;max-width:100%;overflow:hidden}",
-      ".bmc-week-day{min-width:0;max-width:100%;overflow:hidden}",
-      ".bmc-week-act{display:grid;grid-template-columns:64px minmax(0,1fr);gap:9px;align-items:center;width:100%;min-width:0;padding:7px 0;border-top:1px dashed rgba(255,255,255,.24);overflow:hidden}",
-      ".bmc-week-photo{display:block;width:64px;height:50px;object-fit:cover;border-radius:7px;background:#07030f}",
-      ".bmc-week-photo.no-photo{display:grid;place-items:center;color:#ffd857;font-size:18px}",
-      ".bmc-week-copy{min-width:0;overflow:hidden}",
-      ".bmc-week-copy b{display:block;font-size:12px;line-height:1.13;color:#fff6e8;text-transform:uppercase;overflow-wrap:anywhere}",
-      ".bmc-week-copy span{display:block;font-size:10px;color:#5ee6ff;margin-top:2px}",
-      "@media(max-width:760px){html,body{max-width:100vw!important;overflow-x:hidden!important}main,#schedule,#schedule.panel,#schedule .schedule-list,#schedule .card{width:100%!important;max-width:100%!important;min-width:0!important;overflow:hidden!important}#schedule{padding-left:10px!important;padding-right:10px!important}#schedule h2{font-size:clamp(34px,12vw,50px)!important;line-height:.92!important}.bmc-aod-grid{grid-template-columns:1fr!important;gap:8px!important}.bmc-aod-card{grid-template-columns:54px minmax(0,1fr)!important;min-height:54px!important;max-height:70px!important}.bmc-aod-photo{width:54px!important;height:54px!important;min-width:54px!important;max-width:54px!important}.bmc-aod-copy{padding:5px 7px!important}.bmc-aod-copy span{font-size:8.5px!important}.bmc-aod-copy b{font-size:10.5px!important}.bmc-week-grid{grid-template-columns:1fr!important;gap:10px!important}.bmc-week-day{padding:12px!important}.bmc-week-act{grid-template-columns:44px minmax(0,1fr)!important;gap:7px!important}.bmc-week-photo{width:44px!important;height:36px!important;min-width:44px!important;max-width:44px!important}.bmc-week-copy b{font-size:10.5px!important}.bmc-week-copy span{font-size:9px!important}}"
-    ].join("\n");
-    var style=document.createElement("style");
-    style.id="bmc-schedule-authority-style";
-    style.textContent=css;
-    document.head.appendChild(style);
-  }
-  function render(){
-    installStyle();
-    var list=document.getElementById("scheduleList");
-    if(!list) return;
-    var days=weekDays();
-    var focus=focusDay(days);
-    var focusActs=(focus.acts||[]).filter(function(a){return !isPlaceholder(a);});
-    list.innerHTML='<h3 class="bmc-aod-heading">Artists of the Day</h3><div class="bmc-aod-grid">'+focusActs.map(aodCard).join("")+'</div><div class="bmc-week-grid">'+days.map(dayCard).join("")+'</div>';
-    var ribbon=document.querySelector("#schedule .ribbon"); if(ribbon) ribbon.textContent="July 2026 live music";
-    var note=document.querySelector("#schedule .note"); if(note) note.textContent="July schedule is loaded from the approved BMC schedule snapshot.";
-  }
-  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",render); else render();
-  window.addEventListener("load",render);
+  function isPlaceholder(a){return !a||key(a[2])==='TBA'||key(a[2])==='TO BE ANNOUNCED';}
+  function featuredIndex(day){for(var i=day.acts.length-1;i>=0;i--){if(!isPlaceholder(day.acts[i]))return i;}return day.acts.length-1;}
+  function photoAct(day){return day.acts[featuredIndex(day)];}
+  function photoHtml(act,cls){var src=act?imgFor(act[2]):'';return src?'<img class="bmc-band-photo '+cls+'" src="'+esc(src)+'" alt="'+esc(act[2])+' at Balcony Music Club" loading="lazy" decoding="async">':'';}
+  function actsHtml(day){var head=photoAct(day);return day.acts.map(function(a,i){return '<div class="act '+(a===head?'is-featured-headliner':'')+'">'+photoHtml(a,'bmc-band-photo--act')+'<b>'+esc(a[2])+'</b><span>'+esc(a[0])+'–'+esc(a[1])+'</span></div>';}).join('');}
+  function dayCard(day){return '<article class="card show-day"><h3>'+pretty(day.date)+'</h3>'+photoHtml(photoAct(day),'bmc-band-photo--feature')+actsHtml(day)+'</article>';}
+  function installStyle(){var old=document.getElementById('bmc-schedule-authority-style');if(old)old.remove();var style=document.createElement('style');style.id='bmc-schedule-authority-style';style.textContent='.weekly-schedule-panel{max-width:100%;overflow:hidden}.weekly-lineup-grid{display:grid;grid-template-columns:minmax(0,.92fr) minmax(0,1.08fr);gap:12px;align-items:start;max-width:100%;overflow:hidden}.week-lineup-strip{display:grid;grid-template-columns:1fr;gap:10px;max-width:100%;overflow:hidden}.bmc-band-photo{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border:2px solid rgba(255,216,87,.58);border-radius:14px;margin:8px 0 10px;background:#120728;box-shadow:0 12px 28px rgba(0,0,0,.32)}.show-day .bmc-band-photo{max-height:170px}.today-lineup .bmc-band-photo{max-height:180px}.act .bmc-band-photo--act{max-height:92px;margin:0 0 8px;border-radius:10px}.act.is-featured-headliner{border-top:1px dashed rgba(255,255,255,.24);padding-top:8px;margin-top:8px}@media(max-width:760px){html,body{overflow-x:hidden!important}.weekly-lineup-grid{grid-template-columns:1fr!important;gap:10px!important}.weekly-schedule-panel,.weekly-lineup-grid,.week-lineup-strip,.show-day,.today-lineup{width:100%!important;max-width:100%!important;min-width:0!important;overflow:hidden!important}.show-day .bmc-band-photo--feature,.today-lineup .bmc-band-photo--feature{max-height:92px!important}.act .bmc-band-photo--act{width:64px!important;height:48px!important;max-height:48px!important;float:left!important;margin:0 8px 4px 0!important;object-fit:cover!important}.act{display:block!important;clear:both!important}.act b{font-size:12px!important;line-height:1.14!important;overflow-wrap:anywhere!important}.act span{font-size:10px!important}}';document.head.appendChild(style);}
+  function render(){var section=document.getElementById('schedule');if(!section)return;installStyle();var today=venueToday();var todayIso=iso(today);var win=weekWindow(today);var week=SCHEDULE.filter(function(d){return d.date>=win.start&&d.date<=win.end;});if(!week.length)week=SCHEDULE.filter(function(d){return d.date>=todayIso;}).slice(0,4);var todayDay=SCHEDULE.find(function(d){return d.date===todayIso;});var focus=todayDay||week[0];var todayHtml=focus?'<h3>Artist of the Day</h3>'+photoHtml(photoAct(focus),'bmc-band-photo--feature')+actsHtml(focus):'<h3>Artist of the Day</h3><p>Lineup coming soon.</p>';var weekHtml=week.length?week.map(dayCard).join(''):'<article class="card"><p>Lineup coming soon.</p></article>';section.classList.add('weekly-schedule-panel');section.innerHTML='<span class="ribbon">July 2026 live music</span><h2>This Week\'s Lineup:</h2><div class="weekly-lineup-grid"><article class="card today-lineup">'+todayHtml+'</article><div><h3>Artists of the Week</h3><div class="week-lineup-strip">'+weekHtml+'</div></div></div><p><button id="openFullSchedule" type="button" class="button primary">Open Full Band Schedule</button></p>';}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',render);else render();window.addEventListener('load',function(){render();setTimeout(render,250);setTimeout(render,1000);});
 })();
