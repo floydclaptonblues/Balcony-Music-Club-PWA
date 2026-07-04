@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bmc-guest-pwa-v58-restored-layout-july-text';
+const CACHE_NAME = 'bmc-guest-pwa-v59-mobile-lineup-image-fix';
 const CORE_ASSETS = [
   '/',
   '/index.html',
