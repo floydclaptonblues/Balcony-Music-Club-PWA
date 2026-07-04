@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bmc-guest-pwa-v73-freeform-3d-music-notes';
+const CACHE_NAME = 'bmc-guest-pwa-v74-boozeball-specials';
 const CORE_ASSETS = [
   '/',
   '/index.html',
@@ -6,6 +6,8 @@ const CORE_ASSETS = [
   '/icons/icon.svg',
   '/assets/venue/photos.js',
   '/assets/venue/venue-gallery-local-patch.js',
+  '/assets/venue/1000019805.jpg',
+  '/assets/venue/1000019788.jpg',
   '/assets/bot/jazzycat-bot.js',
   '/assets/bot/bmc-contact-patch.js',
   '/assets/bot/hero-quality-patch.js',
@@ -58,6 +60,26 @@ const MUSIC_NOTE_STARS_PATCH = `<style id="bmc-music-note-stars">
 @keyframes musicDustB{from{transform:translate3d(0,0,0) scale(1.04)}to{transform:translate3d(78px,-92px,0) scale(1.1)}}
 @media (prefers-reduced-motion:reduce){.music-stars .note-star,.music-stars:before,.music-stars:after{animation:none}}
 </style>`;
+const BOOZEBALL_SPECIALS_PATCH = `<style id="bmc-boozeball-specials-style">
+.boozeball-marquee-shell{margin:6px 0 16px;padding:9px;background:linear-gradient(180deg,rgba(255,216,87,.82),rgba(255,74,176,.58));border:2px solid #000;border-radius:16px;box-shadow:0 0 22px rgba(255,216,87,.28),0 10px 30px rgba(255,74,176,.18);overflow:hidden;}
+.boozeball-marquee-link{display:block;position:relative;overflow:hidden;min-height:52px;border:2px solid #000;border-radius:12px;background:linear-gradient(90deg,#190724,#4b1380,#190724);color:#fff7d6;text-decoration:none;text-shadow:2px 2px 0 #000;box-shadow:inset 0 0 0 3px rgba(94,230,255,.58);animation:boozeBlink 1.05s steps(2,end) infinite;}
+.boozeball-marquee-track{display:flex;width:max-content;white-space:nowrap;animation:boozeScroll 13s linear infinite;}
+.boozeball-marquee-track span{display:inline-flex;align-items:center;min-height:52px;padding:0 34px;font-family:Chicago,Charcoal,Geneva,'Arial Rounded MT Bold',Verdana,sans-serif;text-transform:uppercase;letter-spacing:.08em;font-size:clamp(15px,4.5vw,26px);font-weight:1000;color:#ffe57a;}
+.boozeball-card{border-color:rgba(255,216,87,.68);background:linear-gradient(180deg,rgba(255,216,87,.12),rgba(255,74,176,.07)),linear-gradient(180deg,rgba(50,25,86,.86),rgba(20,7,35,.88));}
+.boozeball-lede{font-size:16px;color:#fff6e8;margin-top:0;}
+.boozeball-photo-grid{display:grid;grid-template-columns:1fr;gap:10px;margin:12px 0;}
+.boozeball-photo-grid img{display:block;width:100%;height:auto;border:2px solid #000;border-radius:14px;background:#120728;box-shadow:0 8px 28px rgba(0,0,0,.42);}
+.boozeball-menu{display:grid;grid-template-columns:1fr;gap:10px;margin-top:12px;}
+.boozeball-menu article{border:2px solid #000;border-radius:12px;background:rgba(0,0,0,.24);padding:12px;}
+.boozeball-menu h3{color:#ffe57a;margin-bottom:6px;}
+.boozeball-menu ul{list-style:none;margin:0;padding:0;columns:1;}
+.boozeball-menu li{font-weight:900;color:#fff6e8;font-size:14px;line-height:1.65;}
+@keyframes boozeBlink{0%,49%{filter:saturate(1.15) brightness(1.08)}50%,100%{filter:saturate(1.9) brightness(1.34)}}
+@keyframes boozeScroll{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
+@media(min-width:760px){.boozeball-photo-grid{grid-template-columns:1.1fr .9fr}.boozeball-menu{grid-template-columns:repeat(2,minmax(0,1fr))}.boozeball-menu ul{columns:1}}
+@media (prefers-reduced-motion:reduce){.boozeball-marquee-link,.boozeball-marquee-track{animation:none}.boozeball-marquee-track{transform:none}}
+</style>`;
+const BOOZEBALL_SPECIALS_SECTION = `<section class="boozeball-marquee-shell" aria-label="BMC BoozeBall special"><a class="boozeball-marquee-link" href="#boozeball"><span class="boozeball-marquee-track"><span>The Slammin' $7 BMC BoozeBall.....Try Now!!!</span><span>The Slammin' $7 BMC BoozeBall.....Try Now!!!</span></span></a></section><section id="boozeball" class="panel boozeball-card"><span class="ribbon">Drink Special</span><h2>The Slammin' $7 BMC BoozeBall</h2><p class="boozeball-lede"><strong>Available now at the Patio Bar.</strong> Choose Absolut plus puree flavor and make it a cold little BMC party ball.</p><div class="boozeball-photo-grid"><img src="assets/venue/1000019805.jpg" alt="BMC BoozeBalls patio bar promo showing seven flavors available now"><img src="assets/venue/1000019788.jpg" alt="BMC Boozy Balls flavor menu with Absolut and puree flavor options"></div><div class="boozeball-menu"><article><h3>Absolut flavors</h3><ul><li>🍋 Citrus</li><li>💚 Lime</li><li>🥭 Mango</li><li>🍊 Mandarine</li><li>🌶️ Pepper</li><li>🍓 Raspberry</li><li>🫐 Wildberry</li></ul></article><article><h3>Puree flavors</h3><ul><li>🍓 Strawberry</li><li>🫐 Blueberry</li><li>⭐ Passion</li><li>🍓 Strawberry</li><li>🍈 Guava</li><li>🍈 Guava</li><li>⭐ Passion Fruit</li></ul></article></div></section>`;
 const MUSIC_NOTE_STARS_LAYER = `<div class="music-stars" aria-hidden="true"><span class="note-star n1">&#9834;</span><span class="note-star n2">&#9835;</span><span class="note-star n3">&#9836;</span><span class="note-star n4">&#9834;</span><span class="note-star n5">&#9835;</span><span class="note-star n6">&#9836;</span><span class="note-star n7">&#9834;</span><span class="note-star n8">&#9835;</span><span class="note-star n9">&#9834;</span><span class="note-star n10">&#9836;</span><span class="note-star n11">&#9835;</span><span class="note-star n12">&#9834;</span><span class="note-star n13">&#9836;</span><span class="note-star n14">&#9835;</span><span class="note-star n15">&#9834;</span><span class="note-star n16">&#9836;</span><span class="note-star n17">&#9835;</span><span class="note-star n18">&#9834;</span><span class="note-star n19">&#9836;</span><span class="note-star n20">&#9835;</span></div>`;
 const HERO_QUALITY_PATCH = `<script src="assets/bot/hero-quality-patch.js?v=hero-quality-1"></script>`;
 const JAZZYCAT_RESTORE_PATCH = `<script src="assets/bot/jazzycat-restore-patch.js?v=jazzycat-original-1"></script>`;
@@ -83,6 +105,13 @@ function patchAlertTopicCopy(html) {
     .replace(/<span>Store \/ merch updates<\/span>/g, '<span>Special Event Invitations!</span>');
 }
 
+function patchBoozeBallSpecials(html) {
+  let patched = html;
+  if (!patched.includes('bmc-boozeball-specials-style')) patched = patched.replace('</head>', BOOZEBALL_SPECIALS_PATCH + '</head>');
+  if (!patched.includes('id="boozeball"')) patched = patched.replace('<section id="book"', BOOZEBALL_SPECIALS_SECTION + '<section id="book"');
+  return patched;
+}
+
 function patchMusicNoteStars(html) {
   let patched = html;
   if (!patched.includes('bmc-music-note-stars')) patched = patched.replace('</head>', MUSIC_NOTE_STARS_PATCH + '</head>');
@@ -91,7 +120,7 @@ function patchMusicNoteStars(html) {
 }
 
 function patchIndexHtml(html) {
-  let patched = patchAlertTopicCopy(patchMusicNoteStars(patchJulyText(html)));
+  let patched = patchBoozeBallSpecials(patchAlertTopicCopy(patchMusicNoteStars(patchJulyText(html))));
   if (!patched.includes('bmc-index-no-circles')) patched = patched.replace('</head>', INDEX_NO_CIRCLES_PATCH + '</head>');
   if (!patched.includes('hero-quality-patch.js')) patched = patched.replace('</body>', HERO_QUALITY_PATCH + '</body>');
   if (!patched.includes('jazzycat-restore-patch.js')) patched = patched.replace('</body>', JAZZYCAT_RESTORE_PATCH + '</body>');
