@@ -61,6 +61,52 @@ function hasPushSupport() {
   return 'serviceWorker' in navigator && 'PushManager' in window && 'Notification' in window;
 }
 
+function waitForWorkerState(worker: ServiceWorker, targetState: ServiceWorkerState) {
+  if (worker.state === targetState) return Promise.resolve();
+
+  return new Promise<void>((resolve, reject) => {
+    const timeout = window.setTimeout(() => {
+      cleanup();
+      reject(new Error(`Timed out waiting for service worker to become ${targetState}.`));
+    }, 10000);
+
+    const cleanup = () => {
+      window.clearTimeout(timeout);
+      worker.removeEventListener('statechange', handleStateChange);
+    };
+
+    const handleStateChange = () => {
+      if (worker.state === targetState) {
+        cleanup();
+        resolve();
+        return;
+      }
+
+      if (worker.state === 'redundant') {
+        cleanup();
+        reject(new Error('The service worker became redundant before it activated.'));
+      }
+    };
+
+    worker.addEventListener('statechange', handleStateChange);
+  });
+}
+
+async function waitForActiveServiceWorker(registration: ServiceWorkerRegistration) {
+  if (registration.active) return registration;
+
+  const worker = registration.installing ?? registration.waiting;
+  if (worker) {
+    await waitForWorkerState(worker, 'activated');
+  }
+
+  if (!registration.active) {
+    throw new Error('The service worker registered but did not become active.');
+  }
+
+  return registration;
+}
+
 export function getPushAlertStatus(): PushAlertStatus {
   if (!hasPushSupport()) return 'unsupported';
   if (!getPushApiUrl() || !getVapidPublicKey()) return 'missing-config';
@@ -96,6 +142,7 @@ export async function subscribeToShowAlerts(
       `${APP_BASE_PATH}push-sw.js?api=${encodeURIComponent(pushApiUrl)}`,
       { scope: PUSH_SCOPE_PATH },
     );
+    await waitForActiveServiceWorker(registration);
   } catch {
     throw new Error('The BMC alerts service worker could not start. Refresh the app and try again.');
   }
