@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bmc-guest-pwa-v63-direct-july-shell';
+const CACHE_NAME = 'bmc-guest-pwa-v64-july-schedule-refresh';
 const CORE_ASSETS = [
   '/',
   '/index.html',
