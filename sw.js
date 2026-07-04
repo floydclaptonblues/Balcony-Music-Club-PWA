@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bmc-guest-pwa-v67-musical-note-stars';
+const CACHE_NAME = 'bmc-guest-pwa-v68-musical-note-stars-layer';
 const CORE_ASSETS = [
   '/',
   '/index.html',
@@ -63,7 +63,7 @@ function patchJulyText(html) {
 function patchMusicNoteStars(html) {
   let patched = html;
   if (!patched.includes('bmc-music-note-stars')) patched = patched.replace('</head>', MUSIC_NOTE_STARS_PATCH + '</head>');
-  if (!patched.includes('music-stars')) patched = patched.replace('<body>', '<body>' + MUSIC_NOTE_STARS_LAYER);
+  if (!patched.includes('class="music-stars"')) patched = patched.replace('<body>', '<body>' + MUSIC_NOTE_STARS_LAYER);
   return patched;
 }
 
