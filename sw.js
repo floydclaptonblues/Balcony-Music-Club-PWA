@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bmc-guest-pwa-v77-jazzycat-ufo-orbit';
+const CACHE_NAME = 'bmc-guest-pwa-v78-jazzycat-ufo-orbit-3x';
 const CORE_ASSETS = [
   '/',
   '/index.html',
@@ -54,7 +54,7 @@ const HERO_QUALITY_PATCH = `<script src="assets/bot/hero-quality-patch.js?v=hero
 const JAZZYCAT_RESTORE_PATCH = `<script src="assets/bot/jazzycat-restore-patch.js?v=jazzycat-original-1"></script>`;
 const COSMIC_RESTORE_PATCH = `<script src="assets/bot/cosmic-restore-patch.js?v=cosmic-restore-1"></script>`;
 const VENUE_GALLERY_PATCH = `<script src="assets/venue/venue-gallery-local-patch.js?v=local-venue-2"></script>`;
-const UFO_ORBIT_PATCH = `<script src="assets/venue/jazzycat-ufo-orbit.js?v=20260705-ufo-orbit"></script>`;
+const UFO_ORBIT_PATCH = `<script src="assets/venue/jazzycat-ufo-orbit.js?v=20260705-ufo-orbit-3x"></script>`;
 
 function patchJulyText(html) {
   return html
@@ -90,7 +90,7 @@ function patchMusicNoteStars(html) {
 }
 
 function patchUfoOrbit(html) {
-  let patched = html.replace(/assets\/venue\/jazzycat-ufo-orbit\.js\?v=[^"']+/g, 'assets/venue/jazzycat-ufo-orbit.js?v=20260705-ufo-orbit');
+  let patched = html.replace(/assets\/venue\/jazzycat-ufo-orbit\.js\?v=[^"']+/g, 'assets/venue/jazzycat-ufo-orbit.js?v=20260705-ufo-orbit-3x');
   if (!patched.includes('jazzycat-ufo-orbit.js')) patched = patched.replace('</body>', UFO_ORBIT_PATCH + '</body>');
   return patched;
 }
