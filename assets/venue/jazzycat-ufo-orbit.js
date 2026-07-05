@@ -1,7 +1,7 @@
 (() => {
   const LAYER_ID = 'bmc-ufo-orbit-layer';
   const STYLE_ID = 'bmc-ufo-orbit-style';
-  const UFO_SRC = 'assets/venue/bmc_jazzycat_ufo_360_rotation.gif?v=20260705-ufo-orbit';
+  const UFO_SRC = 'assets/venue/bmc_jazzycat_ufo_360_rotation.gif?v=20260705-ufo-orbit-3x';
 
   if (document.getElementById(LAYER_ID)) return;
 
@@ -17,7 +17,7 @@
         pointer-events:none;
         overflow:hidden;
         contain:layout paint;
-        --bmc-ufo-size:clamp(98px,10.6vw,168px);
+        --bmc-ufo-size:clamp(294px,31.8vw,504px);
         --bmc-ufo-edge:max(6px,env(safe-area-inset-left));
       }
       #${LAYER_ID} .bmc-ufo-ship{
@@ -74,12 +74,12 @@
         100%{opacity:0;transform:translate3d(var(--bmc-note-dx),var(--bmc-note-dy),0) scale(.16) rotate(var(--bmc-note-rot))}
       }
       @media(max-width:760px){
-        #${LAYER_ID}{--bmc-ufo-size:clamp(58px,18vw,92px)}
+        #${LAYER_ID}{--bmc-ufo-size:clamp(174px,54vw,276px)}
         #${LAYER_ID} .bmc-ufo-ship{top:8svh;opacity:.86;filter:drop-shadow(0 0 6px rgba(94,230,255,.32))}
         #${LAYER_ID} .bmc-ufo-note{font-size:12px}
       }
       @media(max-width:420px){
-        #${LAYER_ID}{--bmc-ufo-size:clamp(50px,16vw,72px)}
+        #${LAYER_ID}{--bmc-ufo-size:clamp(150px,48vw,216px)}
         #${LAYER_ID} .bmc-ufo-ship{opacity:.78}
       }
       @media(prefers-reduced-motion:reduce){
