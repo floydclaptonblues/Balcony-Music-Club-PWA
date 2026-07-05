@@ -1,7 +1,7 @@
 (() => {
   const LAYER_ID = 'bmc-ufo-orbit-layer';
   const STYLE_ID = 'bmc-ufo-orbit-style';
-  const UFO_SRC = 'assets/venue/bmc_jazzycat_ufo_360_rotation.gif?v=20260705-ufo-orbit-3x';
+  const UFO_SRC = 'assets/venue/bmc_jazzycat_ufo_360_rotation.gif?v=20260705-ufo-orbit-3x-fast';
 
   if (document.getElementById(LAYER_ID)) return;
 
@@ -37,11 +37,11 @@
       }
       #${LAYER_ID} .bmc-ufo-ship--left{
         left:max(6px,env(safe-area-inset-left));
-        animation:bmcUfoOrbitLeft 34s ease-in-out infinite alternate;
+        animation:bmcUfoOrbitLeft 11.33s ease-in-out infinite alternate;
       }
       #${LAYER_ID} .bmc-ufo-ship--right{
         right:max(6px,env(safe-area-inset-right));
-        animation:bmcUfoOrbitRight 38s ease-in-out infinite alternate;
+        animation:bmcUfoOrbitRight 12.67s ease-in-out infinite alternate;
       }
       #${LAYER_ID} .bmc-ufo-ship--right img{transform:scaleX(-1)}
       #${LAYER_ID} .bmc-ufo-note{
