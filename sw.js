@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bmc-guest-pwa-v76-july-band-photo-reset';
+const CACHE_NAME = 'bmc-guest-pwa-v77-jazzycat-ufo-orbit';
 const CORE_ASSETS = [
   '/',
   '/index.html',
@@ -6,6 +6,8 @@ const CORE_ASSETS = [
   '/icons/icon.svg',
   '/assets/venue/photos.js',
   '/assets/venue/venue-gallery-local-patch.js',
+  '/assets/venue/jazzycat-ufo-orbit.js',
+  '/assets/venue/bmc_jazzycat_ufo_360_rotation.gif',
   '/assets/bot/jazzycat-bot.js',
   '/assets/bot/bmc-contact-patch.js',
   '/assets/bot/hero-quality-patch.js',
@@ -52,6 +54,7 @@ const HERO_QUALITY_PATCH = `<script src="assets/bot/hero-quality-patch.js?v=hero
 const JAZZYCAT_RESTORE_PATCH = `<script src="assets/bot/jazzycat-restore-patch.js?v=jazzycat-original-1"></script>`;
 const COSMIC_RESTORE_PATCH = `<script src="assets/bot/cosmic-restore-patch.js?v=cosmic-restore-1"></script>`;
 const VENUE_GALLERY_PATCH = `<script src="assets/venue/venue-gallery-local-patch.js?v=local-venue-2"></script>`;
+const UFO_ORBIT_PATCH = `<script src="assets/venue/jazzycat-ufo-orbit.js?v=20260705-ufo-orbit"></script>`;
 
 function patchJulyText(html) {
   return html
@@ -86,8 +89,14 @@ function patchMusicNoteStars(html) {
   return patched;
 }
 
+function patchUfoOrbit(html) {
+  let patched = html.replace(/assets\/venue\/jazzycat-ufo-orbit\.js\?v=[^"']+/g, 'assets/venue/jazzycat-ufo-orbit.js?v=20260705-ufo-orbit');
+  if (!patched.includes('jazzycat-ufo-orbit.js')) patched = patched.replace('</body>', UFO_ORBIT_PATCH + '</body>');
+  return patched;
+}
+
 function patchIndexHtml(html) {
-  let patched = patchScheduleAuthority(patchAlertTopicCopy(patchMusicNoteStars(patchJulyText(html))));
+  let patched = patchUfoOrbit(patchScheduleAuthority(patchAlertTopicCopy(patchMusicNoteStars(patchJulyText(html)))));
   if (!patched.includes('bmc-index-no-circles')) patched = patched.replace('</head>', INDEX_NO_CIRCLES_PATCH + '</head>');
   if (!patched.includes('hero-quality-patch.js')) patched = patched.replace('</body>', HERO_QUALITY_PATCH + '</body>');
   if (!patched.includes('jazzycat-restore-patch.js')) patched = patched.replace('</body>', JAZZYCAT_RESTORE_PATCH + '</body>');
