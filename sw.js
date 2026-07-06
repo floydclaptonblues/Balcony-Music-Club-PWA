@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bmc-guest-pwa-v81-boozballs-draft-menu';
+const CACHE_NAME = 'bmc-guest-pwa-v82-featured-drinks-drafts';
 const CORE_ASSETS = [
   '/',
   '/index.html',
@@ -51,8 +51,9 @@ const MUSIC_NOTE_STARS_PATCH = `<style id="bmc-music-note-stars">
 </style>`;
 
 const MUSIC_NOTE_STARS_LAYER = `<div class="music-stars" aria-hidden="true"><span class="note-star n1">&#9834;</span><span class="note-star n2">&#9835;</span><span class="note-star n3">&#9836;</span><span class="note-star n4">&#9834;</span><span class="note-star n5">&#9835;</span><span class="note-star n6">&#9836;</span><span class="note-star n7">&#9834;</span><span class="note-star n8">&#9835;</span><span class="note-star n9">&#9834;</span><span class="note-star n10">&#9836;</span></div>`;
-const SCHEDULE_AUTHORITY_PATCH = `<script src="assets/bot/schedule-authority-patch.js?v=20260706-boozballs-drafts"></script>`;
-const DRINK_MENU_PATCH = `<script src="assets/venue/bmc-drink-menu-patch.js?v=20260706-boozballs-drafts"></script>`;
+const CONTACT_PATCH = `<script src="assets/bot/bmc-contact-patch.js?v=20260706-featured-draft-beers"></script>`;
+const SCHEDULE_AUTHORITY_PATCH = `<script src="assets/bot/schedule-authority-patch.js?v=20260706-featured-draft-beers"></script>`;
+const DRINK_MENU_PATCH = `<script src="assets/venue/bmc-drink-menu-patch.js?v=20260706-featured-draft-beers"></script>`;
 const HERO_QUALITY_PATCH = `<script src="assets/bot/hero-quality-patch.js?v=hero-quality-1"></script>`;
 const JAZZYCAT_RESTORE_PATCH = `<script src="assets/bot/jazzycat-restore-patch.js?v=jazzycat-original-1"></script>`;
 const COSMIC_RESTORE_PATCH = `<script src="assets/bot/cosmic-restore-patch.js?v=cosmic-restore-1"></script>`;
@@ -79,8 +80,14 @@ function patchAlertTopicCopy(html) {
     .replace(/<span>Store \/ merch updates<\/span>/g, '<span>Special Event Invitations!</span>');
 }
 
+function patchContact(html) {
+  let patched = html.replace(/assets\/bot\/bmc-contact-patch\.js\?v=[^"']+/g, 'assets/bot/bmc-contact-patch.js?v=20260706-featured-draft-beers');
+  if (!patched.includes('bmc-contact-patch.js')) patched = patched.replace('</body>', CONTACT_PATCH + '</body>');
+  return patched;
+}
+
 function patchScheduleAuthority(html) {
-  let patched = html.replace(/assets\/bot\/schedule-authority-patch\.js\?v=[^"']+/g, 'assets/bot/schedule-authority-patch.js?v=20260706-boozballs-drafts');
+  let patched = html.replace(/assets\/bot\/schedule-authority-patch\.js\?v=[^"']+/g, 'assets/bot/schedule-authority-patch.js?v=20260706-featured-draft-beers');
   if (!patched.includes('schedule-authority-patch.js')) patched = patched.replace('</body>', SCHEDULE_AUTHORITY_PATCH + '</body>');
   return patched;
 }
@@ -89,7 +96,7 @@ function patchDrinkMenu(html) {
   let patched = html
     .replace(/<style id="bmc-hide-boozeball-temporary">[\s\S]*?<\/style>/g, '')
     .replace(/<script id="bmc-hide-boozeball-temporary-script">[\s\S]*?<\/script>/g, '')
-    .replace(/assets\/venue\/bmc-drink-menu-patch\.js\?v=[^"']+/g, 'assets/venue/bmc-drink-menu-patch.js?v=20260706-boozballs-drafts');
+    .replace(/assets\/venue\/bmc-drink-menu-patch\.js\?v=[^"']+/g, 'assets/venue/bmc-drink-menu-patch.js?v=20260706-featured-draft-beers');
   if (!patched.includes('bmc-drink-menu-patch.js')) patched = patched.replace('</body>', DRINK_MENU_PATCH + '</body>');
   return patched;
 }
@@ -108,7 +115,7 @@ function patchUfoOrbit(html) {
 }
 
 function patchIndexHtml(html) {
-  let patched = patchDrinkMenu(patchUfoOrbit(patchScheduleAuthority(patchAlertTopicCopy(patchMusicNoteStars(patchJulyText(html))))));
+  let patched = patchDrinkMenu(patchUfoOrbit(patchScheduleAuthority(patchContact(patchAlertTopicCopy(patchMusicNoteStars(patchJulyText(html)))))));
   if (!patched.includes('bmc-index-no-circles')) patched = patched.replace('</head>', INDEX_NO_CIRCLES_PATCH + '</head>');
   if (!patched.includes('hero-quality-patch.js')) patched = patched.replace('</body>', HERO_QUALITY_PATCH + '</body>');
   if (!patched.includes('jazzycat-restore-patch.js')) patched = patched.replace('</body>', JAZZYCAT_RESTORE_PATCH + '</body>');
