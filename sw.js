@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bmc-guest-pwa-v79-jazzycat-ufo-orbit-3x-fast';
+const CACHE_NAME = 'bmc-guest-pwa-v80-calendar-popup-hide-boozeball';
 const CORE_ASSETS = [
   '/',
   '/index.html',
@@ -35,6 +35,13 @@ body:before,body:after{display:none!important;content:none!important;background:
 .bmc-ironwork{display:none!important;}
 </style>`;
 
+const BOOZEBALL_HIDE_PATCH = `<style id="bmc-hide-boozeball-temporary">
+#boozeball,.boozeball-marquee-shell,a[href="#boozeball"]{display:none!important;visibility:hidden!important;height:0!important;min-height:0!important;margin:0!important;padding:0!important;overflow:hidden!important;}
+</style>`;
+const BOOZEBALL_HIDE_SCRIPT = `<script id="bmc-hide-boozeball-temporary-script">
+(function(){function hideBooze(){document.querySelectorAll('#boozeball,.boozeball-marquee-shell,a[href="#boozeball"]').forEach(function(n){n.remove();});}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',hideBooze);else hideBooze();window.addEventListener('load',function(){hideBooze();setTimeout(hideBooze,250);setTimeout(hideBooze,1000);});})();
+</script>`;
+
 const MUSIC_NOTE_STARS_PATCH = `<style id="bmc-music-note-stars">
 .music-stars{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden;opacity:.9;mix-blend-mode:screen;perspective:1100px;perspective-origin:50% 48%;transform-style:preserve-3d;}
 .music-stars .note-star{position:absolute;display:block;font-family:Georgia,serif;font-weight:900;text-shadow:0 0 10px rgba(255,216,87,.48),0 0 24px rgba(94,230,255,.22);transform-style:preserve-3d;backface-visibility:visible;will-change:transform;animation-timing-function:ease-in-out;animation-iteration-count:infinite;}
@@ -49,7 +56,7 @@ const MUSIC_NOTE_STARS_PATCH = `<style id="bmc-music-note-stars">
 </style>`;
 
 const MUSIC_NOTE_STARS_LAYER = `<div class="music-stars" aria-hidden="true"><span class="note-star n1">&#9834;</span><span class="note-star n2">&#9835;</span><span class="note-star n3">&#9836;</span><span class="note-star n4">&#9834;</span><span class="note-star n5">&#9835;</span><span class="note-star n6">&#9836;</span><span class="note-star n7">&#9834;</span><span class="note-star n8">&#9835;</span><span class="note-star n9">&#9834;</span><span class="note-star n10">&#9836;</span></div>`;
-const SCHEDULE_AUTHORITY_PATCH = `<script src="assets/bot/schedule-authority-patch.js?v=20260705-july-band-photo-reset"></script>`;
+const SCHEDULE_AUTHORITY_PATCH = `<script src="assets/bot/schedule-authority-patch.js?v=20260706-calendar-popup-hide-boozeball"></script>`;
 const HERO_QUALITY_PATCH = `<script src="assets/bot/hero-quality-patch.js?v=hero-quality-1"></script>`;
 const JAZZYCAT_RESTORE_PATCH = `<script src="assets/bot/jazzycat-restore-patch.js?v=jazzycat-original-1"></script>`;
 const COSMIC_RESTORE_PATCH = `<script src="assets/bot/cosmic-restore-patch.js?v=cosmic-restore-1"></script>`;
@@ -77,8 +84,15 @@ function patchAlertTopicCopy(html) {
 }
 
 function patchScheduleAuthority(html) {
-  let patched = html.replace(/assets\/bot\/schedule-authority-patch\.js\?v=[^"']+/g, 'assets/bot/schedule-authority-patch.js?v=20260705-july-band-photo-reset');
+  let patched = html.replace(/assets\/bot\/schedule-authority-patch\.js\?v=[^"']+/g, 'assets/bot/schedule-authority-patch.js?v=20260706-calendar-popup-hide-boozeball');
   if (!patched.includes('schedule-authority-patch.js')) patched = patched.replace('</body>', SCHEDULE_AUTHORITY_PATCH + '</body>');
+  return patched;
+}
+
+function patchHideBoozeBall(html) {
+  let patched = html;
+  if (!patched.includes('bmc-hide-boozeball-temporary')) patched = patched.replace('</head>', BOOZEBALL_HIDE_PATCH + '</head>');
+  if (!patched.includes('bmc-hide-boozeball-temporary-script')) patched = patched.replace('</body>', BOOZEBALL_HIDE_SCRIPT + '</body>');
   return patched;
 }
 
@@ -96,7 +110,7 @@ function patchUfoOrbit(html) {
 }
 
 function patchIndexHtml(html) {
-  let patched = patchUfoOrbit(patchScheduleAuthority(patchAlertTopicCopy(patchMusicNoteStars(patchJulyText(html)))));
+  let patched = patchHideBoozeBall(patchUfoOrbit(patchScheduleAuthority(patchAlertTopicCopy(patchMusicNoteStars(patchJulyText(html))))));
   if (!patched.includes('bmc-index-no-circles')) patched = patched.replace('</head>', INDEX_NO_CIRCLES_PATCH + '</head>');
   if (!patched.includes('hero-quality-patch.js')) patched = patched.replace('</body>', HERO_QUALITY_PATCH + '</body>');
   if (!patched.includes('jazzycat-restore-patch.js')) patched = patched.replace('</body>', JAZZYCAT_RESTORE_PATCH + '</body>');
