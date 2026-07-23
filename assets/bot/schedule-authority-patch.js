@@ -225,8 +225,9 @@
   function dayCard(day) {
     const card = element('article', 'card frozen-day-card');
     card.appendChild(element('h3', '', prettyDate(day.date)));
-    const firstNamedAct = day.acts.find(function (act) { return key(act[2]) !== 'TBA'; }) || day.acts[0];
-    if (firstNamedAct) card.appendChild(imageForAct(firstNamedAct[2], 'frozen-band-photo'));
+    const namedActs = day.acts.filter(function (act) { return key(act[2]) !== 'TBA'; });
+    const headliner = namedActs[namedActs.length - 1] || day.acts[day.acts.length - 1];
+    if (headliner) card.appendChild(imageForAct(headliner[2], 'frozen-band-photo'));
     day.acts.forEach(function (act) {
       const row = element('div', 'frozen-act');
       row.appendChild(element('span', '', act[0].replace(' PM', '')));
