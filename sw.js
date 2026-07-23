@@ -1,4 +1,4 @@
-const CACHE_NAME = 'bmc-guest-pwa-v82-featured-drinks-drafts';
+const CACHE_NAME = 'bmc-guest-pwa-v83-headliner-photos';
 const CORE_ASSETS = [
   '/',
   '/index.html',
@@ -52,7 +52,7 @@ const MUSIC_NOTE_STARS_PATCH = `<style id="bmc-music-note-stars">
 
 const MUSIC_NOTE_STARS_LAYER = `<div class="music-stars" aria-hidden="true"><span class="note-star n1">&#9834;</span><span class="note-star n2">&#9835;</span><span class="note-star n3">&#9836;</span><span class="note-star n4">&#9834;</span><span class="note-star n5">&#9835;</span><span class="note-star n6">&#9836;</span><span class="note-star n7">&#9834;</span><span class="note-star n8">&#9835;</span><span class="note-star n9">&#9834;</span><span class="note-star n10">&#9836;</span></div>`;
 const CONTACT_PATCH = `<script src="assets/bot/bmc-contact-patch.js?v=20260706-featured-draft-beers"></script>`;
-const SCHEDULE_AUTHORITY_PATCH = `<script src="assets/bot/schedule-authority-patch.js?v=20260706-featured-draft-beers"></script>`;
+const SCHEDULE_AUTHORITY_PATCH = `<script src="assets/bot/schedule-authority-patch.js?v=20260723-headliner-photos"></script>`;
 const DRINK_MENU_PATCH = `<script src="assets/venue/bmc-drink-menu-patch.js?v=20260706-featured-draft-beers"></script>`;
 const HERO_QUALITY_PATCH = `<script src="assets/bot/hero-quality-patch.js?v=hero-quality-1"></script>`;
 const JAZZYCAT_RESTORE_PATCH = `<script src="assets/bot/jazzycat-restore-patch.js?v=jazzycat-original-1"></script>`;
@@ -87,7 +87,7 @@ function patchContact(html) {
 }
 
 function patchScheduleAuthority(html) {
-  let patched = html.replace(/assets\/bot\/schedule-authority-patch\.js\?v=[^"']+/g, 'assets/bot/schedule-authority-patch.js?v=20260706-featured-draft-beers');
+  let patched = html.replace(/assets\/bot\/schedule-authority-patch\.js\?v=[^"']+/g, 'assets/bot/schedule-authority-patch.js?v=20260723-headliner-photos');
   if (!patched.includes('schedule-authority-patch.js')) patched = patched.replace('</body>', SCHEDULE_AUTHORITY_PATCH + '</body>');
   return patched;
 }
