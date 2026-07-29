@@ -140,6 +140,13 @@
     return daysInWeekContaining(dateObject(SCHEDULE[SCHEDULE.length - 1].date));
   }
 
+  function currentAndUpcomingSchedule(now) {
+    const venueToday = dateObject(dateKeyInVenueTimeZone(now));
+    return SCHEDULE.filter(function (day) {
+      return dateObject(day.date) >= venueToday;
+    });
+  }
+
   function prettyDate(dateString) {
     return dateObject(dateString).toLocaleDateString(undefined, {
       timeZone: 'UTC',
@@ -149,10 +156,11 @@
     });
   }
 
-  function scheduleMonthLabel() {
-    if (!SCHEDULE.length) return 'Live music schedule';
-    const first = dateObject(SCHEDULE[0].date);
-    const last = dateObject(SCHEDULE[SCHEDULE.length - 1].date);
+  function scheduleMonthLabel(days) {
+    const activeSchedule = days && days.length ? days : SCHEDULE;
+    if (!activeSchedule.length) return 'Live music schedule';
+    const first = dateObject(activeSchedule[0].date);
+    const last = dateObject(activeSchedule[activeSchedule.length - 1].date);
     const monthYear = function (value) {
       return value.toLocaleDateString(undefined, { timeZone: 'UTC', month: 'long', year: 'numeric' });
     };
@@ -221,16 +229,26 @@
       modal.id = 'bmc-full-calendar';
       modal.setAttribute('aria-hidden', 'true');
       modal.innerHTML = '<div class="bmc-calendar-backdrop" data-calendar-close="true"></div><div class="bmc-calendar-dialog" role="dialog" aria-modal="true" aria-labelledby="bmc-calendar-title"><button class="button ghost bmc-calendar-close" type="button" data-calendar-close="true">Close</button><span class="ribbon">Full Calendar</span><h2 id="bmc-calendar-title"></h2><div class="bmc-calendar-list"></div></div>';
-      modal.querySelector('#bmc-calendar-title').textContent = scheduleMonthLabel().replace(/ live music$/i, '') + ' Calendar';
       modal.querySelectorAll('[data-calendar-close="true"]').forEach(function (button) {
         button.addEventListener('click', closeCalendar);
       });
-      const list = modal.querySelector('.bmc-calendar-list');
-      SCHEDULE.forEach(function (day) {
-        list.appendChild(makeCalendarDay(day));
-      });
       document.body.appendChild(modal);
     }
+
+    const upcomingDays = currentAndUpcomingSchedule(new Date());
+    const title = modal.querySelector('#bmc-calendar-title');
+    const list = modal.querySelector('.bmc-calendar-list');
+    title.textContent = scheduleMonthLabel(upcomingDays).replace(/ live music$/i, '') + ' Calendar';
+    list.textContent = '';
+
+    if (upcomingDays.length) {
+      upcomingDays.forEach(function (day) {
+        list.appendChild(makeCalendarDay(day));
+      });
+    } else {
+      list.appendChild(element('p', 'note', 'The next live-music dates have not been posted yet.'));
+    }
+
     modal.classList.add('is-open');
     modal.setAttribute('aria-hidden', 'false');
     document.body.classList.add('bmc-calendar-open');
