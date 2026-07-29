@@ -9,7 +9,7 @@
     { date: '2026-07-05', acts: [['3:00 PM', '5:30 PM', 'SIERRA & GREEN NOTES'], ['6:00 PM', '8:30 PM', 'JOSH BENITEZ BAND'], ['9:00 PM', '11:30 PM', 'MAURICE CADE & ESS']] },
     { date: '2026-07-09', acts: [['6:00 PM', '8:30 PM', 'DAPPER DANDIES'], ['9:00 PM', '11:30 PM', 'JAM BRASS BAND']] },
     { date: '2026-07-10', acts: [['6:00 PM', '8:30 PM', 'ADO SOUL & THE TRIBE'], ['9:00 PM', '11:30 PM', 'KAT KILEY EXPERIENCE']] },
-    { date: '2026-07-11', acts: [['3:00 PM', '5:30 PM', 'ANDRE LOVETT BAND'], ['6:00 PM', '8:30 PM', "WOODY'S RAMPAGE"], ['9:00 PM', '11:30 PM', 'JOHN LISI & DELTA FUNK']] },
+    { date: '2026-07-11', acts: [['3:00 PM', '5:30 PM', 'ANDRE LOVETT BAND'], ['6:00 PM', '8:30 PM', 'WOODY\'S RAMPAGE'], ['9:00 PM', '11:30 PM', 'JOHN LISI & DELTA FUNK']] },
     { date: '2026-07-12', acts: [['3:00 PM', '5:30 PM', 'DEEJ FLAVA & MOTHER RUCKUS'], ['6:00 PM', '8:30 PM', 'MAURICE CADE & ESS'], ['9:00 PM', '11:30 PM', 'KIM IN THE WIND']] },
     { date: '2026-07-16', acts: [['6:00 PM', '8:30 PM', 'LEROY MARSHALL BAND'], ['9:00 PM', '11:30 PM', 'KAT KILEY EXPERIENCE']] },
     { date: '2026-07-17', acts: [['6:00 PM', '8:30 PM', 'PARISH LINE'], ['9:00 PM', '11:30 PM', 'BIG MIKE & THE R&B KINGS']] },
@@ -19,8 +19,26 @@
     { date: '2026-07-24', acts: [['6:00 PM', '8:30 PM', 'MOTHER RUCKUS'], ['9:00 PM', '11:30 PM', 'BIG MIKE & THE R&B KINGS']] },
     { date: '2026-07-25', acts: [['3:00 PM', '5:30 PM', 'ANDRE LOVETT BAND'], ['6:00 PM', '8:30 PM', 'SUGAR & THE DADDIES'], ['9:00 PM', '11:30 PM', 'FLEURTATIONS']] },
     { date: '2026-07-26', acts: [['3:00 PM', '5:30 PM', 'DEEJ FLAVA & MOTHER RUCKUS'], ['6:00 PM', '8:30 PM', 'MAURICE CADE & ESS'], ['9:00 PM', '11:30 PM', 'KIM IN THE WIND']] },
-    { date: '2026-07-30', acts: [['6:00 PM', '8:30 PM', 'TBA'], ['9:00 PM', '11:30 PM', 'KAT KILEY EXPERIENCE']] },
-    { date: '2026-07-31', acts: [['6:00 PM', '8:30 PM', 'MOTHER RUCKUS'], ['9:00 PM', '11:30 PM', 'BIG MIKE & R&B KINGS']] }
+    { date: '2026-07-30', acts: [['6:00 PM', '8:30 PM', 'DECATUR RADIO'], ['9:00 PM', '11:30 PM', 'KAT KILEY EXPERIENCE']] },
+    { date: '2026-07-31', acts: [['6:00 PM', '8:30 PM', 'MOTHER RUCKUS'], ['9:00 PM', '11:30 PM', 'BIG MIKE & R&B KINGS']] },
+    { date: '2026-08-01', acts: [['3:00 PM', '5:30 PM', 'ANDRE LOVETT BAND'], ['6:00 PM', '8:30 PM', 'T MARIE & BAYOU JUJU'], ['9:00 PM', '11:30 PM', 'ADO SOUL & THE TRIBE']] },
+    { date: '2026-08-02', acts: [['3:00 PM', '5:30 PM', 'SIERRA & GREEN NOTES'], ['6:00 PM', '8:30 PM', 'JAM BRASS BAND'], ['9:00 PM', '11:30 PM', 'TBA']] },
+    { date: '2026-08-06', acts: [['6:00 PM', '8:30 PM', 'DAPPER DANDIES'], ['9:00 PM', '11:30 PM', 'MAURICE CADE & ESS']] },
+    { date: '2026-08-07', acts: [['6:00 PM', '8:30 PM', 'WOODY\'S RAMPAGE'], ['9:00 PM', '11:30 PM', 'ASHLEY PAIGE & SOULCIAL CLUB']] },
+    { date: '2026-08-08', acts: [['3:00 PM', '5:30 PM', 'TROPICAL WEATHER'], ['6:00 PM', '8:30 PM', 'RUMPSHAKERS'], ['9:00 PM', '11:30 PM', 'THEE FONK JAM feat. TamarieT']] },
+    { date: '2026-08-09', acts: [['3:00 PM', '5:30 PM', 'DEEJ FLAVA & MOTHER RUCKUS'], ['6:00 PM', '8:30 PM', 'JAM BRASS BAND'], ['9:00 PM', '11:30 PM', 'TBA']] },
+    { date: '2026-08-13', acts: [['6:00 PM', '8:30 PM', 'FUNKY SOLES'], ['9:00 PM', '11:30 PM', 'LEROY MARSHALL BAND']] },
+    { date: '2026-08-14', acts: [['6:00 PM', '8:30 PM', 'PARISH LINE'], ['9:00 PM', '11:30 PM', 'ASHLEY PAIGE & SOULCIAL CLUB']] },
+    { date: '2026-08-15', acts: [['3:00 PM', '5:30 PM', 'TROPICAL WEATHER'], ['6:00 PM', '8:30 PM', 'SUGAR & THE DADDIES'], ['9:00 PM', '11:30 PM', 'ADO SOUL & THE TRIBE']] },
+    { date: '2026-08-16', acts: [['3:00 PM', '5:30 PM', 'SIERRA & GREEN NOTES'], ['6:00 PM', '8:30 PM', 'JAM BRASS BAND'], ['9:00 PM', '11:30 PM', 'TBA']] },
+    { date: '2026-08-20', acts: [['6:00 PM', '8:30 PM', 'DAPPER DANDIES'], ['9:00 PM', '11:30 PM', 'MAURICE CADE & ESS']] },
+    { date: '2026-08-21', acts: [['6:00 PM', '8:30 PM', 'JOSH BENITEZ BAND'], ['9:00 PM', '11:30 PM', 'BIG MIKE & R&B KINGS']] },
+    { date: '2026-08-22', acts: [['3:00 PM', '5:30 PM', 'ANDRE LOVETT BAND'], ['6:00 PM', '8:30 PM', 'RUMPSHAKERS'], ['9:00 PM', '11:30 PM', 'R&R SMOKING FOUNDATION']] },
+    { date: '2026-08-23', acts: [['3:00 PM', '5:30 PM', 'DEEJ FLAVA & MOTHER RUCKUS'], ['6:00 PM', '8:30 PM', 'JAM BRASS BAND'], ['9:00 PM', '11:30 PM', 'TBA']] },
+    { date: '2026-08-27', acts: [['6:00 PM', '8:30 PM', 'FUNKY SOLES'], ['9:00 PM', '11:30 PM', 'MAURICE CADE & ESS']] },
+    { date: '2026-08-28', acts: [['6:00 PM', '8:30 PM', 'ELECTRIC BARREL HOUSE'], ['9:00 PM', '11:30 PM', 'BIG MIKE & R&B KINGS']] },
+    { date: '2026-08-29', acts: [['3:00 PM', '5:30 PM', 'ANDRE LOVETT BAND'], ['6:00 PM', '8:30 PM', 'SUGAR & THE DADDIES'], ['9:00 PM', '11:30 PM', 'PIANO MAN G']] },
+    { date: '2026-08-30', acts: [['3:00 PM', '5:30 PM', 'TROPICAL WEATHER'], ['6:00 PM', '8:30 PM', 'JAM BRASS BAND'], ['9:00 PM', '11:30 PM', 'TBA']] }
   ];
 
   const LEGACY = 'assets/bands/bmc-band-assets/assets/bands/';
@@ -46,6 +64,7 @@
     'SIERRA & GREEN NOTES': LEGACY + 'sierra-green.jpg?v=20260723-current-week-auto',
     'KIM IN THE WIND': LEGACY + 'kim-in-the-wind.webp?v=20260723-current-week-auto',
     'KAT KILEY EXPERIENCE': LEGACY + 'kat-kiley-experience.webp?v=20260723-current-week-auto',
+    'T MARIE & BAYOU JUJU': UPCOMING + 'IMG_20260616_235511.png?v=20260729-august-calendar',
     'FUNKY SOLES': UPCOMING + 'Funky%20Soles%20Featuring%20Tahj%20Derosier.png?v=20260704-restored',
     'ADO SOUL & THE TRIBE': UPCOMING + 'Ado%20Soul%20Tribe.png?v=20260704-restored',
     'MAURICE CADE & ESS': UPCOMING + 'Maurice%20Cade%20%26%20ESS%20Sunday%206pm.jpg?v=20260704-restored',
@@ -134,16 +153,25 @@
     if (!SCHEDULE.length) return 'Live music schedule';
     const first = dateObject(SCHEDULE[0].date);
     const last = dateObject(SCHEDULE[SCHEDULE.length - 1].date);
-    const firstLabel = first.toLocaleDateString(undefined, { timeZone: 'UTC', month: 'long', year: 'numeric' });
-    const lastLabel = last.toLocaleDateString(undefined, { timeZone: 'UTC', month: 'long', year: 'numeric' });
-    return firstLabel === lastLabel ? firstLabel + ' live music' : 'Live music schedule';
+    const monthYear = function (value) {
+      return value.toLocaleDateString(undefined, { timeZone: 'UTC', month: 'long', year: 'numeric' });
+    };
+    if (first.getUTCFullYear() === last.getUTCFullYear() && first.getUTCMonth() === last.getUTCMonth()) {
+      return monthYear(first) + ' live music';
+    }
+    if (first.getUTCFullYear() === last.getUTCFullYear()) {
+      const firstMonth = first.toLocaleDateString(undefined, { timeZone: 'UTC', month: 'long' });
+      const lastMonth = last.toLocaleDateString(undefined, { timeZone: 'UTC', month: 'long' });
+      return firstMonth + '–' + lastMonth + ' ' + first.getUTCFullYear() + ' live music';
+    }
+    return 'Live music schedule';
   }
 
   function installStyle() {
     if (document.getElementById('bmc-schedule-authority-style')) return;
     const style = element('style');
     style.id = 'bmc-schedule-authority-style';
-    style.textContent = '.frozen-lineup-panel{overflow:hidden}.frozen-lineup-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.frozen-week-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.frozen-day-card{aspect-ratio:1/1;min-height:190px;overflow:hidden;display:flex;flex-direction:column;padding:10px}.frozen-day-card h3{font-size:13px;margin-bottom:6px}.frozen-band-photo{width:100%;height:42%;object-fit:cover;border:2px solid rgba(255,216,87,.58);border-radius:10px;margin-bottom:8px;background:#120728}.frozen-act{display:grid;grid-template-columns:auto 1fr;gap:5px;align-items:start;border-top:1px dashed rgba(255,255,255,.18);padding-top:5px;margin-top:5px}.frozen-act span{color:#5ee6ff;font-size:10px;line-height:1.1;white-space:nowrap}.frozen-act b{font-size:10px;line-height:1.12;overflow-wrap:anywhere;color:#fff6e8}.bmc-calendar-modal{position:fixed;inset:0;z-index:99999;display:none;align-items:center;justify-content:center;padding:14px}.bmc-calendar-modal.is-open{display:flex}.bmc-calendar-backdrop{position:absolute;inset:0;background:rgba(5,2,11,.82);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}.bmc-calendar-dialog{position:relative;z-index:1;width:min(980px,100%);max-height:86svh;overflow:auto;border:3px solid #000;border-radius:18px;background:linear-gradient(180deg,rgba(50,25,86,.98),rgba(18,7,34,.98));box-shadow:0 28px 80px rgba(0,0,0,.72),0 0 0 2px rgba(255,216,87,.35);padding:16px}.bmc-calendar-close{float:right;margin-left:8px}.bmc-calendar-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.bmc-calendar-day{background:rgba(0,0,0,.18)}.bmc-calendar-act{display:grid;grid-template-columns:86px 1fr;gap:10px;align-items:start;border-top:1px dashed rgba(255,255,255,.22);padding-top:8px;margin-top:8px}.bmc-calendar-band-photo{display:block;width:86px;height:64px;object-fit:cover;border:2px solid rgba(255,216,87,.58);border-radius:10px;background:#120728;box-shadow:0 7px 18px rgba(0,0,0,.32)}.bmc-calendar-act-info{display:grid;gap:4px;min-width:0}.bmc-calendar-act b{color:#fff6e8;font-size:13px;line-height:1.15;overflow-wrap:anywhere}.bmc-calendar-act span{color:#5ee6ff;font-size:12px;line-height:1.15}.bmc-calendar-open{overflow:hidden}@media(max-width:760px){.frozen-week-strip{display:flex;overflow-x:auto;gap:10px;padding-bottom:6px;scroll-snap-type:x mandatory}.frozen-day-card{flex:0 0 74vw;max-width:290px;scroll-snap-align:start}.bmc-calendar-list{grid-template-columns:1fr}.bmc-calendar-act{grid-template-columns:76px 1fr}.bmc-calendar-band-photo{width:76px;height:56px}.bmc-calendar-dialog{max-height:88svh;padding:12px}}';
+    style.textContent = ".frozen-lineup-panel{overflow:hidden}.frozen-lineup-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.frozen-week-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.frozen-day-card{aspect-ratio:1/1;min-height:190px;overflow:hidden;display:flex;flex-direction:column;padding:10px}.frozen-day-card h3{font-size:13px;margin-bottom:6px}.frozen-band-photo{width:100%;height:42%;object-fit:cover;border:2px solid rgba(255,216,87,.58);border-radius:10px;margin-bottom:8px;background:#120728}.frozen-act{display:grid;grid-template-columns:auto 1fr;gap:5px;align-items:start;border-top:1px dashed rgba(255,255,255,.18);padding-top:5px;margin-top:5px}.frozen-act span{color:#5ee6ff;font-size:10px;line-height:1.1;white-space:nowrap}.frozen-act b{font-size:10px;line-height:1.12;overflow-wrap:anywhere;color:#fff6e8}.bmc-calendar-modal{position:fixed;inset:0;z-index:99999;display:none;align-items:center;justify-content:center;padding:14px}.bmc-calendar-modal.is-open{display:flex}.bmc-calendar-backdrop{position:absolute;inset:0;background:rgba(5,2,11,.82);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}.bmc-calendar-dialog{position:relative;z-index:1;width:min(980px,100%);max-height:86svh;overflow:auto;border:3px solid #000;border-radius:18px;background:linear-gradient(180deg,rgba(50,25,86,.98),rgba(18,7,34,.98));box-shadow:0 28px 80px rgba(0,0,0,.72),0 0 0 2px rgba(255,216,87,.35);padding:16px}.bmc-calendar-close{float:right;margin-left:8px}.bmc-calendar-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.bmc-calendar-day{background:rgba(0,0,0,.18)}.bmc-calendar-act{display:grid;grid-template-columns:86px 1fr;gap:10px;align-items:start;border-top:1px dashed rgba(255,255,255,.22);padding-top:8px;margin-top:8px}.bmc-calendar-band-photo{display:block;width:86px;height:64px;object-fit:cover;border:2px solid rgba(255,216,87,.58);border-radius:10px;background:#120728;box-shadow:0 7px 18px rgba(0,0,0,.32)}.bmc-calendar-act-info{display:grid;gap:4px;min-width:0}.bmc-calendar-act b{color:#fff6e8;font-size:13px;line-height:1.15;overflow-wrap:anywhere}.bmc-calendar-act span{color:#5ee6ff;font-size:12px;line-height:1.15}.bmc-calendar-open{overflow:hidden}@media(max-width:760px){.frozen-week-strip{display:flex;overflow-x:auto;gap:10px;padding-bottom:6px;scroll-snap-type:x mandatory}.frozen-day-card{flex:0 0 74vw;max-width:290px;scroll-snap-align:start}.bmc-calendar-list{grid-template-columns:1fr}.bmc-calendar-act{grid-template-columns:76px 1fr}.bmc-calendar-band-photo{width:76px;height:56px}.bmc-calendar-dialog{max-height:88svh;padding:12px}}";
     document.head.appendChild(style);
   }
 
