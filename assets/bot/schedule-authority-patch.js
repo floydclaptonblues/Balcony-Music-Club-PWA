@@ -2,27 +2,12 @@
   'use strict';
 
   const VENUE_TIME_ZONE = 'America/Chicago';
+  const BMC_MURAL = 'assets/venue/20260213_212259%20(1).jpg?v=20260730-band-fallback';
   const SCHEDULE = [
-    { date: '2026-07-02', acts: [['6:00 PM', '8:30 PM', 'FUNKY SOLES'], ['9:00 PM', '11:30 PM', 'MOTHER RUCKUS']] },
-    { date: '2026-07-03', acts: [['6:00 PM', '8:30 PM', 'ADO SOUL & THE TRIBE'], ['9:00 PM', '11:30 PM', 'KAT KILEY EXPERIENCE']] },
-    { date: '2026-07-04', acts: [['3:00 PM', '5:30 PM', 'TROPICAL WEATHER'], ['6:00 PM', '8:30 PM', 'JOHN LISI & DELTA FUNK'], ['9:00 PM', '11:30 PM', 'THEE FONK JAM feat. TamarieT']] },
-    { date: '2026-07-05', acts: [['3:00 PM', '5:30 PM', 'SIERRA & GREEN NOTES'], ['6:00 PM', '8:30 PM', 'JOSH BENITEZ BAND'], ['9:00 PM', '11:30 PM', 'MAURICE CADE & ESS']] },
-    { date: '2026-07-09', acts: [['6:00 PM', '8:30 PM', 'DAPPER DANDIES'], ['9:00 PM', '11:30 PM', 'JAM BRASS BAND']] },
-    { date: '2026-07-10', acts: [['6:00 PM', '8:30 PM', 'ADO SOUL & THE TRIBE'], ['9:00 PM', '11:30 PM', 'KAT KILEY EXPERIENCE']] },
-    { date: '2026-07-11', acts: [['3:00 PM', '5:30 PM', 'ANDRE LOVETT BAND'], ['6:00 PM', '8:30 PM', 'WOODY\'S RAMPAGE'], ['9:00 PM', '11:30 PM', 'JOHN LISI & DELTA FUNK']] },
-    { date: '2026-07-12', acts: [['3:00 PM', '5:30 PM', 'DEEJ FLAVA & MOTHER RUCKUS'], ['6:00 PM', '8:30 PM', 'MAURICE CADE & ESS'], ['9:00 PM', '11:30 PM', 'KIM IN THE WIND']] },
-    { date: '2026-07-16', acts: [['6:00 PM', '8:30 PM', 'LEROY MARSHALL BAND'], ['9:00 PM', '11:30 PM', 'KAT KILEY EXPERIENCE']] },
-    { date: '2026-07-17', acts: [['6:00 PM', '8:30 PM', 'PARISH LINE'], ['9:00 PM', '11:30 PM', 'BIG MIKE & THE R&B KINGS']] },
-    { date: '2026-07-18', acts: [['3:00 PM', '5:30 PM', 'ANDRE LOVETT BAND'], ['6:00 PM', '8:30 PM', 'JON RONIGER'], ['9:00 PM', '11:30 PM', 'ASHLEY PAIGE & SOULCIAL CLUB']] },
-    { date: '2026-07-19', acts: [['3:00 PM', '5:30 PM', 'SIERRA & GREEN NOTES'], ['6:00 PM', '8:30 PM', 'GABE STILLMAN BAND'], ['9:00 PM', '11:30 PM', 'KIM IN THE WIND']] },
-    { date: '2026-07-23', acts: [['6:00 PM', '8:30 PM', 'DAPPER DANDIES'], ['9:00 PM', '11:30 PM', 'KAT KILEY EXPERIENCE']] },
-    { date: '2026-07-24', acts: [['6:00 PM', '8:30 PM', 'MOTHER RUCKUS'], ['9:00 PM', '11:30 PM', 'BIG MIKE & THE R&B KINGS']] },
-    { date: '2026-07-25', acts: [['3:00 PM', '5:30 PM', 'ANDRE LOVETT BAND'], ['6:00 PM', '8:30 PM', 'SUGAR & THE DADDIES'], ['9:00 PM', '11:30 PM', 'FLEURTATIONS']] },
-    { date: '2026-07-26', acts: [['3:00 PM', '5:30 PM', 'DEEJ FLAVA & MOTHER RUCKUS'], ['6:00 PM', '8:30 PM', 'MAURICE CADE & ESS'], ['9:00 PM', '11:30 PM', 'KIM IN THE WIND']] },
     { date: '2026-07-30', acts: [['6:00 PM', '8:30 PM', 'DECATUR RADIO'], ['9:00 PM', '11:30 PM', 'KAT KILEY EXPERIENCE']] },
     { date: '2026-07-31', acts: [['6:00 PM', '8:30 PM', 'MOTHER RUCKUS'], ['9:00 PM', '11:30 PM', 'BIG MIKE & R&B KINGS']] },
     { date: '2026-08-01', acts: [['3:00 PM', '5:30 PM', 'ANDRE LOVETT BAND'], ['6:00 PM', '8:30 PM', 'T MARIE & BAYOU JUJU'], ['9:00 PM', '11:30 PM', 'ADO SOUL & THE TRIBE']] },
-    { date: '2026-08-02', acts: [['3:00 PM', '5:30 PM', 'SIERRA & GREEN NOTES'], ['6:00 PM', '8:30 PM', 'JAM BRASS BAND'], ['9:00 PM', '11:30 PM', 'TBA']] },
+    { date: '2026-08-02', acts: [['3:00 PM', '5:30 PM', 'SIERRA & GREEN NOTES'], ['6:00 PM', '8:30 PM', 'JAM BRASS BAND'], ['9:00 PM', '11:30 PM', 'SHORTY AND THE GIANTS']] },
     { date: '2026-08-06', acts: [['6:00 PM', '8:30 PM', 'DAPPER DANDIES'], ['9:00 PM', '11:30 PM', 'MAURICE CADE & ESS']] },
     { date: '2026-08-07', acts: [['6:00 PM', '8:30 PM', 'WOODY\'S RAMPAGE'], ['9:00 PM', '11:30 PM', 'ASHLEY PAIGE & SOULCIAL CLUB']] },
     { date: '2026-08-08', acts: [['3:00 PM', '5:30 PM', 'TROPICAL WEATHER'], ['6:00 PM', '8:30 PM', 'RUMPSHAKERS'], ['9:00 PM', '11:30 PM', 'THEE FONK JAM feat. TamarieT']] },
@@ -51,10 +36,6 @@
     'JAM BRASS BAND': SUPPLIED + 'Jam%20Brass%20Band%20Thursday%20%281%29.jpg',
     'JOSH BENITEZ BAND': SUPPLIED + 'Josh%20Benitez%20Band%20Sunday.png',
     'LEROY MARSHALL BAND': SUPPLIED + 'Leroy%20Marshal.jpg',
-    'LEROY MARSHAL BAND': SUPPLIED + 'Leroy%20Marshal.jpg',
-    'JON RONIGER': SUPPLIED + 'JON%20RONIGER.jpg',
-    'FLEURTATIONS': SUPPLIED + 'FLEURTATIONS.jpg',
-    'THE FLEURTATIONS': SUPPLIED + 'FLEURTATIONS.jpg',
     'ANDRE LOVETT BAND': LEGACY + 'andre-lovett-band.jpg?v=20260723-current-week-auto',
     'DAPPER DANDIES': LEGACY + 'dapper-dandies.jpg?v=20260723-current-week-auto',
     'SUGAR & THE DADDIES': LEGACY + 'sugar-and-the-daddies.jpg?v=20260723-current-week-auto',
@@ -62,7 +43,6 @@
     'BIG MIKE & THE R&B KINGS': LEGACY + 'big-mike-rb-kings.webp?v=20260723-current-week-auto',
     'BIG MIKE & R&B KINGS': LEGACY + 'big-mike-rb-kings.webp?v=20260723-current-week-auto',
     'SIERRA & GREEN NOTES': LEGACY + 'sierra-green.jpg?v=20260723-current-week-auto',
-    'KIM IN THE WIND': LEGACY + 'kim-in-the-wind.webp?v=20260723-current-week-auto',
     'KAT KILEY EXPERIENCE': LEGACY + 'kat-kiley-experience.webp?v=20260723-current-week-auto',
     'T MARIE & BAYOU JUJU': UPCOMING + 'IMG_20260616_235511.png?v=20260729-august-calendar',
     'FUNKY SOLES': UPCOMING + 'Funky%20Soles%20Featuring%20Tahj%20Derosier.png?v=20260704-restored',
@@ -71,7 +51,6 @@
     'MOTHER RUCKUS': UPCOMING + 'Mother%20Ruckus.png?v=20260704-restored',
     'DEEJ FLAVA & MOTHER RUCKUS': UPCOMING + 'Mother%20Ruckus.png?v=20260704-restored',
     'PARISH LINE': UPCOMING + 'Louisiana%20Parish%20Line.png?v=20260704-restored',
-    'GABE STILLMAN BAND': UPCOMING + 'Gabe%20Stillman.png?v=20260704-restored',
     'ASHLEY PAIGE & SOULCIAL CLUB': UPCOMING + 'Ashley%20Paige%20and%20the%20Soulcial%20Club.jpeg?v=20260704-restored',
     'THEE FONK JAM': UPCOMING + 'Thee%20PlayMateZ.png?v=20260704-restored',
     'THEE FONK JAM FEAT. TAMARIET': UPCOMING + 'Thee%20PlayMateZ.png?v=20260704-restored',
@@ -184,18 +163,24 @@
   }
 
   function imageForAct(actName, className) {
-    const source = IMAGE_BY_ACT[key(actName)];
-    if (!source) {
-      const blank = element('div', className, '');
-      blank.setAttribute('aria-hidden', 'true');
-      return blank;
-    }
+    const mappedSource = IMAGE_BY_ACT[key(actName)];
     const image = new Image();
     image.className = className;
-    image.src = source;
-    image.alt = actName + ' at Balcony Music Club';
+    image.src = mappedSource || BMC_MURAL;
+    image.alt = mappedSource
+      ? actName + ' at Balcony Music Club'
+      : 'Balcony Music Club mural — fallback image for ' + actName;
     image.loading = 'lazy';
     image.decoding = 'async';
+    image.onerror = function () {
+      if (image.dataset.muralFallback === 'true') {
+        image.onerror = null;
+        return;
+      }
+      image.dataset.muralFallback = 'true';
+      image.src = BMC_MURAL;
+      image.alt = 'Balcony Music Club mural — fallback image for ' + actName;
+    };
     return image;
   }
 
