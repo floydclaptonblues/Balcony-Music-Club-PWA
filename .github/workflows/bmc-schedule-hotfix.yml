@@ -1,0 +1,113 @@
+name: One-time BMC schedule hotfix
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/bmc-schedule-hotfix.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Update August 2 schedule and mural fallback
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          schedule_path = Path('assets/bot/schedule-authority-patch.js')
+          text = schedule_path.read_text(encoding='utf-8')
+
+          old_day = "    { date: '2026-08-02', acts: [['3:00 PM', '5:30 PM', 'SIERRA & GREEN NOTES'], ['6:00 PM', '8:30 PM', 'JAM BRASS BAND'], ['9:00 PM', '11:30 PM', 'TBA']] },"
+          new_day = "    { date: '2026-08-02', acts: [['3:00 PM', '5:30 PM', 'SIERRA & GREEN NOTES'], ['6:00 PM', '8:30 PM', 'JAM BRASS BAND'], ['9:00 PM', '11:30 PM', 'SHORTY AND THE GIANTS']] },"
+          if old_day not in text and new_day not in text:
+              raise SystemExit('August 2 schedule row was not found')
+          text = text.replace(old_day, new_day, 1)
+
+          john_lisi_line = "  const JOHN_LISI = 'https://images.squarespace-cdn.com/content/v1/5872a05fb8a79b5c39e888e8/1570220588454-ROAJNS29CYDX7TFZ3B09/johnlisi.jpg?format=1000w';"
+          mural_line = "  const BMC_MURAL = 'assets/venue/20260213_212259%20(1).jpg?v=20260730-band-fallback';"
+          if 'const BMC_MURAL' not in text:
+              if john_lisi_line not in text:
+                  raise SystemExit('JOHN_LISI anchor was not found')
+              text = text.replace(john_lisi_line, john_lisi_line + '\n' + mural_line, 1)
+
+          old_image_fn = """  function imageForAct(actName, className) {
+    const source = IMAGE_BY_ACT[key(actName)];
+    if (!source) {
+      const blank = element('div', className, '');
+      blank.setAttribute('aria-hidden', 'true');
+      return blank;
+    }
+    const image = new Image();
+    image.className = className;
+    image.src = source;
+    image.alt = actName + ' at Balcony Music Club';
+    image.loading = 'lazy';
+    image.decoding = 'async';
+    return image;
+  }"""
+          new_image_fn = """  function imageForAct(actName, className) {
+    const source = IMAGE_BY_ACT[key(actName)] || BMC_MURAL;
+    const image = new Image();
+    image.className = className;
+    image.src = source;
+    image.alt = IMAGE_BY_ACT[key(actName)]
+      ? actName + ' at Balcony Music Club'
+      : 'Balcony Music Club mural — fallback image for ' + actName;
+    image.loading = 'lazy';
+    image.decoding = 'async';
+    image.onerror = function () {
+      image.onerror = null;
+      image.src = BMC_MURAL;
+      image.alt = 'Balcony Music Club mural — fallback image for ' + actName;
+    };
+    return image;
+  }"""
+          if old_image_fn in text:
+              text = text.replace(old_image_fn, new_image_fn, 1)
+          elif new_image_fn not in text:
+              raise SystemExit('imageForAct fallback block was not found')
+
+          schedule_path.write_text(text, encoding='utf-8')
+
+          version = '20260730-shorty-mural-fallback'
+          for filename in ('index.html', 'sw.js', 'bmc-push-override.js'):
+              path = Path(filename)
+              if not path.exists():
+                  continue
+              value = path.read_text(encoding='utf-8')
+              value = value.replace('20260723-headliner-photos', version)
+              value = re.sub(
+                  r'assets/bot/schedule-authority-patch\.js\?v=[^"\']+',
+                  'assets/bot/schedule-authority-patch.js?v=' + version,
+                  value
+              )
+              if filename == 'sw.js':
+                  value = re.sub(
+                      r"const CACHE_NAME = '[^']+';",
+                      "const CACHE_NAME = 'bmc-guest-pwa-v84-shorty-mural-fallback';",
+                      value,
+                      count=1
+                  )
+              path.write_text(value, encoding='utf-8')
+
+          workflow = Path('.github/workflows/bmc-schedule-hotfix.yml')
+          if workflow.exists():
+              workflow.unlink()
+          PY
+
+      - name: Commit final update
+        shell: bash
+        run: |
+          git config user.name "BMC Schedule Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          git commit -m "Update Aug 2 act and add mural image fallback"
+          git push
