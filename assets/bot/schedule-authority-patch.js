@@ -4,8 +4,6 @@
   const VENUE_TIME_ZONE = 'America/Chicago';
   const BMC_MURAL = 'assets/venue/20260213_212259%20(1).jpg?v=20260730-band-fallback';
   const SCHEDULE = [
-    { date: '2026-07-30', acts: [['6:00 PM', '8:30 PM', 'DECATUR RADIO'], ['9:00 PM', '11:30 PM', 'KAT KILEY EXPERIENCE']] },
-    { date: '2026-07-31', acts: [['6:00 PM', '8:30 PM', 'MOTHER RUCKUS'], ['9:00 PM', '11:30 PM', 'BIG MIKE & THE R&B KINGS']] },
     { date: '2026-08-01', acts: [['3:00 PM', '5:30 PM', 'ANDRE LOVETT BAND'], ['6:00 PM', '8:30 PM', 'T MARIE & BAYOU JUJU'], ['9:00 PM', '11:30 PM', 'ADO SOUL & THE TRIBE']] },
     { date: '2026-08-02', acts: [['3:00 PM', '5:30 PM', 'SIERRA & GREEN NOTES'], ['6:00 PM', '8:30 PM', 'TROPICAL WEATHER'], ['9:00 PM', '11:30 PM', 'SHORTY AND THE GIANTS']] },
     { date: '2026-08-06', acts: [['6:00 PM', '8:30 PM', 'DAPPER DANDIES'], ['9:00 PM', '11:30 PM', 'MAURICE CADE & ESS']] },
