@@ -33,7 +33,7 @@
     if(!root||!document.createTreeWalker)return;
     var w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,null); var n;
     while((n=w.nextNode())){
-      n.nodeValue=n.nodeValue.replace(/KIM INDA WIND BAND/g,'KIM IN THE WIND BAND').replace(/Kim Inda Wind Band/g,'Kim In The Wind Band').replace(/Balcony Bar \/ Event Space/g,'Bar').replace(/balcony bar \/ event space/gi,'bar').replace(/balcony bar/gi,'bar');
+      n.nodeValue=n.nodeValue.replace(/KIM INDA WIND BAND/g,'KIM IN THE WIND BAND').replace(/Kim Inda Wind Band/g,'Kim In The Wind Band').replace(/Scan, save, and check the July lineup\./gi,'Scan, save, and check the August lineup.').replace(/July 2026 live music/g,'August 2026 live music').replace(/Open Full July Calendar/g,'Open Full Calendar').replace(/Balcony Bar \/ Event Space/g,'Bar').replace(/balcony bar \/ event space/gi,'bar').replace(/balcony bar/gi,'bar');
     }
   }
   function cleanVenueSpaces(){
