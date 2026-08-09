@@ -5,25 +5,25 @@
   const BMC_MURAL = 'assets/venue/20260213_212259%20(1).jpg?v=20260730-band-fallback';
   const SCHEDULE = [
     { date: '2026-07-30', acts: [['6:00 PM', '8:30 PM', 'DECATUR RADIO'], ['9:00 PM', '11:30 PM', 'KAT KILEY EXPERIENCE']] },
-    { date: '2026-07-31', acts: [['6:00 PM', '8:30 PM', 'MOTHER RUCKUS'], ['9:00 PM', '11:30 PM', 'BIG MIKE & R&B KINGS']] },
+    { date: '2026-07-31', acts: [['6:00 PM', '8:30 PM', 'MOTHER RUCKUS'], ['9:00 PM', '11:30 PM', 'BIG MIKE & THE R&B KINGS']] },
     { date: '2026-08-01', acts: [['3:00 PM', '5:30 PM', 'ANDRE LOVETT BAND'], ['6:00 PM', '8:30 PM', 'T MARIE & BAYOU JUJU'], ['9:00 PM', '11:30 PM', 'ADO SOUL & THE TRIBE']] },
-    { date: '2026-08-02', acts: [['3:00 PM', '5:30 PM', 'SIERRA & GREEN NOTES'], ['6:00 PM', '8:30 PM', 'JAM BRASS BAND'], ['9:00 PM', '11:30 PM', 'SHORTY AND THE GIANTS']] },
+    { date: '2026-08-02', acts: [['3:00 PM', '5:30 PM', 'SIERRA & GREEN NOTES'], ['6:00 PM', '8:30 PM', 'TROPICAL WEATHER'], ['9:00 PM', '11:30 PM', 'SHORTY AND THE GIANTS']] },
     { date: '2026-08-06', acts: [['6:00 PM', '8:30 PM', 'DAPPER DANDIES'], ['9:00 PM', '11:30 PM', 'MAURICE CADE & ESS']] },
-    { date: '2026-08-07', acts: [['6:00 PM', '8:30 PM', 'WOODY\'S RAMPAGE'], ['9:00 PM', '11:30 PM', 'ASHLEY PAIGE & SOULCIAL CLUB']] },
+    { date: '2026-08-07', acts: [['6:00 PM', '8:30 PM', 'WOODY\'S RAMPAGE'], ['9:00 PM', '11:30 PM', 'KIM IN THE WIND BAND']] },
     { date: '2026-08-08', acts: [['3:00 PM', '5:30 PM', 'TROPICAL WEATHER'], ['6:00 PM', '8:30 PM', 'RUMPSHAKERS'], ['9:00 PM', '11:30 PM', 'THEE FONK JAM feat. TamarieT']] },
-    { date: '2026-08-09', acts: [['3:00 PM', '5:30 PM', 'DEEJ FLAVA & MOTHER RUCKUS'], ['6:00 PM', '8:30 PM', 'JAM BRASS BAND'], ['9:00 PM', '11:30 PM', 'TBA']] },
+    { date: '2026-08-09', acts: [['3:00 PM', '5:30 PM', 'DEEJ FLAVA & MOTHER RUCKUS'], ['6:00 PM', '8:30 PM', 'SUGAR & THE DADDIES'], ['9:00 PM', '11:30 PM', 'SHORTY AND THE GIANTS']] },
     { date: '2026-08-13', acts: [['6:00 PM', '8:30 PM', 'FUNKY SOLES'], ['9:00 PM', '11:30 PM', 'LEROY MARSHALL BAND']] },
     { date: '2026-08-14', acts: [['6:00 PM', '8:30 PM', 'PARISH LINE'], ['9:00 PM', '11:30 PM', 'ASHLEY PAIGE & SOULCIAL CLUB']] },
     { date: '2026-08-15', acts: [['3:00 PM', '5:30 PM', 'TROPICAL WEATHER'], ['6:00 PM', '8:30 PM', 'SUGAR & THE DADDIES'], ['9:00 PM', '11:30 PM', 'ADO SOUL & THE TRIBE']] },
-    { date: '2026-08-16', acts: [['3:00 PM', '5:30 PM', 'SIERRA & GREEN NOTES'], ['6:00 PM', '8:30 PM', 'JAM BRASS BAND'], ['9:00 PM', '11:30 PM', 'TBA']] },
+    { date: '2026-08-16', acts: [['3:00 PM', '5:30 PM', 'SIERRA & GREEN NOTES'], ['6:00 PM', '8:30 PM', 'ELECTRIC BARREL HOUSE'], ['9:00 PM', '11:30 PM', 'MOTHER RUCKUS']] },
     { date: '2026-08-20', acts: [['6:00 PM', '8:30 PM', 'DAPPER DANDIES'], ['9:00 PM', '11:30 PM', 'MAURICE CADE & ESS']] },
-    { date: '2026-08-21', acts: [['6:00 PM', '8:30 PM', 'JOSH BENITEZ BAND'], ['9:00 PM', '11:30 PM', 'BIG MIKE & R&B KINGS']] },
+    { date: '2026-08-21', acts: [['6:00 PM', '8:30 PM', 'JOSH BENITEZ BAND'], ['9:00 PM', '11:30 PM', 'BIG MIKE & THE R&B KINGS']] },
     { date: '2026-08-22', acts: [['3:00 PM', '5:30 PM', 'ANDRE LOVETT BAND'], ['6:00 PM', '8:30 PM', 'RUMPSHAKERS'], ['9:00 PM', '11:30 PM', 'R&R SMOKING FOUNDATION']] },
-    { date: '2026-08-23', acts: [['3:00 PM', '5:30 PM', 'DEEJ FLAVA & MOTHER RUCKUS'], ['6:00 PM', '8:30 PM', 'JAM BRASS BAND'], ['9:00 PM', '11:30 PM', 'TBA']] },
+    { date: '2026-08-23', acts: [['3:00 PM', '5:30 PM', 'DEEJ FLAVA & MOTHER RUCKUS'], ['6:00 PM', '8:30 PM', 'SUGAR & THE DADDIES'], ['9:00 PM', '11:30 PM', 'SHORTY AND THE GIANTS']] },
     { date: '2026-08-27', acts: [['6:00 PM', '8:30 PM', 'FUNKY SOLES'], ['9:00 PM', '11:30 PM', 'MAURICE CADE & ESS']] },
-    { date: '2026-08-28', acts: [['6:00 PM', '8:30 PM', 'ELECTRIC BARREL HOUSE'], ['9:00 PM', '11:30 PM', 'BIG MIKE & R&B KINGS']] },
+    { date: '2026-08-28', acts: [['6:00 PM', '8:30 PM', 'ELECTRIC BARREL HOUSE'], ['9:00 PM', '11:30 PM', 'BIG MIKE & THE R&B KINGS']] },
     { date: '2026-08-29', acts: [['3:00 PM', '5:30 PM', 'ANDRE LOVETT BAND'], ['6:00 PM', '8:30 PM', 'SUGAR & THE DADDIES'], ['9:00 PM', '11:30 PM', 'PIANO MAN G']] },
-    { date: '2026-08-30', acts: [['3:00 PM', '5:30 PM', 'TROPICAL WEATHER'], ['6:00 PM', '8:30 PM', 'JAM BRASS BAND'], ['9:00 PM', '11:30 PM', 'TBA']] }
+    { date: '2026-08-30', acts: [['3:00 PM', '5:30 PM', 'TROPICAL WEATHER'], ['6:00 PM', '8:30 PM', 'LYNN DRURY'], ['9:00 PM', '11:30 PM', 'MOTHER RUCKUS']] }
   ];
 
   const LEGACY = 'assets/bands/bmc-band-assets/assets/bands/';
@@ -40,6 +40,8 @@
     'DAPPER DANDIES': LEGACY + 'dapper-dandies.jpg?v=20260723-current-week-auto',
     'SUGAR & THE DADDIES': LEGACY + 'sugar-and-the-daddies.jpg?v=20260723-current-week-auto',
     "WOODY'S RAMPAGE": LEGACY + 'woodys-rampage.jpg?v=20260723-current-week-auto',
+    'KIM IN THE WIND': LEGACY + 'kim-in-the-wind.webp?v=20260809-august-calendar',
+    'KIM IN THE WIND BAND': LEGACY + 'kim-in-the-wind.webp?v=20260809-august-calendar',
     'BIG MIKE & THE R&B KINGS': LEGACY + 'big-mike-rb-kings.webp?v=20260723-current-week-auto',
     'BIG MIKE & R&B KINGS': LEGACY + 'big-mike-rb-kings.webp?v=20260723-current-week-auto',
     'SIERRA & GREEN NOTES': LEGACY + 'sierra-green.jpg?v=20260723-current-week-auto',
