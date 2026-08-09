@@ -2,6 +2,7 @@
   var CONTACT_DISPLAY='504-428-5494';
   var CONTACT_TEL='+15044285494';
   var HERO_ASSET='assets/hero/file_000000006800722f9d43f096597b367e.png?v=hero-safe-20260609';
+  var SHORTY_PHOTO='assets/bands/bmc-band-assets/assets/bands/1000021874.png?v=20260809-shorty';
   var FINAL_WELCOME='WELCOME TO THE OFFICIAL BALCONY MUSIC CLUB APP. BROWSE AND ENJOY.<br><br>© BALCONY MUSIC CLUB - THE CENTER OF THE UNIVERSE';
   var SIGNATURE_DRINKS=[
     ['Etta Jameson','Whiskey-based; peach, passionfruit, citrus, and soft almond notes.'],
@@ -17,6 +18,23 @@
   function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
   function drinkCard(d){return '<article class="card drink-card"><h3>'+esc(d[0])+'</h3><p>'+esc(d[1])+'</p></article>';}
   function pillList(items){return items.map(function(d){return '<span class="drink-pill">'+esc(d)+'</span>';}).join('');}
+  function isShorty(text){return /SHORTY\s*(?:&|AND)\s*THE\s*GIANTS/i.test(String(text||''));}
+  function fixShortyPhotos(){
+    document.querySelectorAll('.frozen-day-card,.bmc-calendar-act').forEach(function(block){
+      if(!isShorty(block.textContent))return;
+      var img=block.querySelector('.frozen-band-photo,.bmc-calendar-band-photo');
+      if(!img)return;
+      if(img.getAttribute('src')!==SHORTY_PHOTO)img.src=SHORTY_PHOTO;
+      img.alt='Shorty & The Giants at Balcony Music Club';
+      img.onerror=null;
+      img.dataset.shortyCanonical='true';
+    });
+  }
+  function watchShortyPhotos(){
+    if(window.__BMC_SHORTY_PHOTO_WIRED||!window.MutationObserver||!document.body)return;
+    window.__BMC_SHORTY_PHOTO_WIRED=true;
+    new MutationObserver(function(){fixShortyPhotos();}).observe(document.body,{childList:true,subtree:true});
+  }
   function installStyles(){
     var old=document.getElementById('bmc-safe-patch-style');
     if(old)old.remove();
@@ -48,7 +66,7 @@
   function drinks(){var existing=document.getElementById('drinks');if(existing)existing.remove();installDrinkModal();var nav=document.querySelector('nav');if(nav&&!nav.querySelector('a[href="#drinks"]')){var a=document.createElement('a');a.href='#drinks';a.textContent='Drinks';nav.insertBefore(a,nav.querySelector('a[href="#contact"]')||null);}var buttons=document.querySelector('.hero-copy .buttons');if(buttons&&!buttons.querySelector('a[href="#drinks"]')){var b=document.createElement('a');b.className='button secondary';b.href='#drinks';b.textContent='Drink Menu';buttons.appendChild(b);}var featured=SIGNATURE_DRINKS.slice(0,4);var section=document.createElement('section');section.id='drinks';section.className='panel drink-menu-panel';section.innerHTML='<span class="ribbon">Drink Menu</span><h2>Featured Drinks</h2><div class="featured-drink-strip">'+featured.map(drinkCard).join('')+'</div><p><button id="openDrinkMenu" type="button" class="button primary">Open Full Drink Menu</button></p>';var anchor=document.getElementById('events')||document.getElementById('jazzycat')||document.getElementById('store')||document.getElementById('contact');if(anchor&&anchor.parentNode)anchor.parentNode.insertBefore(section,anchor);}
   function setupBot(){var bot=window.BMC_JAZZYCAT;var log=document.getElementById('botLog');var form=document.getElementById('botForm');var input=document.getElementById('botInput');var quick=document.getElementById('quickRow');if(!bot||!log||!form||!input||!quick)return;var answers=[{keys:['schedule','band','music','tonight','lineup','show'],answer:'The Band Schedule section shows This Week\'s Lineup, with a button to open the full schedule.'},{keys:['drink','cocktail','beer','menu','draft'],answer:'The Drink Menu section shows featured drinks and opens the full drink menu with signature drinks, draft beers, and packaged drinks.'},{keys:['phone','call','contact','number'],answer:'The contact number for Balcony Music Club is '+CONTACT_DISPLAY+'.'},{keys:['space','spaces','room','rooms','courtyard','speakeasy','bar','stage'],answer:'Venue highlights include the courtyard, speakeasy, bar, and main-stage atmosphere.'}];function ask(q){var text=(q||'').toLowerCase();var hit=answers.find(function(item){return item.keys.some(function(k){return text.indexOf(k)!==-1;});});return hit?hit.answer:'Ask about the weekly lineup, full schedule, booking, drink menu, contact, social links, or venue spaces.';}log.textContent='Hi, I am JazzyCat. Ask about music, drinks, booking, or venue info.';quick.innerHTML=['Tonight','Band schedule','Drink menu','Contact','Booking'].map(function(q){return '<button class="button ghost" type="button">'+q+'</button>';}).join('');quick.querySelectorAll('button').forEach(function(btn){btn.onclick=function(){input.value=btn.textContent;log.textContent=ask(input.value);};});form.onsubmit=function(e){e.preventDefault();log.textContent=ask(input.value);};}
   function wireClicks(){if(window.__BMC_SAFE_CLICK_WIRED)return;window.__BMC_SAFE_CLICK_WIRED=true;document.addEventListener('click',function(e){var openDrinks=e.target.closest&&e.target.closest('#openDrinkMenu,a[href="#drinks"]');var drinkBackdrop=e.target.classList&&e.target.classList.contains('drink-modal-backdrop');var closeDrinks=e.target.closest&&e.target.closest('.drink-modal-close');if(openDrinks){e.preventDefault();var d=document.getElementById('bmcDrinkModal');if(d)d.classList.add('is-open');}if(drinkBackdrop||closeDrinks){var dm=document.getElementById('bmcDrinkModal');if(dm)dm.classList.remove('is-open');}});document.addEventListener('keydown',function(e){if(e.key==='Escape'){document.querySelectorAll('.drink-modal-backdrop.is-open').forEach(function(el){el.classList.remove('is-open');});}});}
-  function run(){installStyles();removeSpecialEvents();cleanVenueSpaces();hero();contacts();drinks();setupBot();cleanNotes();replaceTextSafe(document.body);wireClicks();}
+  function run(){installStyles();removeSpecialEvents();cleanVenueSpaces();hero();contacts();drinks();setupBot();cleanNotes();replaceTextSafe(document.body);fixShortyPhotos();watchShortyPhotos();wireClicks();}
   function runSoon(){run();setTimeout(run,250);setTimeout(run,900);}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',runSoon);else runSoon();
   window.addEventListener('load',runSoon);
