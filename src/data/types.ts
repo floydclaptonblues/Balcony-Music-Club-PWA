@@ -7,6 +7,7 @@ export type SourceId =
   | 'website-footer'
   | 'public-social-search'
   | 'site-owner-approval-2026-06-05'
+  | 'site-owner-supplied-2026-08-17'
   | 'generated-placeholder';
 
 export type VenueInfo = {
