@@ -16,14 +16,15 @@
     { date: '2026-08-16', acts: [['3:00 PM', '5:30 PM', 'SIERRA & GREEN NOTES'], ['6:00 PM', '8:30 PM', 'ELECTRIC BARREL HOUSE'], ['9:00 PM', '11:30 PM', 'MOTHER RUCKUS']] },
     { date: '2026-08-20', acts: [['6:00 PM', '8:30 PM', 'DAPPER DANDIES'], ['9:00 PM', '11:30 PM', 'MAURICE CADE & ESS']] },
     { date: '2026-08-21', acts: [['6:00 PM', '8:30 PM', 'JOSH BENITEZ BAND'], ['9:00 PM', '11:30 PM', 'BIG MIKE & THE R&B KINGS']] },
-    { date: '2026-08-22', acts: [['3:00 PM', '5:30 PM', 'ANDRE LOVETT BAND'], ['6:00 PM', '8:30 PM', 'RUMPSHAKERS'], ['9:00 PM', '11:30 PM', 'R&R SMOKING FOUNDATION']] },
+    { date: '2026-08-22', acts: [['3:00 PM', '5:30 PM', 'ANDRE LOVETT BAND'], ['6:00 PM', '8:30 PM', 'RUMPSHAKERS'], ['9:00 PM', '11:30 PM', "R&R SMOKIN' FOUNDATION"]] },
     { date: '2026-08-23', acts: [['3:00 PM', '5:30 PM', 'DEEJ FLAVA & MOTHER RUCKUS'], ['6:00 PM', '8:30 PM', 'SUGAR & THE DADDIES'], ['9:00 PM', '11:30 PM', 'SHORTY AND THE GIANTS']] },
     { date: '2026-08-27', acts: [['6:00 PM', '8:30 PM', 'FUNKY SOLES'], ['9:00 PM', '11:30 PM', 'MAURICE CADE & ESS']] },
-    { date: '2026-08-28', acts: [['6:00 PM', '8:30 PM', 'ELECTRIC BARREL HOUSE'], ['9:00 PM', '11:30 PM', 'BIG MIKE & THE R&B KINGS']] },
+    { date: '2026-08-28', acts: [['6:00 PM', '8:30 PM', 'DANNY RAY & THE ELECTRIC BARRELHOUSE'], ['9:00 PM', '11:30 PM', 'BIG MIKE & THE R&B KINGS']] },
     { date: '2026-08-29', acts: [['3:00 PM', '5:30 PM', 'ANDRE LOVETT BAND'], ['6:00 PM', '8:30 PM', 'SUGAR & THE DADDIES'], ['9:00 PM', '11:30 PM', 'PIANO MAN G']] },
     { date: '2026-08-30', acts: [['3:00 PM', '5:30 PM', 'TROPICAL WEATHER'], ['6:00 PM', '8:30 PM', 'LYNN DRURY'], ['9:00 PM', '11:30 PM', 'MOTHER RUCKUS']] }
   ];
 
+  const LOCAL_BANDS = 'assets/bands/';
   const LEGACY = 'assets/bands/bmc-band-assets/assets/bands/';
   const SUPPLIED = 'https://floydclaptonblues.github.io/Balcony-Music-Club-PWA/assets/bands/bmc-band-assets/assets/bands/';
   const UPCOMING = 'https://floydclaptonblues.github.io/UpcomingShows/assets/artists/';
@@ -55,7 +56,17 @@
     'THEE FONK JAM': UPCOMING + 'Thee%20PlayMateZ.png?v=20260704-restored',
     'THEE FONK JAM FEAT. TAMARIET': UPCOMING + 'Thee%20PlayMateZ.png?v=20260704-restored',
     'JOHN LISI & DELTA FUNK': JOHN_LISI,
-    'JOHN LISI AND DELTA FUNK': JOHN_LISI
+    'JOHN LISI AND DELTA FUNK': JOHN_LISI,
+    'DANNY RAY & THE ELECTRIC BARRELHOUSE': LOCAL_BANDS + 'Danny%20Ray%20%26%20Electric%20Barrelhouse.jpeg?v=20260817-band-art',
+    'DANNY RAY & ELECTRIC BARRELHOUSE': LOCAL_BANDS + 'Danny%20Ray%20%26%20Electric%20Barrelhouse.jpeg?v=20260817-band-art',
+    'DANNY RAY AND THE ELECTRIC BARRELHOUSE': LOCAL_BANDS + 'Danny%20Ray%20%26%20Electric%20Barrelhouse.jpeg?v=20260817-band-art',
+    'ELECTRIC BARREL HOUSE': LOCAL_BANDS + 'Danny%20Ray%20%26%20Electric%20Barrelhouse.jpeg?v=20260817-band-art',
+    'ELECTRIC BARRELHOUSE': LOCAL_BANDS + 'Danny%20Ray%20%26%20Electric%20Barrelhouse.jpeg?v=20260817-band-art',
+    "R&R SMOKIN' FOUNDATION": LOCAL_BANDS + 'R%26R%20Smokin%27%20Foundation.jpeg?v=20260817-band-art',
+    'R&R SMOKIN FOUNDATION': LOCAL_BANDS + 'R%26R%20Smokin%27%20Foundation.jpeg?v=20260817-band-art',
+    'R&R SMOKING FOUNDATION': LOCAL_BANDS + 'R%26R%20Smokin%27%20Foundation.jpeg?v=20260817-band-art',
+    'THE CURTIS FAMILY': LOCAL_BANDS + 'The%20Curtis%20Family.jpeg?v=20260817-band-art',
+    'CURTIS FAMILY': LOCAL_BANDS + 'The%20Curtis%20Family.jpeg?v=20260817-band-art'
   };
 
   function key(value) {
