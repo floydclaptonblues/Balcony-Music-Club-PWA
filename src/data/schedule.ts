@@ -16,10 +16,10 @@ const august2026 = [
   { date: '2026-08-16', dayLabel: 'Sunday • August 16', acts: [['3:00 PM', '5:30 PM', 'SIERRA & GREEN NOTES'], ['6:00 PM', '8:30 PM', 'ELECTRIC BARREL HOUSE'], ['9:00 PM', '11:30 PM', 'MOTHER RUCKUS']] },
   { date: '2026-08-20', dayLabel: 'Thursday • August 20', acts: [['6:00 PM', '8:30 PM', 'DAPPER DANDIES'], ['9:00 PM', '11:30 PM', 'MAURICE CADE & ESS']] },
   { date: '2026-08-21', dayLabel: 'Friday • August 21', acts: [['6:00 PM', '8:30 PM', 'JOSH BENITEZ BAND'], ['9:00 PM', '11:30 PM', 'BIG MIKE & THE R&B KINGS']] },
-  { date: '2026-08-22', dayLabel: 'Saturday • August 22', acts: [['3:00 PM', '5:30 PM', 'ANDRE LOVETT BAND'], ['6:00 PM', '8:30 PM', 'RUMPSHAKERS'], ['9:00 PM', '11:30 PM', 'R&R SMOKING FOUNDATION']] },
+  { date: '2026-08-22', dayLabel: 'Saturday • August 22', acts: [['3:00 PM', '5:30 PM', 'ANDRE LOVETT BAND'], ['6:00 PM', '8:30 PM', 'RUMPSHAKERS'], ['9:00 PM', '11:30 PM', "R&R SMOKIN' FOUNDATION"]] },
   { date: '2026-08-23', dayLabel: 'Sunday • August 23', acts: [['3:00 PM', '5:30 PM', 'DEEJ FLAVA & MOTHER RUCKUS'], ['6:00 PM', '8:30 PM', 'SUGAR & THE DADDIES'], ['9:00 PM', '11:30 PM', 'SHORTY AND THE GIANTS']] },
   { date: '2026-08-27', dayLabel: 'Thursday • August 27', acts: [['6:00 PM', '8:30 PM', 'FUNKY SOLES'], ['9:00 PM', '11:30 PM', 'MAURICE CADE & ESS']] },
-  { date: '2026-08-28', dayLabel: 'Friday • August 28', acts: [['6:00 PM', '8:30 PM', 'ELECTRIC BARREL HOUSE'], ['9:00 PM', '11:30 PM', 'BIG MIKE & THE R&B KINGS']] },
+  { date: '2026-08-28', dayLabel: 'Friday • August 28', acts: [['6:00 PM', '8:30 PM', 'DANNY RAY & THE ELECTRIC BARRELHOUSE'], ['9:00 PM', '11:30 PM', 'BIG MIKE & THE R&B KINGS']] },
   { date: '2026-08-29', dayLabel: 'Saturday • August 29', acts: [['3:00 PM', '5:30 PM', 'ANDRE LOVETT BAND'], ['6:00 PM', '8:30 PM', 'SUGAR & THE DADDIES'], ['9:00 PM', '11:30 PM', 'PIANO MAN G']] },
   { date: '2026-08-30', dayLabel: 'Sunday • August 30', acts: [['3:00 PM', '5:30 PM', 'TROPICAL WEATHER'], ['6:00 PM', '8:30 PM', 'LYNN DRURY'], ['9:00 PM', '11:30 PM', 'MOTHER RUCKUS']] },
 ] as const;
