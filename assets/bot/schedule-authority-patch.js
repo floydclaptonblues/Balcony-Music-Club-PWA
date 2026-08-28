@@ -21,7 +21,24 @@
     { date: '2026-08-27', acts: [['6:00 PM', '8:30 PM', 'FUNKY SOLES'], ['9:00 PM', '11:30 PM', 'MAURICE CADE & ESS']] },
     { date: '2026-08-28', acts: [['6:00 PM', '8:30 PM', 'DANNY RAY & THE ELECTRIC BARRELHOUSE'], ['9:00 PM', '11:30 PM', 'BIG MIKE & THE R&B KINGS']] },
     { date: '2026-08-29', acts: [['3:00 PM', '5:30 PM', 'ANDRE LOVETT BAND'], ['6:00 PM', '8:30 PM', 'SUGAR & THE DADDIES'], ['9:00 PM', '11:30 PM', 'PIANO MAN G']] },
-    { date: '2026-08-30', acts: [['3:00 PM', '5:30 PM', 'TROPICAL WEATHER'], ['6:00 PM', '8:30 PM', 'LYNN DRURY'], ['9:00 PM', '11:30 PM', 'MOTHER RUCKUS']] }
+    { date: '2026-08-30', acts: [['3:00 PM', '5:30 PM', 'TROPICAL WEATHER'], ['6:00 PM', '8:30 PM', 'LYNN DRURY'], ['9:00 PM', '11:30 PM', 'MOTHER RUCKUS']] },
+
+    { date: '2026-09-03', acts: [['6:00 PM', '8:30 PM', 'DAPPER DANDIES'], ['9:00 PM', '11:30 PM', 'KAT KILEY EXPERIENCE']] },
+    { date: '2026-09-04', acts: [['6:00 PM', '8:30 PM', 'PARISH LINE'], ['9:00 PM', '11:30 PM', 'BIG MIKE & R&B KINGS']] },
+    { date: '2026-09-05', acts: [['3:00 PM', '5:30 PM', 'ANDRE LOVETT BAND'], ['6:00 PM', '8:30 PM', 'SUGAR & THE DADDIES'], ['9:00 PM', '11:30 PM', 'PIANO MAN G']] },
+    { date: '2026-09-06', acts: [['3:00 PM', '5:30 PM', 'DEEJ FLAVA & MOTHER RUCKUS'], ['6:00 PM', '8:30 PM', 'JAM BRASS BAND'], ['9:00 PM', '11:30 PM', 'SHORTY & THE GIANTS']] },
+    { date: '2026-09-10', acts: [['6:00 PM', '8:30 PM', 'MAURICE CADE & ESS'], ['9:00 PM', '11:30 PM', 'KAT KILEY EXPERIENCE']] },
+    { date: '2026-09-11', acts: [['6:00 PM', '8:30 PM', 'PARISH LINE'], ['9:00 PM', '11:30 PM', 'BIG MIKE & R&B KINGS']] },
+    { date: '2026-09-12', acts: [['3:00 PM', '5:30 PM', 'ANDRE LOVETT BAND'], ['6:00 PM', '8:30 PM', 'GABE STILLMAN'], ['9:00 PM', '11:30 PM', 'CURTIS FAMILY']] },
+    { date: '2026-09-13', acts: [['3:00 PM', '5:30 PM', 'DEEJ FLAVA & MOTHER RUCKUS'], ['6:00 PM', '8:30 PM', 'JAM BRASS BAND'], ['9:00 PM', '11:30 PM', 'CURTIS FAMILY']] },
+    { date: '2026-09-17', acts: [['6:00 PM', '8:30 PM', 'DAPPER DANDIES'], ['9:00 PM', '11:30 PM', 'KAT KILEY EXPERIENCE']] },
+    { date: '2026-09-18', acts: [['6:00 PM', '8:30 PM', 'WOODY\'S RAMPAGE'], ['9:00 PM', '11:30 PM', 'ANDRE LOVETT BAND']] },
+    { date: '2026-09-19', acts: [['3:00 PM', '5:30 PM', 'TROPICAL WEATHER'], ['6:00 PM', '8:30 PM', 'SUGAR & THE DADDIES'], ['9:00 PM', '11:30 PM', 'FLEURTATIONS']] },
+    { date: '2026-09-20', acts: [['3:00 PM', '5:30 PM', 'DEEJ FLAVA & MOTHER RUCKUS'], ['6:00 PM', '8:30 PM', 'JAM BRASS BAND'], ['9:00 PM', '11:30 PM', 'ARMANI SMITH']] },
+    { date: '2026-09-24', acts: [['6:00 PM', '8:30 PM', 'MAURICE CADE & ESS'], ['9:00 PM', '11:30 PM', 'KAT KILEY EXPERIENCE']] },
+    { date: '2026-09-25', acts: [['6:00 PM', '8:30 PM', 'MOTHER RUCKUS'], ['9:00 PM', '11:30 PM', 'BIG MIKE & R&B KINGS']] },
+    { date: '2026-09-26', acts: [['3:00 PM', '5:30 PM', 'ANDRE LOVETT BAND'], ['6:00 PM', '8:30 PM', 'MS SILKY SOL'], ['9:00 PM', '11:30 PM', 'TAMARIE T & PLAYMATZ']] },
+    { date: '2026-09-27', acts: [['3:00 PM', '5:30 PM', 'DEEJ FLAVA & MOTHER RUCKUS'], ['6:00 PM', '8:30 PM', 'JAM BRASS BAND'], ['9:00 PM', '11:30 PM', 'FUNKY SOLES']] }
   ];
 
   const LOCAL_BANDS = 'assets/bands/';
@@ -35,10 +52,13 @@
     'JAM BRASS BAND': SUPPLIED + 'Jam%20Brass%20Band%20Thursday%20%281%29.jpg',
     'JOSH BENITEZ BAND': SUPPLIED + 'Josh%20Benitez%20Band%20Sunday.png',
     'LEROY MARSHALL BAND': SUPPLIED + 'Leroy%20Marshal.jpg',
+    'FLEURTATIONS': SUPPLIED + 'FLEURTATIONS.jpg',
+    'THE FLEURTATIONS': SUPPLIED + 'FLEURTATIONS.jpg',
     'ANDRE LOVETT BAND': LEGACY + 'andre-lovett-band.jpg?v=20260723-current-week-auto',
     'DAPPER DANDIES': LEGACY + 'dapper-dandies.jpg?v=20260723-current-week-auto',
     'SUGAR & THE DADDIES': LEGACY + 'sugar-and-the-daddies.jpg?v=20260723-current-week-auto',
     "WOODY'S RAMPAGE": LEGACY + 'woodys-rampage.jpg?v=20260723-current-week-auto',
+    'WOODYS RAMPAGE': LEGACY + 'woodys-rampage.jpg?v=20260723-current-week-auto',
     'KIM IN THE WIND': LEGACY + 'kim-in-the-wind.webp?v=20260809-august-calendar',
     'KIM IN THE WIND BAND': LEGACY + 'kim-in-the-wind.webp?v=20260809-august-calendar',
     'BIG MIKE & THE R&B KINGS': LEGACY + 'big-mike-rb-kings.webp?v=20260723-current-week-auto',
@@ -52,6 +72,11 @@
     'MOTHER RUCKUS': UPCOMING + 'Mother%20Ruckus.png?v=20260704-restored',
     'DEEJ FLAVA & MOTHER RUCKUS': UPCOMING + 'Mother%20Ruckus.png?v=20260704-restored',
     'PARISH LINE': UPCOMING + 'Louisiana%20Parish%20Line.png?v=20260704-restored',
+    'GABE STILLMAN': UPCOMING + 'Gabe%20Stillman.png?v=20260827-september-calendar',
+    'GABE STILLMAN BAND': UPCOMING + 'Gabe%20Stillman.png?v=20260827-september-calendar',
+    'SHORTY & THE GIANTS': UPCOMING + '1000021874.png?v=20260809-shorty',
+    'SHORTY AND THE GIANTS': UPCOMING + '1000021874.png?v=20260809-shorty',
+    'TAMARIE T & PLAYMATZ': UPCOMING + 'Thee%20PlayMateZ.png?v=20260827-september-calendar',
     'ASHLEY PAIGE & SOULCIAL CLUB': UPCOMING + 'Ashley%20Paige%20and%20the%20Soulcial%20Club.jpeg?v=20260704-restored',
     'THEE FONK JAM': UPCOMING + 'Thee%20PlayMateZ.png?v=20260704-restored',
     'THEE FONK JAM FEAT. TAMARIET': UPCOMING + 'Thee%20PlayMateZ.png?v=20260704-restored',
@@ -284,7 +309,8 @@
     if (!section) return;
 
     installStyle();
-    const week = visibleWeek(new Date());
+    const now = new Date();
+    const week = visibleWeek(now);
     const signature = week.map(function (day) { return day.date; }).join(',');
     if (section.dataset.scheduleSignature === signature && section.querySelector('.frozen-week-strip')) {
       bindCalendarButtons();
@@ -300,7 +326,7 @@
     const head = element('div', 'frozen-lineup-head');
     const heading = element('div');
     heading.innerHTML = '<span class="ribbon"></span><h2>This Week\'s Lineup:</h2>';
-    heading.querySelector('.ribbon').textContent = scheduleMonthLabel();
+    heading.querySelector('.ribbon').textContent = scheduleMonthLabel(currentAndUpcomingSchedule(now));
     head.appendChild(heading);
 
     const button = element('button', 'button primary bmc-calendar-button', 'Open Full Calendar');
