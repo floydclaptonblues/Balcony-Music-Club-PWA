@@ -8,6 +8,7 @@ export type SourceId =
   | 'public-social-search'
   | 'site-owner-approval-2026-06-05'
   | 'site-owner-supplied-2026-08-17'
+  | 'management-schedule-2026-08-27'
   | 'generated-placeholder';
 
 export type VenueInfo = {
