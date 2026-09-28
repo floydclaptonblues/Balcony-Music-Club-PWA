@@ -3,42 +3,28 @@
 
   const VENUE_TIME_ZONE = 'America/Chicago';
   const BMC_MURAL = 'assets/venue/20260213_212259%20(1).jpg?v=20260730-band-fallback';
+  // Management schedule supplied 2026-09-28. Blank billings are TBA.
+  // Start times are supplied; end times retain the existing 2.5-hour slot convention.
   const SCHEDULE = [
-    { date: '2026-08-01', acts: [['3:00 PM', '5:30 PM', 'ANDRE LOVETT BAND'], ['6:00 PM', '8:30 PM', 'T MARIE & BAYOU JUJU'], ['9:00 PM', '11:30 PM', 'ADO SOUL & THE TRIBE']] },
-    { date: '2026-08-02', acts: [['3:00 PM', '5:30 PM', 'SIERRA & GREEN NOTES'], ['6:00 PM', '8:30 PM', 'TROPICAL WEATHER'], ['9:00 PM', '11:30 PM', 'SHORTY AND THE GIANTS']] },
-    { date: '2026-08-06', acts: [['6:00 PM', '8:30 PM', 'DAPPER DANDIES'], ['9:00 PM', '11:30 PM', 'MAURICE CADE & ESS']] },
-    { date: '2026-08-07', acts: [['6:00 PM', '8:30 PM', 'WOODY\'S RAMPAGE'], ['9:00 PM', '11:30 PM', 'KIM IN THE WIND BAND']] },
-    { date: '2026-08-08', acts: [['3:00 PM', '5:30 PM', 'TROPICAL WEATHER'], ['6:00 PM', '8:30 PM', 'RUMPSHAKERS'], ['9:00 PM', '11:30 PM', 'THEE FONK JAM feat. TamarieT']] },
-    { date: '2026-08-09', acts: [['3:00 PM', '5:30 PM', 'DEEJ FLAVA & MOTHER RUCKUS'], ['6:00 PM', '8:30 PM', 'SUGAR & THE DADDIES'], ['9:00 PM', '11:30 PM', 'SHORTY AND THE GIANTS']] },
-    { date: '2026-08-13', acts: [['6:00 PM', '8:30 PM', 'FUNKY SOLES'], ['9:00 PM', '11:30 PM', 'LEROY MARSHALL BAND']] },
-    { date: '2026-08-14', acts: [['6:00 PM', '8:30 PM', 'PARISH LINE'], ['9:00 PM', '11:30 PM', 'ASHLEY PAIGE & SOULCIAL CLUB']] },
-    { date: '2026-08-15', acts: [['3:00 PM', '5:30 PM', 'TROPICAL WEATHER'], ['6:00 PM', '8:30 PM', 'SUGAR & THE DADDIES'], ['9:00 PM', '11:30 PM', 'ADO SOUL & THE TRIBE']] },
-    { date: '2026-08-16', acts: [['3:00 PM', '5:30 PM', 'SIERRA & GREEN NOTES'], ['6:00 PM', '8:30 PM', 'ELECTRIC BARREL HOUSE'], ['9:00 PM', '11:30 PM', 'MOTHER RUCKUS']] },
-    { date: '2026-08-20', acts: [['6:00 PM', '8:30 PM', 'DAPPER DANDIES'], ['9:00 PM', '11:30 PM', 'MAURICE CADE & ESS']] },
-    { date: '2026-08-21', acts: [['6:00 PM', '8:30 PM', 'JOSH BENITEZ BAND'], ['9:00 PM', '11:30 PM', 'BIG MIKE & THE R&B KINGS']] },
-    { date: '2026-08-22', acts: [['3:00 PM', '5:30 PM', 'ANDRE LOVETT BAND'], ['6:00 PM', '8:30 PM', 'RUMPSHAKERS'], ['9:00 PM', '11:30 PM', "R&R SMOKIN' FOUNDATION"]] },
-    { date: '2026-08-23', acts: [['3:00 PM', '5:30 PM', 'DEEJ FLAVA & MOTHER RUCKUS'], ['6:00 PM', '8:30 PM', 'SUGAR & THE DADDIES'], ['9:00 PM', '11:30 PM', 'SHORTY AND THE GIANTS']] },
-    { date: '2026-08-27', acts: [['6:00 PM', '8:30 PM', 'FUNKY SOLES'], ['9:00 PM', '11:30 PM', 'MAURICE CADE & ESS']] },
-    { date: '2026-08-28', acts: [['6:00 PM', '8:30 PM', 'DANNY RAY & THE ELECTRIC BARRELHOUSE'], ['9:00 PM', '11:30 PM', 'BIG MIKE & THE R&B KINGS']] },
-    { date: '2026-08-29', acts: [['3:00 PM', '5:30 PM', 'ANDRE LOVETT BAND'], ['6:00 PM', '8:30 PM', 'SUGAR & THE DADDIES'], ['9:00 PM', '11:30 PM', 'PIANO MAN G']] },
-    { date: '2026-08-30', acts: [['3:00 PM', '5:30 PM', 'TROPICAL WEATHER'], ['6:00 PM', '8:30 PM', 'LYNN DRURY'], ['9:00 PM', '11:30 PM', 'MOTHER RUCKUS']] },
-
-    { date: '2026-09-03', acts: [['6:00 PM', '8:30 PM', 'DAPPER DANDIES'], ['9:00 PM', '11:30 PM', 'KAT KILEY EXPERIENCE']] },
-    { date: '2026-09-04', acts: [['6:00 PM', '8:30 PM', 'PARISH LINE'], ['9:00 PM', '11:30 PM', 'BIG MIKE & R&B KINGS']] },
-    { date: '2026-09-05', acts: [['3:00 PM', '5:30 PM', 'ANDRE LOVETT BAND'], ['6:00 PM', '8:30 PM', 'SUGAR & THE DADDIES'], ['9:00 PM', '11:30 PM', 'PIANO MAN G']] },
-    { date: '2026-09-06', acts: [['3:00 PM', '5:30 PM', 'DEEJ FLAVA & MOTHER RUCKUS'], ['6:00 PM', '8:30 PM', 'JAM BRASS BAND'], ['9:00 PM', '11:30 PM', 'SHORTY & THE GIANTS']] },
-    { date: '2026-09-10', acts: [['6:00 PM', '8:30 PM', 'MAURICE CADE & ESS'], ['9:00 PM', '11:30 PM', 'KAT KILEY EXPERIENCE']] },
-    { date: '2026-09-11', acts: [['6:00 PM', '8:30 PM', 'PARISH LINE'], ['9:00 PM', '11:30 PM', 'BIG MIKE & R&B KINGS']] },
-    { date: '2026-09-12', acts: [['3:00 PM', '5:30 PM', 'ANDRE LOVETT BAND'], ['6:00 PM', '8:30 PM', 'GABE STILLMAN'], ['9:00 PM', '11:30 PM', 'CURTIS FAMILY']] },
-    { date: '2026-09-13', acts: [['3:00 PM', '5:30 PM', 'DEEJ FLAVA & MOTHER RUCKUS'], ['6:00 PM', '8:30 PM', 'JAM BRASS BAND'], ['9:00 PM', '11:30 PM', 'CURTIS FAMILY']] },
-    { date: '2026-09-17', acts: [['6:00 PM', '8:30 PM', 'DAPPER DANDIES'], ['9:00 PM', '11:30 PM', 'KAT KILEY EXPERIENCE']] },
-    { date: '2026-09-18', acts: [['6:00 PM', '8:30 PM', 'WOODY\'S RAMPAGE'], ['9:00 PM', '11:30 PM', 'ANDRE LOVETT BAND']] },
-    { date: '2026-09-19', acts: [['3:00 PM', '5:30 PM', 'TROPICAL WEATHER'], ['6:00 PM', '8:30 PM', 'SUGAR & THE DADDIES'], ['9:00 PM', '11:30 PM', 'FLEURTATIONS']] },
-    { date: '2026-09-20', acts: [['3:00 PM', '5:30 PM', 'DEEJ FLAVA & MOTHER RUCKUS'], ['6:00 PM', '8:30 PM', 'JAM BRASS BAND'], ['9:00 PM', '11:30 PM', 'ARMANI SMITH']] },
-    { date: '2026-09-24', acts: [['6:00 PM', '8:30 PM', 'MAURICE CADE & ESS'], ['9:00 PM', '11:30 PM', 'KAT KILEY EXPERIENCE']] },
-    { date: '2026-09-25', acts: [['6:00 PM', '8:30 PM', 'MOTHER RUCKUS'], ['9:00 PM', '11:30 PM', 'BIG MIKE & R&B KINGS']] },
-    { date: '2026-09-26', acts: [['3:00 PM', '5:30 PM', 'ANDRE LOVETT BAND'], ['6:00 PM', '8:30 PM', 'MS SILKY SOL'], ['9:00 PM', '11:30 PM', 'TAMARIE T & PLAYMATZ']] },
-    { date: '2026-09-27', acts: [['3:00 PM', '5:30 PM', 'DEEJ FLAVA & MOTHER RUCKUS'], ['6:00 PM', '8:30 PM', 'JAM BRASS BAND'], ['9:00 PM', '11:30 PM', 'FUNKY SOLES']] }
+    { date: '2026-10-01', acts: [['6:00 PM', '8:30 PM', 'DAPPER DANDIES'], ['9:00 PM', '11:30 PM', 'KAT KILEY EXPERIENCE']] },
+    { date: '2026-10-02', acts: [['6:00 PM', '8:30 PM', 'ELECTRIC BARRELHOUSE'], ['9:00 PM', '11:30 PM', 'BIG MIKE & RB KINGS']] },
+    { date: '2026-10-03', acts: [['3:00 PM', '5:30 PM', 'ANDRE LOVETT BAND'], ['6:00 PM', '8:30 PM', 'TBA'], ['9:00 PM', '11:30 PM', 'RR SMOKIN FOUNDATION']] },
+    { date: '2026-10-04', acts: [['3:00 PM', '5:30 PM', 'DEEJ FK & MOTHER RUCKUS'], ['6:00 PM', '8:30 PM', 'JAM BRASS BAND'], ['9:00 PM', '11:30 PM', 'ARMANI SMITH']] },
+    { date: '2026-10-08', acts: [['6:00 PM', '8:30 PM', 'MAURICE CADE & ESS'], ['9:00 PM', '11:30 PM', 'KAT KILEY EXPERIENCE']] },
+    { date: '2026-10-09', acts: [['6:00 PM', '8:30 PM', 'ELECTRIC BARRELHOUSE'], ['9:00 PM', '11:30 PM', 'BIG MIKE & RB KINGS']] },
+    { date: '2026-10-10', acts: [['3:00 PM', '5:30 PM', 'TROPICAL WEATHER'], ['6:00 PM', '8:30 PM', 'SUGAR & THE DADDIES'], ['9:00 PM', '11:30 PM', 'TBA']] },
+    { date: '2026-10-11', acts: [['3:00 PM', '5:30 PM', 'DEEJ FK & MOTHER RUCKUS'], ['6:00 PM', '8:30 PM', 'JAM BRASS BAND'], ['9:00 PM', '11:30 PM', 'TBA']] },
+    { date: '2026-10-15', acts: [['6:00 PM', '8:30 PM', 'DAPPER DANDIES'], ['9:00 PM', '11:30 PM', 'KAT KILEY EXPERIENCE']] },
+    { date: '2026-10-16', acts: [['6:00 PM', '8:30 PM', 'PARISH LINE'], ['9:00 PM', '11:30 PM', 'CAESAR BROS']] },
+    { date: '2026-10-17', acts: [['3:00 PM', '5:30 PM', 'TROPICAL WEATHER'], ['6:00 PM', '8:30 PM', 'SUGAR & THE DADDIES'], ['9:00 PM', '11:30 PM', 'TAMARIE T PLAYMATZ']] },
+    { date: '2026-10-18', acts: [['3:00 PM', '5:30 PM', 'DEEJ FK & MOTHER RUCKUS'], ['6:00 PM', '8:30 PM', 'JAM BRASS BAND'], ['9:00 PM', '11:30 PM', 'ANDRE LOVETT BAND']] },
+    { date: '2026-10-22', acts: [['6:00 PM', '8:30 PM', 'MAURICE CADE & ESS'], ['9:00 PM', '11:30 PM', 'KAT KILEY EXPERIENCE']] },
+    { date: '2026-10-23', acts: [['6:00 PM', '8:30 PM', 'PARISH LINE'], ['9:00 PM', '11:30 PM', 'BIG MIKE & RB KINGS']] },
+    { date: '2026-10-24', acts: [['3:00 PM', '5:30 PM', 'TROPICAL WEATHER'], ['6:00 PM', '8:30 PM', 'GABE STILLMAN'], ['9:00 PM', '11:30 PM', 'ESSENTIALS']] },
+    { date: '2026-10-25', acts: [['3:00 PM', '5:30 PM', 'DEEJ FK & MOTHER RUCKUS'], ['6:00 PM', '8:30 PM', 'JAM BRASS BAND'], ['9:00 PM', '11:30 PM', 'TBA']] },
+    { date: '2026-10-29', acts: [['6:00 PM', '8:30 PM', 'DAPPER DANDIES'], ['9:00 PM', '11:30 PM', 'KEEPING IT ROLLIN’ BRASS BAND']] },
+    { date: '2026-10-30', acts: [['6:00 PM', '8:30 PM', 'MOTHER RUCKUS'], ['9:00 PM', '11:30 PM', 'BIG MIKE & RB KINGS']] },
+    { date: '2026-10-31', acts: [['3:00 PM', '5:30 PM', 'TROPICAL WEATHER'], ['6:00 PM', '8:30 PM', '(SUGAR)((RONIGER)(ADO)'], ['9:00 PM', '11:30 PM', 'KAT KILEY EXPERIENCE']] }
   ];
 
   const LOCAL_BANDS = 'assets/bands/';
