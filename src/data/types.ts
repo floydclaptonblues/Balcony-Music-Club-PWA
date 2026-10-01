@@ -10,6 +10,7 @@ export type SourceId =
   | 'site-owner-supplied-2026-08-17'
   | 'management-schedule-2026-08-27'
   | 'management-schedule-2026-09-28'
+  | 'management-schedule-2026-10-01'
   | 'generated-placeholder';
 
 export type VenueInfo = {
