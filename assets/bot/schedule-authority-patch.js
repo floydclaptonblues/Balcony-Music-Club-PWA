@@ -3,7 +3,7 @@
 
   const VENUE_TIME_ZONE = 'America/Chicago';
   const BMC_MURAL = 'assets/venue/20260213_212259%20(1).jpg?v=20260730-band-fallback';
-  // Management schedule revised 2026-10-01. October 10 and 31 at 6 PM are TBA.
+  // Management schedule revised 2026-10-01; owner update 2026-10-27: October 31 at 6 PM is Epic Funk Brass Band. October 10 at 6 PM remains TBA.
   // Start times are supplied; end times retain the existing 2.5-hour slot convention.
   const SCHEDULE = [
     { date: '2026-10-01', acts: [['6:00 PM', '8:30 PM', 'DAPPER DANDIES'], ['9:00 PM', '11:30 PM', 'KAT KILEY EXPERIENCE']] },
@@ -24,7 +24,7 @@
     { date: '2026-10-25', acts: [['3:00 PM', '5:30 PM', 'DEEJ FK & MOTHER RUCKUS'], ['6:00 PM', '8:30 PM', 'JAM BRASS BAND'], ['9:00 PM', '11:30 PM', 'FUNKY SOLES']] },
     { date: '2026-10-29', acts: [['6:00 PM', '8:30 PM', 'DAPPER DANDIES'], ['9:00 PM', '11:30 PM', 'KEEP IT ROLLING BRASS BAND']] },
     { date: '2026-10-30', acts: [['6:00 PM', '8:30 PM', 'MOTHER RUCKUS'], ['9:00 PM', '11:30 PM', 'BIG MIKE & RB KINGS']] },
-    { date: '2026-10-31', acts: [['3:00 PM', '5:30 PM', 'TROPICAL WEATHER'], ['6:00 PM', '8:30 PM', 'TBA'], ['9:00 PM', '11:30 PM', 'KAT KILEY EXPERIENCE']] }
+    { date: '2026-10-31', acts: [['3:00 PM', '5:30 PM', 'TROPICAL WEATHER'], ['6:00 PM', '8:30 PM', 'Epic Funk Brass Band'], ['9:00 PM', '11:30 PM', 'KAT KILEY EXPERIENCE']] }
   ];
 
   const LOCAL_BANDS = 'assets/bands/';
