@@ -1,8 +1,8 @@
 import type { ScheduleItem } from './types';
 
-// October 2026 management schedule revised October 1, 2026.
+// October 2026 management schedule revised October 1, 2026; October 31 update supplied October 27, 2026.
 // Mirrored to UpcomingShows/shows.json and assets/bot/schedule-authority-patch.js.
-// All 47 slots retained: October 10 and 31 at 6 PM are TBA; billings are verbatim.
+// All 47 slots retained: October 10 at 6 PM remains TBA; October 31 at 6 PM is Epic Funk Brass Band.
 // Start times are supplied; end times retain the existing 2.5-hour slot convention.
 // All times America/Chicago. Historical schedules remain in Git history.
 
@@ -25,7 +25,7 @@ const schedule2026 = [
   { date: '2026-10-25', dayLabel: 'Sunday • October 25', acts: [['3:00 PM', '5:30 PM', 'DEEJ FK & MOTHER RUCKUS'], ['6:00 PM', '8:30 PM', 'JAM BRASS BAND'], ['9:00 PM', '11:30 PM', 'FUNKY SOLES']] },
   { date: '2026-10-29', dayLabel: 'Thursday • October 29', acts: [['6:00 PM', '8:30 PM', 'DAPPER DANDIES'], ['9:00 PM', '11:30 PM', 'KEEP IT ROLLING BRASS BAND']] },
   { date: '2026-10-30', dayLabel: 'Friday • October 30', acts: [['6:00 PM', '8:30 PM', 'MOTHER RUCKUS'], ['9:00 PM', '11:30 PM', 'BIG MIKE & RB KINGS']] },
-  { date: '2026-10-31', dayLabel: 'Saturday • October 31', acts: [['3:00 PM', '5:30 PM', 'TROPICAL WEATHER'], ['6:00 PM', '8:30 PM', 'TBA'], ['9:00 PM', '11:30 PM', 'KAT KILEY EXPERIENCE']] },
+  { date: '2026-10-31', dayLabel: 'Saturday • October 31', acts: [['3:00 PM', '5:30 PM', 'TROPICAL WEATHER'], ['6:00 PM', '8:30 PM', 'Epic Funk Brass Band'], ['9:00 PM', '11:30 PM', 'KAT KILEY EXPERIENCE']] },
 ] as const;
 
 export const schedule: ScheduleItem[] = schedule2026.flatMap((day) =>
@@ -36,6 +36,10 @@ export const schedule: ScheduleItem[] = schedule2026.flatMap((day) =>
     startTime: act[0],
     endTime: act[1],
     title: act[2],
-    sourceIds: ['website-shows', 'management-schedule-2026-10-01'],
+    sourceIds: [
+      'website-shows',
+      'management-schedule-2026-10-01',
+      ...(day.date === '2026-10-31' && act[0] === '6:00 PM' ? ['site-owner-supplied-2026-10-27'] : []),
+    ],
   })),
 );
