@@ -1,9 +1,7 @@
 -- Non-destructive snapshot of the three listed Sierra Green shows from shows-data.js.
 -- Existing past-date performances are preserved rather than rewritten.
-BEGIN TRANSACTION;
 INSERT OR IGNORE INTO bands(id,tenant,name,description,created_at,updated_at) VALUES ('sierra-band-sierra-green','sierra','Sierra Green','',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
 INSERT OR IGNORE INTO bands(id,tenant,name,description,created_at,updated_at) VALUES ('sierra-band-sierra-the-green-notes','sierra','Sierra & The Green Notes','',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
 INSERT OR IGNORE INTO shows(id,tenant,date,start_time,end_time,title,band_id,venue,location,description,is_headliner,status,version,created_at,updated_at,updated_by) VALUES ('sierra-legacy-2026-08-01-2200','sierra','2026-08-01','22:00',NULL,'Sierra Green','sierra-band-sierra-green','The Spotted Cat','New Orleans, LA','Original listing: 10:00 PM–Close',0,'published',1,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,'legacy-import-2026-10-27');
 INSERT OR IGNORE INTO shows(id,tenant,date,start_time,end_time,title,band_id,venue,location,description,is_headliner,status,version,created_at,updated_at,updated_by) VALUES ('sierra-legacy-2026-08-02-1500','sierra','2026-08-02','15:00','17:30','Sierra & The Green Notes','sierra-band-sierra-the-green-notes','Balcony Music Club','New Orleans, LA','Original listing: 3:00–5:30 PM',0,'published',1,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,'legacy-import-2026-10-27');
 INSERT OR IGNORE INTO shows(id,tenant,date,start_time,end_time,title,band_id,venue,location,description,is_headliner,status,version,created_at,updated_at,updated_by) VALUES ('sierra-legacy-2026-08-16-1500','sierra','2026-08-16','15:00','17:30','Sierra & The Green Notes','sierra-band-sierra-the-green-notes','Balcony Music Club','New Orleans, LA','Original listing: 3:00–5:30 PM',0,'published',1,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,'legacy-import-2026-10-27');
-COMMIT;

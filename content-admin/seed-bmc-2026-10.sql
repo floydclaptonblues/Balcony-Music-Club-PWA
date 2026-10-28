@@ -1,7 +1,6 @@
 -- Original 2026-10-27 BMC October schedule: 19 days, 47 slots.
 -- Non-destructive, deterministic IDs. Apply after schema.sql and before editor use.
 -- Legacy 2.5-hour end times are calendar conventions, not newly confirmed durations.
-BEGIN TRANSACTION;
 INSERT OR IGNORE INTO bands(id,tenant,name,description,legacy_photo_url,created_at,updated_at) VALUES ('bmc-band-dapper-dandies','bmc','DAPPER DANDIES','','https://shows.balconymusicclub.com/assets/artists/dapper-dandies.jpg',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
 INSERT OR IGNORE INTO bands(id,tenant,name,description,legacy_photo_url,created_at,updated_at) VALUES ('bmc-band-kat-kiley-experience','bmc','KAT KILEY EXPERIENCE','',NULL,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
 INSERT OR IGNORE INTO bands(id,tenant,name,description,legacy_photo_url,created_at,updated_at) VALUES ('bmc-band-electric-barrelhouse','bmc','ELECTRIC BARRELHOUSE','','https://shows.balconymusicclub.com/assets/artists/Danny%20Ray%20%26%20Electric%20Barrelhouse.jpeg',CURRENT_TIMESTAMP,CURRENT_TIMESTAMP);
@@ -71,4 +70,3 @@ INSERT OR IGNORE INTO shows(id,tenant,date,start_time,end_time,title,band_id,ven
 INSERT OR IGNORE INTO shows(id,tenant,date,start_time,end_time,title,band_id,venue,location,description,is_headliner,status,version,created_at,updated_at,updated_by) VALUES ('bmc-legacy-2026-10-31-1500','bmc','2026-10-31','15:00','17:30','TROPICAL WEATHER','bmc-band-tropical-weather','Balcony Music Club','New Orleans, LA','',0,'published',1,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,'legacy-import-2026-10-27');
 INSERT OR IGNORE INTO shows(id,tenant,date,start_time,end_time,title,band_id,venue,location,description,is_headliner,status,version,created_at,updated_at,updated_by) VALUES ('bmc-legacy-2026-10-31-1800','bmc','2026-10-31','18:00','20:30','Epic Funk Brass Band','bmc-band-epic-funk-brass-band','Balcony Music Club','New Orleans, LA','',0,'published',1,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,'legacy-import-2026-10-27');
 INSERT OR IGNORE INTO shows(id,tenant,date,start_time,end_time,title,band_id,venue,location,description,is_headliner,status,version,created_at,updated_at,updated_by) VALUES ('bmc-legacy-2026-10-31-2100','bmc','2026-10-31','21:00','23:30','KAT KILEY EXPERIENCE','bmc-band-kat-kiley-experience','Balcony Music Club','New Orleans, LA','',1,'published',1,CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,'legacy-import-2026-10-27');
-COMMIT;
