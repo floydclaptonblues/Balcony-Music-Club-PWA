@@ -24,3 +24,4 @@ jobs:
       - run: npm install --ignore-scripts --no-audit --no-fund
       - run: npm run check
       - run: npm test
+      - run: python3 test/verify-seeds.py
