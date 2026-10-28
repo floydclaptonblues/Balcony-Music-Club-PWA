@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Balcony Music Club Admin | Content Admin</title>
+<link rel="stylesheet" href="./admin.css">
+<script src="./admin.js" defer></script>
+</head>
+<body data-site="bmc">
+<header class="masthead">
+  <div><p class="eyebrow">Content publishing · Venue</p><h1>Balcony Music Club Admin</h1><p>Manage venue shows, musicians, band photographs, and performance information.</p></div>
+  <nav aria-label="Admin pages"><a href="./bmc.html">BMC Admin</a><a href="./sierra.html">Sierra Admin</a></nav>
+</header>
+<main class="layout">
+  <section class="panel" aria-labelledby="event-heading">
+    <div class="section-title"><h2 id="event-heading">Add or edit performance</h2><button type="button" class="muted" id="reset-show">New show</button></div>
+    <p>Save as a draft, or select Published to make it available in the new content feed. The existing public websites are not connected during this development phase.</p>
+    <form id="show-form">
+      <input type="hidden" name="id"><input type="hidden" name="version">
+      <div class="two"><label>Performance date<input name="date" type="date" required></label><label>Start time<input name="start_time" type="time" required></label></div>
+      <div class="two"><label>End time (optional)<input name="end_time" type="time"></label><label>Band profile (optional)<select name="band_id"><option value="">No band profile</option></select></label></div>
+      <label>Artist or event title<input name="title" required maxlength="160" placeholder="Enter the act or event name"></label>
+      <div class="two"><label>Venue<input name="venue" maxlength="180" placeholder="Venue name"></label><label>City / location<input name="location" maxlength="180" placeholder="City, state"></label></div>
+      <label>Description / notes<textarea name="description" maxlength="1200" rows="3" placeholder="Optional public event details"></textarea></label>
+      <div class="two"><label>Publication<select name="status"><option value="draft">Draft — private</option><option value="published">Published — public feed</option><option value="cancelled">Cancelled — not shown</option></select></label><label class="check"><input name="is_headliner" type="checkbox"> Headlining set</label></div>
+      <div class="actions"><button type="submit" id="save-show">Save performance</button><button type="button" id="cancel-edit" class="muted">Clear form</button></div>
+    </form>
+  </section>
+  <section class="panel" aria-labelledby="band-heading">
+    <h2 id="band-heading">Band profiles &amp; photographs</h2>
+    <p>Register an act once, then reuse the name and photo on any performance.</p>
+    <form id="band-form" class="stack">
+      <label>New band name<input name="name" maxlength="160" required placeholder="Band or artist name"></label>
+      <button type="submit">Add band profile</button>
+    </form>
+    <hr>
+    <form id="photo-form" class="stack">
+      <label>Existing band<select name="band_id" required><option value="">Choose a band</option></select></label>
+      <label>Photo (JPEG, PNG, WebP; max 5 MB)<input name="photo" type="file" accept="image/jpeg,image/png,image/webp" required></label>
+      <button type="submit">Upload band photo</button>
+    </form>
+    <h3>Saved bands</h3>
+    <div id="band-list" class="band-list"></div>
+  </section>
+  <section class="panel wide" aria-labelledby="listing-heading">
+    <div class="section-title"><h2 id="listing-heading">Saved performances</h2><button type="button" id="reload" class="muted">Refresh</button></div>
+    <p>Use Edit to correct a show, Copy to reuse its details for another date, or Cancel to remove it from the public feed without erasing its record.</p>
+    <div id="show-list" class="show-list"></div>
+  </section>
+  <section class="panel wide" aria-labelledby="history-heading">
+    <div class="section-title"><h2 id="history-heading">Recent changes</h2><button class="muted" type="button" id="reload-history">View history</button></div>
+    <div id="history" class="history"><p>Change history is available to authorized editors.</p></div>
+  </section>
+</main>
+<div id="status" role="status" aria-live="polite"></div>
+<footer>Separate BMC and Sierra content, with Cloudflare Access and per-site editor permissions. Changes to the established public sites are deliberately disabled during setup.</footer>
+</body>
+</html>
