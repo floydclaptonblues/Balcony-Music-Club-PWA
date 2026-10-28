@@ -6,6 +6,7 @@ CREATE TABLE IF NOT EXISTS bands (
   description TEXT NOT NULL DEFAULT '',
   photo_key TEXT,
   photo_type TEXT,
+  legacy_photo_url TEXT,
   created_at TEXT NOT NULL,
   updated_at TEXT NOT NULL,
   UNIQUE (tenant, name)

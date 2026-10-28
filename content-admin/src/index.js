@@ -118,13 +118,13 @@ async function publicAPI(request, env, site, parts) {
   if (request.method !== 'GET') fail(405, 'Read-only feed.');
   if (parts[0] === 'shows' && parts.length === 1) {
     const rows = await env.DB.prepare(
-      "SELECT s.*, b.photo_key AS band_photo FROM shows s LEFT JOIN bands b ON s.tenant=b.tenant AND s.band_id=b.id WHERE s.tenant=? AND s.status='published' ORDER BY s.date,s.start_time"
+      "SELECT s.*, b.photo_key AS band_photo, b.legacy_photo_url AS legacy_photo FROM shows s LEFT JOIN bands b ON s.tenant=b.tenant AND s.band_id=b.id WHERE s.tenant=? AND s.status='published' ORDER BY s.date,s.start_time"
     ).bind(site).all();
     const shows = (rows.results || []).map(s => ({
       id: s.id, date: s.date, start_time: s.start_time, end_time: s.end_time,
       title: s.title, venue: s.venue, location: s.location,
       description: s.description, is_headliner: !!s.is_headliner,
-      photo: s.band_photo ? new URL('/api/public/' + site + '/photo/' + s.band_id, request.url).href : null
+      photo: s.band_photo ? new URL('/api/public/' + site + '/photo/' + s.band_id, request.url).href : (s.legacy_photo || null)
     }));
     return json({ site, timezone: site === 'bmc' ? 'America/Chicago' : 'Venue local time', shows }, 200, true);
   }
@@ -245,7 +245,7 @@ export default {
       const headers=new Headers(response.headers);
       headers.set('X-Content-Type-Options','nosniff');
       headers.set('Referrer-Policy','no-referrer');
-      headers.set('Content-Security-Policy',"default-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self'; connect-src 'self'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'");
+      headers.set('Content-Security-Policy',"default-src 'self'; img-src 'self' data: https://shows.balconymusicclub.com; script-src 'self'; style-src 'self'; connect-src 'self'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'");
       return new Response(response.body,{ status:response.status,headers });
     } catch(err) {
       if (err instanceof HttpError) return json({ error:err.message },err.status);

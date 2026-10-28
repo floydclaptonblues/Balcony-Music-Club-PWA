@@ -78,16 +78,16 @@ function renderBands() {
   if (!state.bands.length) { list.appendChild(el('p','', 'No band profiles yet. Create one above.')); return; }
   for (const band of state.bands) {
     const row = el('div','band-row');
-    if (band.photo_key) {
+    if (band.photo_key || band.legacy_photo_url) {
       const img = el('img');
-      img.src = '/api/public/' + site + '/photo/' + encodeURIComponent(band.id);
+      img.src = band.photo_key ? '/api/public/' + site + '/photo/' + encodeURIComponent(band.id) : band.legacy_photo_url;
       img.alt = band.name + ' promotional photo';
       img.loading = 'lazy';
       row.appendChild(img);
     }
     const label = el('div');
     label.appendChild(el('strong','',band.name));
-    label.appendChild(el('small','',band.photo_key ? 'Photo saved' : 'No photo yet'));
+    label.appendChild(el('small','',band.photo_key ? 'Uploaded photo saved' : (band.legacy_photo_url ? 'Existing website photo linked' : 'No photo yet')));
     row.appendChild(label);
     row.appendChild(button('Select photo',() => {
       field(photoForm,'band_id').value = band.id;
