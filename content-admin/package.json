@@ -10,7 +10,8 @@
     "db:remote": "wrangler d1 execute bmc-sierra-content --remote --file=./schema.sql",
     "test": "node --test",
     "seed:bmc:local": "wrangler d1 execute bmc-sierra-content --local --file=./seed-bmc-2026-10.sql",
-    "seed:sierra:local": "wrangler d1 execute bmc-sierra-content --local --file=./seed-sierra-2026.sql"
+    "seed:sierra:local": "wrangler d1 execute bmc-sierra-content --local --file=./seed-sierra-2026.sql",
+    "seed:bmc:nov:local": "wrangler d1 execute bmc-sierra-content --local --file=./seed-bmc-2026-11.sql"
   },
   "dependencies": {
     "jose": "^6.1.0"

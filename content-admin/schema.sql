@@ -46,3 +46,16 @@ CREATE TABLE IF NOT EXISTS audit_log (
   created_at TEXT NOT NULL
 );
 CREATE INDEX IF NOT EXISTS idx_audit_tenant ON audit_log (tenant, created_at DESC);
+
+-- Closures have no performers and must not be mistaken for scheduled shows.
+CREATE TABLE IF NOT EXISTS closures (
+  id TEXT PRIMARY KEY,
+  tenant TEXT NOT NULL CHECK (tenant IN ('bmc','sierra')),
+  date TEXT NOT NULL,
+  notice TEXT NOT NULL,
+  created_at TEXT NOT NULL,
+  updated_at TEXT NOT NULL,
+  updated_by TEXT NOT NULL,
+  UNIQUE (tenant, date)
+);
+CREATE INDEX IF NOT EXISTS idx_closures_tenant_date ON closures(tenant, date);

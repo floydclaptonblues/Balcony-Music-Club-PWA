@@ -126,7 +126,8 @@ async function publicAPI(request, env, site, parts) {
       description: s.description, is_headliner: !!s.is_headliner,
       photo: s.band_photo ? new URL('/api/public/' + site + '/photo/' + s.band_id, request.url).href : (s.legacy_photo || null)
     }));
-    return json({ site, timezone: site === 'bmc' ? 'America/Chicago' : 'Venue local time', shows }, 200, true);
+    const closureRows = await env.DB.prepare('SELECT id,date,notice FROM closures WHERE tenant=? ORDER BY date').bind(site).all();
+    return json({ site, timezone: site === 'bmc' ? 'America/Chicago' : 'Venue local time', shows, closures: closureRows.results || [] }, 200, true);
   }
   if (parts[0] === 'photo' && parts.length === 2) {
     const band = await env.DB.prepare('SELECT photo_key FROM bands WHERE tenant=? AND id=?').bind(site, parts[1]).first();
@@ -141,15 +142,40 @@ async function adminAPI(request, env, site, parts, actor) {
   const [collection, id, action] = parts;
   const method = request.method;
   if (collection === 'data' && parts.length === 1 && method === 'GET') {
-    const [bands, shows] = await Promise.all([
+    const [bands, shows, closures] = await Promise.all([
       env.DB.prepare('SELECT * FROM bands WHERE tenant=? ORDER BY name').bind(site).all(),
-      env.DB.prepare('SELECT * FROM shows WHERE tenant=? ORDER BY date DESC,start_time').bind(site).all()
+      env.DB.prepare('SELECT * FROM shows WHERE tenant=? ORDER BY date DESC,start_time').bind(site).all(),
+      env.DB.prepare('SELECT * FROM closures WHERE tenant=? ORDER BY date DESC').bind(site).all()
     ]);
-    return json({ site, actor, bands: bands.results || [], shows: shows.results || [] });
+    return json({ site, actor, bands: bands.results || [], shows: shows.results || [], closures: closures.results || [] });
   }
   if (collection === 'audit' && parts.length === 1 && method === 'GET') {
     const result = await env.DB.prepare('SELECT id,actor,action,entity,entity_id,created_at FROM audit_log WHERE tenant=? ORDER BY created_at DESC LIMIT 100').bind(site).all();
     return json({ entries: result.results || [] });
+  }
+  if (collection === 'closures' && parts.length === 1 && method === 'POST') {
+    const input = await bodyJSON(request);
+    const date = dateOnly(input.date);
+    const notice = string(input.notice, 'Closure notice', 400);
+    const before = await env.DB.prepare('SELECT * FROM closures WHERE tenant=? AND date=?').bind(site,date).first();
+    const id = before?.id || crypto.randomUUID();
+    const timestamp = now();
+    if (before) {
+      await env.DB.prepare('UPDATE closures SET notice=?,updated_at=?,updated_by=? WHERE tenant=? AND id=?')
+        .bind(notice,timestamp,actor,site,id).run();
+    } else {
+      await env.DB.prepare('INSERT INTO closures(id,tenant,date,notice,created_at,updated_at,updated_by) VALUES(?,?,?,?,?,?,?)')
+        .bind(id,site,date,notice,timestamp,timestamp,actor).run();
+    }
+    await audit(env,site,actor,before ? 'update' : 'create','closure',id,before,{date,notice});
+    return json({id,date,notice},before ? 200 : 201);
+  }
+  if (collection === 'closures' && id && parts.length === 2 && method === 'DELETE') {
+    const before = await env.DB.prepare('SELECT * FROM closures WHERE tenant=? AND id=?').bind(site,id).first();
+    if (!before) fail(404,'Closure not found.');
+    await env.DB.prepare('DELETE FROM closures WHERE tenant=? AND id=?').bind(site,id).run();
+    await audit(env,site,actor,'remove','closure',id,before,null);
+    return json({ok:true,id});
   }
   if (collection === 'bands' && parts.length === 1 && method === 'POST') {
     const input = await bodyJSON(request);

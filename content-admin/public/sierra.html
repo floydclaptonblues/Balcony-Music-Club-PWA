@@ -44,6 +44,15 @@
     <h3>Saved bands</h3>
     <div id="band-list" class="band-list"></div>
   </section>
+  <section class="panel wide" aria-labelledby="closure-heading">
+    <h2 id="closure-heading">Venue closures / days without performances</h2>
+    <p>Mark a holiday or scheduled closure separately from a band performance. A closure can be edited or removed.</p>
+    <form id="closure-form" class="stack">
+      <div class="two"><label>Date<input type="date" name="date" required></label><label>Closure notice<input type="text" name="notice" maxlength="400" required placeholder="Closed for Thanksgiving"></label></div>
+      <button type="submit">Save closure</button>
+    </form>
+    <div id="closure-list" class="show-list"></div>
+  </section>
   <section class="panel wide" aria-labelledby="listing-heading">
     <div class="section-title"><h2 id="listing-heading">Saved performances</h2><button type="button" id="reload" class="muted">Refresh</button></div>
     <p>Use Edit to correct a show, Copy to reuse its details for another date, or Cancel to remove it from the public feed without erasing its record.</p>

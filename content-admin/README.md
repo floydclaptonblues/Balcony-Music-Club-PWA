@@ -60,3 +60,11 @@ Make one independent change at a time, preserve backups, inspect the website bef
 This code has not yet been deployed or tested against a configured Cloudflare account. Site data and photo uploads cannot be exercised end-to-end until D1, R2, Access and hostnames exist. The audit table records changes but there is not yet a one-click history restore feature. Date recurrence, batch uploads, message notifications, image cropping, rich content edits and a production cutover are later enhancements. No account identity, DNS, Cloudflare resources, or existing website hosting has been changed.
 
 For safety, review this feature branch and test the new Worker in a staging configuration before any production merge.
+
+## November 2026 BMC calendar snapshot (October 29 update)
+
+`seed-bmc-2026-11.sql` preserves the 41 November slots (16 performance dates), the November 28 9 PM `TBD` slot and the **Thursday November 26 Thanksgiving closure** as a separate record, not a band/show. Import it **after** `schema.sql` and `seed-bmc-2026-10.sql`:
+
+`npx wrangler d1 execute bmc-sierra-content --remote --file=./seed-bmc-2026-11.sql`
+
+The updated new Worker exposes `closures` in public and signed-in JSON feeds. Authorized editors can create, edit and remove closures from either admin page. The live November calendar remains served from the original GitHub Pages sites; Cloudflare staging/deployment and feed cutover are still pending.

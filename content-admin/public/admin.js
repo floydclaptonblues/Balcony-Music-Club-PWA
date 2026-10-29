@@ -4,10 +4,11 @@ const site = document.body.dataset.site;
 if (!['bmc','sierra'].includes(site)) return;
 const api = '/api/admin/' + site;
 const $ = selector => document.querySelector(selector);
-const state = { bands: [], shows: [] };
+const state = { bands: [], shows: [], closures: [] };
 const showForm = $('#show-form');
 const bandForm = $('#band-form');
 const photoForm = $('#photo-form');
+const closureForm = $('#closure-form');
 const status = $('#status');
 const field = (form, name) => form.elements.namedItem(name);
 const el = (tag, cls, text) => {
@@ -96,6 +97,28 @@ function renderBands() {
     list.appendChild(row);
   }
 }
+function renderClosures() {
+  const list = $('#closure-list'); list.replaceChildren();
+  if (!state.closures.length) { list.appendChild(el('p','', 'No venue closures recorded.')); return; }
+  for (const closure of state.closures) {
+    const row = el('div','show-row');
+    const details = el('div','detail');
+    details.appendChild(el('strong','',closure.date));
+    details.appendChild(el('small','',closure.notice));
+    row.appendChild(details);
+    row.appendChild(button('Edit', () => {
+      field(closureForm,'date').value=closure.date;
+      field(closureForm,'notice').value=closure.notice;
+      closureForm.scrollIntoView({behavior:'smooth',block:'start'});
+    }));
+    row.appendChild(button('Remove',async () => {
+      if (!confirm('Remove closure notice for '+closure.date+'?')) return;
+      try { await call('/closures/'+encodeURIComponent(closure.id),{method:'DELETE'}); await load(); }
+      catch(err) { message(err.message,true); }
+    }));
+    list.appendChild(row);
+  }
+}
 function renderShows() {
   const list = $('#show-list');
   list.replaceChildren();
@@ -126,7 +149,8 @@ async function load() {
     const data = await call('/data');
     state.bands=data.bands || [];
     state.shows=data.shows || [];
-    renderBands(); renderShows();
+    state.closures=data.closures || [];
+    renderBands(); renderShows(); renderClosures();
     message('Connected as '+data.actor+'. Changes are scoped to '+(site==='bmc'?'BMC':'Sierra')+'.');
   } catch(err) { message(err.message,true); }
 }
@@ -143,6 +167,14 @@ async function history() {
     }
   } catch(err) { message(err.message,true); }
 }
+closureForm.addEventListener('submit',async event => {
+  event.preventDefault();
+  const payload = {date:field(closureForm,'date').value,notice:field(closureForm,'notice').value};
+  try {
+    await call('/closures',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    closureForm.reset(); await load(); message('Closure notice saved.');
+  } catch(err) { message(err.message,true); }
+});
 showForm.addEventListener('submit',async event => {
   event.preventDefault();
   const payload = {};
