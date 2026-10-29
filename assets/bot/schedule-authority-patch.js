@@ -3,7 +3,7 @@
 
   const VENUE_TIME_ZONE = 'America/Chicago';
   const BMC_MURAL = 'assets/venue/20260213_212259%20(1).jpg?v=20260730-band-fallback';
-  // Management schedule revised 2026-10-01; owner update 2026-10-27: October 31 at 6 PM is Epic Funk Brass Band. October 10 at 6 PM remains TBA.
+  // October and November 2026 management schedules, updated October 29. November 26 closed; November 28 at 9 PM TBD.
   // Start times are supplied; end times retain the existing 2.5-hour slot convention.
   const SCHEDULE = [
     { date: '2026-10-01', acts: [['6:00 PM', '8:30 PM', 'DAPPER DANDIES'], ['9:00 PM', '11:30 PM', 'KAT KILEY EXPERIENCE']] },
@@ -24,7 +24,24 @@
     { date: '2026-10-25', acts: [['3:00 PM', '5:30 PM', 'DEEJ FK & MOTHER RUCKUS'], ['6:00 PM', '8:30 PM', 'JAM BRASS BAND'], ['9:00 PM', '11:30 PM', 'FUNKY SOLES']] },
     { date: '2026-10-29', acts: [['6:00 PM', '8:30 PM', 'DAPPER DANDIES'], ['9:00 PM', '11:30 PM', 'KEEP IT ROLLING BRASS BAND']] },
     { date: '2026-10-30', acts: [['6:00 PM', '8:30 PM', 'MOTHER RUCKUS'], ['9:00 PM', '11:30 PM', 'BIG MIKE & RB KINGS']] },
-    { date: '2026-10-31', acts: [['3:00 PM', '5:30 PM', 'TROPICAL WEATHER'], ['6:00 PM', '8:30 PM', 'Epic Funk Brass Band'], ['9:00 PM', '11:30 PM', 'KAT KILEY EXPERIENCE']] }
+    { date: '2026-10-31', acts: [['3:00 PM', '5:30 PM', 'TROPICAL WEATHER'], ['6:00 PM', '8:30 PM', 'Epic Funk Brass Band'], ['9:00 PM', '11:30 PM', 'KAT KILEY EXPERIENCE']] },
+    { date: '2026-11-01', acts: [['3:00 PM', '5:30 PM', 'DEEJ FLAVA & MOTHER RUCKUS'], ['6:00 PM', '8:30 PM', 'JAM BRASS BAND'], ['9:00 PM', '11:30 PM', 'ANDRE LOVETT BAND']] },
+    { date: '2026-11-05', acts: [['6:00 PM', '8:30 PM', 'RUMPSHAKERS'], ['9:00 PM', '11:30 PM', 'KAT KILEY EXPERIENCE']] },
+    { date: '2026-11-06', acts: [['6:00 PM', '8:30 PM', 'ELECTRIC BARRELHOUSE'], ['9:00 PM', '11:30 PM', 'BIG MIKE & RB KINGS']] },
+    { date: '2026-11-07', acts: [['3:00 PM', '5:30 PM', 'ANDRE LOVETT BAND'], ['6:00 PM', '8:30 PM', 'MAURICE CADE & ESS'], ['9:00 PM', '11:30 PM', 'KEEPING IT ROLLING BRASS BAND']] },
+    { date: '2026-11-08', acts: [['3:00 PM', '5:30 PM', 'DEEJ FLAVA & MOTHER RUCKUS'], ['6:00 PM', '8:30 PM', 'JAM BRASS BAND'], ['9:00 PM', '11:30 PM', 'FUNKY SOLES']] },
+    { date: '2026-11-12', acts: [['6:00 PM', '8:30 PM', 'DAPPER DANDIES'], ['9:00 PM', '11:30 PM', 'KAT KILEY EXPERIENCE']] },
+    { date: '2026-11-13', acts: [['6:00 PM', '8:30 PM', 'PARISH LINE'], ['9:00 PM', '11:30 PM', 'BIG MIKE & RB KINGS']] },
+    { date: '2026-11-14', acts: [['3:00 PM', '5:30 PM', 'TROPICAL WEATHER'], ['6:00 PM', '8:30 PM', 'JON RONIGER'], ['9:00 PM', '11:30 PM', 'ANDRE LOVETT BAND']] },
+    { date: '2026-11-15', acts: [['3:00 PM', '5:30 PM', 'DEEJ FLAVA & MOTHER RUCKUS'], ['6:00 PM', '8:30 PM', 'JAM BRASS BAND'], ['9:00 PM', '11:30 PM', 'FUNKY SOLES']] },
+    { date: '2026-11-19', acts: [['6:00 PM', '8:30 PM', 'ANDY J FORREST'], ['9:00 PM', '11:30 PM', 'KAT KILEY EXPERIENCE']] },
+    { date: '2026-11-20', acts: [['6:00 PM', '8:30 PM', 'PARISH LINE'], ['9:00 PM', '11:30 PM', 'BIG MIKE & RB KINGS']] },
+    { date: '2026-11-21', acts: [['3:00 PM', '5:30 PM', 'ANDRE LOVETT BAND'], ['6:00 PM', '8:30 PM', 'BEBE & THE STANDARDS'], ['9:00 PM', '11:30 PM', 'TAMARIE T & THEE FUNK JAM']] },
+    { date: '2026-11-22', acts: [['3:00 PM', '5:30 PM', 'DEEJ FLAVA & MOTHER RUCKUS'], ['6:00 PM', '8:30 PM', 'JAM BRASS BAND'], ['9:00 PM', '11:30 PM', 'FUNKY SOLES']] },
+    { date: '2026-11-26', acts: [], closed: true, notice: 'CLOSED FOR THANKSGIVING — no performances scheduled.' },
+    { date: '2026-11-27', acts: [['6:00 PM', '8:30 PM', 'ELECTRIC BARRELHOUSE'], ['9:00 PM', '11:30 PM', 'ADO SOUL']] },
+    { date: '2026-11-28', acts: [['3:00 PM', '5:30 PM', 'ANDRE LOVETT BAND'], ['6:00 PM', '8:30 PM', 'MAURICE CADE & ESS'], ['9:00 PM', '11:30 PM', 'TBD']] },
+    { date: '2026-11-29', acts: [['3:00 PM', '5:30 PM', 'DEEJ FLAVA & MOTHER RUCKUS'], ['6:00 PM', '8:30 PM', 'JAM BRASS BAND'], ['9:00 PM', '11:30 PM', 'KIM INDA WIND BAND']] }
   ];
 
   const LOCAL_BANDS = 'assets/bands/';
@@ -209,6 +226,7 @@
   function makeCalendarDay(day) {
     const card = element('article', 'card bmc-calendar-day');
     card.appendChild(element('h3', '', prettyDate(day.date)));
+    if (day.closed) card.appendChild(element('p', 'note', day.notice || 'Closed — no performances scheduled.'));
     day.acts.forEach(function (act) {
       const row = element('div', 'bmc-calendar-act');
       row.appendChild(imageForAct(act[2], 'bmc-calendar-band-photo'));
@@ -278,7 +296,8 @@
   function dayCard(day) {
     const card = element('article', 'card frozen-day-card');
     card.appendChild(element('h3', '', prettyDate(day.date)));
-    const namedActs = day.acts.filter(function (act) { return key(act[2]) !== 'TBA'; });
+    if (day.closed) card.appendChild(element('p', 'note', day.notice || 'Closed — no performances scheduled.'));
+    const namedActs = day.acts.filter(function (act) { return key(act[2]) !== 'TBA' && key(act[2]) !== 'TBD'; });
     const headliner = namedActs[namedActs.length - 1] || day.acts[day.acts.length - 1];
     if (headliner) card.appendChild(imageForAct(headliner[2], 'frozen-band-photo'));
     day.acts.forEach(function (act) {

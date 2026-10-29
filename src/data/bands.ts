@@ -27,4 +27,10 @@ export const bands: Band[] = [
   { id: 'covertones', name: 'COVERTONES', sourceIds: ['website-shows'] },
   { id: 'maurice-cade', name: 'MAURICE CADE', sourceIds: ['website-shows'] },
   { id: 'sierra', name: 'SIERRA', sourceIds: ['website-shows'] },
+  { id: 'keeping-it-rolling-brass-band-2026-nov', name: 'KEEPING IT ROLLING BRASS BAND', sourceIds: ['site-owner-supplied-2026-10-29'] },
+  { id: 'jon-roniger-2026-nov', name: 'JON RONIGER', sourceIds: ['site-owner-supplied-2026-10-29'] },
+  { id: 'andy-j-forrest-2026-nov', name: 'ANDY J FORREST', sourceIds: ['site-owner-supplied-2026-10-29'] },
+  { id: 'bebe-the-standards-2026-nov', name: 'BEBE & THE STANDARDS', sourceIds: ['site-owner-supplied-2026-10-29'] },
+  { id: 'tamarie-t-thee-funk-jam-2026-nov', name: 'TAMARIE T & THEE FUNK JAM', sourceIds: ['site-owner-supplied-2026-10-29'] },
+  { id: 'ado-soul-2026-nov', name: 'ADO SOUL', sourceIds: ['site-owner-supplied-2026-10-29'] },
 ];

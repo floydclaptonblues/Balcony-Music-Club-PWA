@@ -141,10 +141,11 @@ function App() {
         </Section>
 
         <Section id="schedule" eyebrow="Live music" title="Band Schedule">
+          <p className="note">Thursday, November 26: CLOSED for Thanksgiving — no performances scheduled.</p>
           {upcoming.length === 0 ? (
             <div className="empty-state">
               <p>No current/future band schedule is configured yet.</p>
-              <p className="note">The public source schedule currently in this scaffold is May 2026 and is treated as archived source data, not a live guest schedule.</p>
+              <p className="note">New dates will appear when confirmed by Balcony Music Club.</p>
             </div>
           ) : (
             <div className="card-list">

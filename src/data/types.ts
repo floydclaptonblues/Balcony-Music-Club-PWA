@@ -8,6 +8,8 @@ export type SourceId =
   | 'public-social-search'
   | 'site-owner-approval-2026-06-05'
   | 'site-owner-supplied-2026-08-17'
+  | 'site-owner-supplied-2026-10-27'
+  | 'site-owner-supplied-2026-10-29'
   | 'management-schedule-2026-08-27'
   | 'management-schedule-2026-09-28'
   | 'management-schedule-2026-10-01'
