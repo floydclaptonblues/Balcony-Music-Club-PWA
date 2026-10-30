@@ -5,7 +5,7 @@
   const BMC_MURAL = 'assets/venue/20260213_212259%20(1).jpg?v=20260730-band-fallback';
   // October and November 2026 management schedules, updated October 29. November 26 closed; November 28 at 9 PM TBD.
   // Start times are supplied; end times retain the existing 2.5-hour slot convention.
-  const SCHEDULE = [
+  let SCHEDULE = [
     { date: '2026-10-01', acts: [['6:00 PM', '8:30 PM', 'DAPPER DANDIES'], ['9:00 PM', '11:30 PM', 'KAT KILEY EXPERIENCE']] },
     { date: '2026-10-02', acts: [['6:00 PM', '8:30 PM', 'ELECTRIC BARRELHOUSE'], ['9:00 PM', '11:30 PM', 'BIG MIKE & RB KINGS']] },
     { date: '2026-10-03', acts: [['3:00 PM', '5:30 PM', 'PARISH LINE'], ['6:00 PM', '8:30 PM', 'JOSH BENITEZ BAND'], ['9:00 PM', '11:30 PM', 'ANDRE LOVETT BAND']] },
@@ -201,8 +201,8 @@
     document.head.appendChild(style);
   }
 
-  function imageForAct(actName, className) {
-    const mappedSource = IMAGE_BY_ACT[key(actName)];
+  function imageForAct(actName, className, selectedPhoto) {
+    const mappedSource = selectedPhoto || IMAGE_BY_ACT[key(actName)];
     const image = new Image();
     image.className = className;
     image.src = mappedSource || BMC_MURAL;
@@ -229,7 +229,7 @@
     if (day.closed) card.appendChild(element('p', 'note', day.notice || 'Closed — no performances scheduled.'));
     day.acts.forEach(function (act) {
       const row = element('div', 'bmc-calendar-act');
-      row.appendChild(imageForAct(act[2], 'bmc-calendar-band-photo'));
+      row.appendChild(imageForAct(act[2], 'bmc-calendar-band-photo', act[3]));
       const info = element('div', 'bmc-calendar-act-info');
       info.appendChild(element('b', '', act[2]));
       info.appendChild(element('span', '', act[0] + '–' + act[1]));
@@ -299,7 +299,7 @@
     if (day.closed) card.appendChild(element('p', 'note', day.notice || 'Closed — no performances scheduled.'));
     const namedActs = day.acts.filter(function (act) { return key(act[2]) !== 'TBA' && key(act[2]) !== 'TBD'; });
     const headliner = namedActs[namedActs.length - 1] || day.acts[day.acts.length - 1];
-    if (headliner) card.appendChild(imageForAct(headliner[2], 'frozen-band-photo'));
+    if (headliner) card.appendChild(imageForAct(headliner[2], 'frozen-band-photo', headliner[3]));
     day.acts.forEach(function (act) {
       const row = element('div', 'frozen-act');
       row.appendChild(element('span', '', act[0].replace(' PM', '')));
@@ -308,6 +308,8 @@
     });
     return card;
   }
+
+  let ANNOUNCEMENT = '';
 
   function render() {
     const section = document.getElementById('schedule');
@@ -338,6 +340,7 @@
     button.type = 'button';
     head.appendChild(button);
     section.appendChild(head);
+    if (ANNOUNCEMENT) section.appendChild(element('p', 'note', ANNOUNCEMENT));
 
     if (week.length) {
       const strip = element('div', 'frozen-week-strip');
@@ -352,6 +355,76 @@
     bindCalendarButtons();
   }
 
+
+  // The published UpcomingShows JSON is the single source for the PWA.
+  // Keep the checked-in October/November snapshot above as a safe offline fallback.
+  // GitHub Pages can cache files; a cache-busting query and raw-GitHub fallback
+  // avoid requiring synchronized manual edits in this repository.
+  async function updateFromPublicCalendar() {
+    const candidates = [
+      'https://shows.balconymusicclub.com/shows.json?editor=' + Date.now(),
+      'https://raw.githubusercontent.com/floydclaptonblues/UpcomingShows/main/shows.json?editor=' + Date.now()
+    ];
+    let data;
+    for (const url of candidates) {
+      try {
+        const response = await fetch(url, { cache: 'no-store', mode: 'cors' });
+        if (!response.ok) continue;
+        const candidate = await response.json();
+        if (candidate && Array.isArray(candidate.shows) && candidate.shows.length) {
+          data = candidate;
+          break;
+        }
+      } catch (error) {
+        console.warn('BMC calendar source unavailable; trying a fallback.', error);
+      }
+    }
+    if (!data) return;
+    const yearMatch = String(data.month || '').match(/\b20\d{2}\b/);
+    const sourceYear = yearMatch ? yearMatch[0] : '2026';
+    const monthNames = ['january','february','march','april','may','june','july','august','september','october','november','december'];
+    const live = [];
+    for (const day of data.shows) {
+      let iso = day.isoDate;
+      if (!iso) {
+        const dateMatch = String(day.date || '').match(/(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{1,2})/i);
+        if (!dateMatch) return;
+        const month = monthNames.indexOf(dateMatch[1].toLowerCase()) + 1;
+        if (!month) return;
+        iso = sourceYear + '-' + String(month).padStart(2, '0') + '-' + String(Number(dateMatch[2])).padStart(2, '0');
+      }
+      if (!/^\d{4}-\d{2}-\d{2}$/.test(iso)) return;
+      const acts = [];
+      for (const show of day.shows || []) {
+        const halves = String(show.time || '').split(/\s+–\s+/);
+        if (halves.length !== 2 || !show.artist) return;
+        let selectedPhoto = '';
+        if (show.photo) {
+          try {
+            const parsed = new URL(show.photo, 'https://shows.balconymusicclub.com/');
+            if (parsed.protocol === 'https:') selectedPhoto = parsed.href;
+          } catch (error) {
+            console.warn('Invalid calendar photo URL ignored.', error);
+          }
+        }
+        acts.push([halves[0], halves[1], show.artist, selectedPhoto]);
+      }
+      live.push({
+        date: iso,
+        acts,
+        closed: day.closed === true,
+        notice: day.notice || ''
+      });
+    }
+    live.sort(function (a,b) { return a.date.localeCompare(b.date); });
+    SCHEDULE = live;
+    ANNOUNCEMENT = String(data.announcement || '').trim().slice(0,500);
+    const section = document.getElementById('schedule');
+    if (section) section.removeAttribute('data-schedule-signature');
+    if (section) delete section.dataset.scheduleSignature;
+    render();
+  }
+
   document.addEventListener('keydown', function (event) {
     if (event.key === 'Escape') closeCalendar();
   });
@@ -362,4 +435,5 @@
     render();
   }
   window.addEventListener('load', render);
+  updateFromPublicCalendar();
 })();
